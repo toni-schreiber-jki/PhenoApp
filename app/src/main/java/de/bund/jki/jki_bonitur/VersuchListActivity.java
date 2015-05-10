@@ -1,19 +1,40 @@
 package de.bund.jki.jki_bonitur;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import de.bund.jki.jki_bonitur.config.Config;
 
 
 public class VersuchListActivity extends ActionBarActivity {
+
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_versuch_list);
+        context = this;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showFiles();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,5 +56,39 @@ public class VersuchListActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showFiles()
+    {
+        try {
+            String path = Environment.getExternalStorageDirectory().toString() + Config.BaseFolder +  "/in/";
+            File folder = new File(path);
+            //folder.mkdirs();
+
+            File[] files = folder.listFiles();
+            ArrayList<String> list = new ArrayList<String>();
+            for (int i = 0; i < files.length; ++i) {
+                list.add(files[i].getName());
+            }
+
+            ListView lv = (ListView) findViewById(R.id.lvDateien);
+
+            ArrayAdapter adapter = new ArrayAdapter(this,
+                    android.R.layout.simple_list_item_1, list);
+            lv.setAdapter(adapter);
+
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                    Intent i = new Intent(context, BoniturActivity.class);
+                    i.putExtra("FILE",tv.getText().toString());
+                    context.startActivity(i);
+                }
+            });
+
+        }catch (Exception e){
+            int a = 1;
+        }
     }
 }
