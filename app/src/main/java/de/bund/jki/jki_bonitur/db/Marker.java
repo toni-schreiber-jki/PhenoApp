@@ -1,9 +1,18 @@
 package de.bund.jki.jki_bonitur.db;
 
+import android.content.ContentValues;
+
 /**
  * Created by Toni on 10.05.2015.
  */
 public class Marker extends DbModelInterface {
+
+    public int id               = -1;
+    public int versuchId        = -1;
+    public String code          = null;
+    public String beschreibung  = null;
+    public String foto          = null;
+    public int type             = -1;
 
     public static final int MARKER_TYPE_BONITUR        = 1;
     public static final int MARKER_TYPE_MESSEN         = 2;
@@ -23,12 +32,25 @@ public class Marker extends DbModelInterface {
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +'\n'+
             COLUMN_VERSUCH      + " INTEGER NOT NULL," + '\n' +
             COLUMN_CODE         + " TEXT NOT NULL," + '\n' +
-            COLUMN_BESCHREIBUNG + " INTEGER," + '\n' +
-            COLUMN_FOTO         + " INTEGER," + '\n' +
+            COLUMN_BESCHREIBUNG + " TEXT," + '\n' +
+            COLUMN_FOTO         + " TEXT," + '\n' +
             COLUMN_TYPE         + " INTEGER NOT NULL," + '\n' +
 
             "CONSTRAINT marker_versuch FOREIGN KEY("+COLUMN_VERSUCH+") REFERENCES "+ Versuch.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n'+
                 "ON UPDATE CASCADE " + '\n' +
                 "ON DELETE CASCADE " + '\n' +
     ")";
+
+    @Override
+    boolean save() {
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_VERSUCH, versuchId);
+        values.put(COLUMN_CODE, code);
+        values.put(COLUMN_BESCHREIBUNG, beschreibung);
+        values.put(COLUMN_FOTO, foto);
+        values.put(COLUMN_TYPE, type == -1 ? null: type);
+
+        return saveRow(id,values);
+    }
 }

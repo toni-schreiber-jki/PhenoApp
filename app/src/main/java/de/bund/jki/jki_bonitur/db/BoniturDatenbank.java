@@ -35,7 +35,6 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
             db.execSQL(Akzession.CREATE_TABLE);
             db.execSQL(Standort.ALTER_TABLE_1);
             db.execSQL(Standort.ALTER_TABLE_2);
-
         } catch (Exception e)
         {
             e.printStackTrace();

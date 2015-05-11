@@ -1,9 +1,19 @@
 package de.bund.jki.jki_bonitur.db;
 
+import android.content.ContentValues;
+import android.database.SQLException;
+
+import de.bund.jki.jki_bonitur.BoniturSafe;
+
 /**
  * Created by Toni on 11.05.2015.
  */
 public class MarkerWert extends DbModelInterface {
+
+    public int id       = -1;
+    public int markerId = -1;
+    public String label = null;
+    public String value = null;
 
     public static String COLUMN_ID          = "_id";
     public static String COLUMN_MARKER      = "markerId";
@@ -22,4 +32,14 @@ public class MarkerWert extends DbModelInterface {
             "ON UPDATE CASCADE " + '\n' +
             "ON DELETE CASCADE " + '\n' +
     ")";
+
+    @Override
+    boolean save() {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_MARKER, markerId);
+        values.put(COLUMN_LABEL, label);
+        values.put(COLUMN_VALUE, value);
+
+        return saveRow(id, values);
+    }
 }

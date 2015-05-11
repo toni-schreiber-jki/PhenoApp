@@ -17,7 +17,7 @@ public class BoniturActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bonitur);
         bonDb = new BoniturDatenbank(this);
-        bonDb.getWritableDatabase();
+        BoniturSafe.db = bonDb.getWritableDatabase();
     }
 
 

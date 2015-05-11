@@ -1,9 +1,19 @@
 package de.bund.jki.jki_bonitur.db;
 
+import android.content.ContentValues;
+import android.database.SQLException;
+
+import org.apache.poi.ss.formula.ptg.TblPtg;
+
+import de.bund.jki.jki_bonitur.BoniturSafe;
+
 /**
  * Created by Toni on 10.05.2015.
  */
 public class Versuch extends DbModelInterface {
+
+    public int id       = -1;
+    public String name  = null;
 
     public static String COLUMN_ID = "_id";
     public static String COLUMN_NAME = "name";
@@ -15,4 +25,11 @@ public class Versuch extends DbModelInterface {
             Versuch.COLUMN_NAME + " VARCHAR(100) NOT NULL" + '\n' +
     ")";
 
+    @Override
+    boolean save() {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, name);
+
+        return saveRow(id,values);
+    }
 }
