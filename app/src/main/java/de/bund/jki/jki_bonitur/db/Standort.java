@@ -21,11 +21,13 @@ public class Standort extends DbModelInterface {
             COLUMN_PARZELLE + " TEXT NOT NULL DEFAULT '00'," + '\n' +
             COLUMN_REIHE    + " INTEGER NOT NULL," + '\n' +
             COLUMN_PFLANZE  + " INTEGER NOT NULL," + '\n' +
-            COLUMN_AKZESSION+ " INTEGER," + '\n' +
-            COLUMN_PASSPORT + " INTEGER," + '\n' +
+            //COLUMN_AKZESSION+ " INTEGER," + '\n' +
+            //COLUMN_PASSPORT + " INTEGER," + '\n' +
 
             "CONSTRAINT standort_versuch FOREIGN KEY("+COLUMN_VERSUCH+") REFERENCES "+ Versuch.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n'+
             "ON UPDATE CASCADE " + '\n' +
             "ON DELETE CASCADE " + '\n' +
     ")";
+    public static String ALTER_TABLE_1 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN "+ COLUMN_AKZESSION+" INTEGER REFERENCES "+ Akzession.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n';
+    public static String ALTER_TABLE_2 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN  "+COLUMN_PASSPORT+" INTEGER REFERENCES "+ Passport.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n';
 }

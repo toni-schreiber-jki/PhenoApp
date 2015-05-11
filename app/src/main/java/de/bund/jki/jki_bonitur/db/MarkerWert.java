@@ -1,0 +1,25 @@
+package de.bund.jki.jki_bonitur.db;
+
+/**
+ * Created by Toni on 11.05.2015.
+ */
+public class MarkerWert extends DbModelInterface {
+
+    public static String COLUMN_ID          = "_id";
+    public static String COLUMN_MARKER      = "markerId";
+    public static String COLUMN_LABEL       = "label";
+    public static String COLUMN_VALUE       = "value";
+
+    public static String TABLE_NAME = "markerWert";
+
+    public static String CREATE_TABLE = "CREATE TABLE "+ TABLE_NAME + "(" + '\n'+
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +'\n'+
+            COLUMN_MARKER   + " INTEGER NOT NULL," + '\n' +
+            COLUMN_LABEL    + " TEXT," + '\n' +
+            COLUMN_VALUE    + " INTEGER NOT NULL," + '\n' +
+
+            "CONSTRAINT markerWert_marker FOREIGN KEY("+COLUMN_MARKER+") REFERENCES "+ Marker.TABLE_NAME + "("+Marker.COLUMN_ID+")"+ '\n'+
+            "ON UPDATE CASCADE " + '\n' +
+            "ON DELETE CASCADE " + '\n' +
+    ")";
+}

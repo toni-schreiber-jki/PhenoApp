@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class BoniturDatenbank extends SQLiteOpenHelper {
 
     public static final String DATENBANK_NAME = "bonitur.sqlite";
-    public static final int DATENBANK_VERSION = 7;
+    public static final int DATENBANK_VERSION = 1;
 
     public BoniturDatenbank(Context context) {
          super(
@@ -27,6 +27,15 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(Versuch.CREATE_TABLE);
+            db.execSQL(Marker.CREATE_TABLE);
+            db.execSQL(Standort.CREATE_TABLE);
+            db.execSQL(MarkerWert.CREATE_TABLE);
+            db.execSQL(VersuchWert.CREATE_TABLE);
+            db.execSQL(Passport.CREATE_TABLE);
+            db.execSQL(Akzession.CREATE_TABLE);
+            db.execSQL(Standort.ALTER_TABLE_1);
+            db.execSQL(Standort.ALTER_TABLE_2);
+
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -39,8 +48,8 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
         {
             switch (newVersion)
             {
-                case 6: db.execSQL(Marker.CREATE_TABLE); break;
-                case 7: db.execSQL(Standort.CREATE_TABLE); break;
+
+
             }
         }catch (Exception e)
         {
