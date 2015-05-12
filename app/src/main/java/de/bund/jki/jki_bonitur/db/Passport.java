@@ -1,9 +1,17 @@
 package de.bund.jki.jki_bonitur.db;
 
+import android.content.ContentValues;
+
 /**
  * Created by Toni on 11.05.2015.
  */
 public class Passport extends DbModelInterface {
+
+    public int id           = -1;
+    public int versuchId    = -1;
+    public String leitname  = null;
+    public String kennNr    = null;
+    public String merkmale  = null;
 
     public static String COLUMN_ID          = "_id";
     public static String COLUMN_VERSUCH     = "versuchId";
@@ -24,4 +32,16 @@ public class Passport extends DbModelInterface {
             "ON UPDATE CASCADE " + '\n' +
             "ON DELETE CASCADE " + '\n' +
     ")";
+
+    @Override
+    boolean save() {
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_VERSUCH, versuchId);
+        values.put(COLUMN_LEITNAME, leitname);
+        values.put(COLUMN_KENN_NR, kennNr);
+        values.put(COLUMN_MERKMALE, merkmale);
+
+        return saveRow(id,values);
+    }
 }

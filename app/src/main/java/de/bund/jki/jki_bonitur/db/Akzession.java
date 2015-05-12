@@ -1,9 +1,18 @@
 package de.bund.jki.jki_bonitur.db;
 
+import android.content.ContentValues;
+
 /**
  * Created by Toni on 10.05.2015.
  */
 public class Akzession extends DbModelInterface {
+
+    public int id           = -1;
+    public int versuchId    = -1;
+    public int passportId   = -1;
+    public String nummer    = null;
+    public String name      = null;
+    public String merkmale  = null;
 
     public static String TABLE_NAME ="akzession";
 
@@ -29,6 +38,19 @@ public class Akzession extends DbModelInterface {
             "CONSTRAINT akzession_passport FOREIGN KEY("+COLUMN_PASSPORT+") REFERENCES "+ Passport.TABLE_NAME + "("+Passport.COLUMN_ID+")"+ '\n'+
 
     ")";
+
+    @Override
+    boolean save() {
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_VERSUCH, versuchId);
+        values.put(COLUMN_PASSPORT, passportId != -1 ? passportId : null);
+        values.put(COLUMN_NUMMER, nummer);
+        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_MERKMALE, merkmale);
+
+        return saveRow(id,values);
+    }
 
 
 }
