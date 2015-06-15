@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import de.bund.jki.jki_bonitur.db.BoniturDatenbank;
+import de.bund.jki.jki_bonitur.excel.Reader;
 
 
 public class BoniturActivity extends ActionBarActivity {
@@ -18,6 +19,8 @@ public class BoniturActivity extends ActionBarActivity {
         setContentView(R.layout.activity_bonitur);
         bonDb = new BoniturDatenbank(this);
         BoniturSafe.db = bonDb.getWritableDatabase();
+        Reader reader = new Reader(getIntent().getStringExtra("FILE"));
+        reader.read();
     }
 
 

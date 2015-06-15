@@ -67,6 +67,7 @@ public class VersuchWert extends DbModelInterface {
         values.put(COLUMN_WERT_TEXT,    wert_text);
         values.put(COLUMN_WERT_ID,      wert_id     != -1 ? wert_id     : null);
 
-        return saveRow(id,values);
+        id = saveRow(id,values);
+        return id==-1;
     }
 }

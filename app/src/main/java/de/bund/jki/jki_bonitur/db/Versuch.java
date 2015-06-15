@@ -30,6 +30,7 @@ public class Versuch extends DbModelInterface {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
 
-        return saveRow(id,values);
+        id = saveRow(id,values);
+        return id==-1;
     }
 }

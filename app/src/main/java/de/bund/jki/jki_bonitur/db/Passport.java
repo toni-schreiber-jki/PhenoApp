@@ -33,8 +33,14 @@ public class Passport extends DbModelInterface {
             "ON DELETE CASCADE " + '\n' +
     ")";
 
+    public Passport()
+    {
+        super.TABLE_NAME = TABLE_NAME;
+        super.COLUMN_ID = COLUMN_ID;
+    }
+
     @Override
-    boolean save() {
+    public boolean save() {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_VERSUCH, versuchId);
@@ -42,6 +48,7 @@ public class Passport extends DbModelInterface {
         values.put(COLUMN_KENN_NR, kennNr);
         values.put(COLUMN_MERKMALE, merkmale);
 
-        return saveRow(id,values);
+        id = saveRow(id,values);
+        return id==-1;
     }
 }

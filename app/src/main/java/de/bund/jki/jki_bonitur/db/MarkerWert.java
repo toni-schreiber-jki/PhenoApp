@@ -40,6 +40,7 @@ public class MarkerWert extends DbModelInterface {
         values.put(COLUMN_LABEL, label);
         values.put(COLUMN_VALUE, value);
 
-        return saveRow(id, values);
+        id = saveRow(id,values);
+        return id==-1;
     }
 }

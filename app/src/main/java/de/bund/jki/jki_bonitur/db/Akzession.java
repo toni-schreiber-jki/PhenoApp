@@ -1,6 +1,9 @@
 package de.bund.jki.jki_bonitur.db;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+
+import de.bund.jki.jki_bonitur.BoniturSafe;
 
 /**
  * Created by Toni on 10.05.2015.
@@ -39,8 +42,16 @@ public class Akzession extends DbModelInterface {
 
     ")";
 
+    public Akzession()
+    {
+        super.TABLE_NAME = TABLE_NAME;
+        super.COLUMN_ID = COLUMN_ID;
+    }
+
+
+
     @Override
-    boolean save() {
+    public boolean save() {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_VERSUCH, versuchId);
@@ -49,7 +60,36 @@ public class Akzession extends DbModelInterface {
         values.put(COLUMN_NAME, name);
         values.put(COLUMN_MERKMALE, merkmale);
 
-        return saveRow(id,values);
+        id = saveRow(id,values);
+        return id==-1;
+    }
+
+    static Akzession findByPk(int id)
+    {
+        Akzession res = new Akzession();
+
+        Cursor c = BoniturSafe.db.query(
+                Akzession.TABLE_NAME,
+                new String[]{Akzession.COLUMN_ID, Akzession.COLUMN_VERSUCH, Akzession.COLUMN_PASSPORT, Akzession.COLUMN_NUMMER, Akzession.COLUMN_NAME, Akzession.COLUMN_MERKMALE},
+                Akzession.COLUMN_ID+"=?",
+                new String [] {""+id},
+                null,
+                null,
+                null);
+
+        if(c.getCount() == 1){
+            c.moveToFirst();
+            res.id =        c.getInt(c.getColumnIndex(Akzession.COLUMN_ID));
+            res.versuchId = c.getInt(c.getColumnIndex(Akzession.COLUMN_VERSUCH));
+            res.passportId= c.getInt(c.getColumnIndex(Akzession.COLUMN_PASSPORT));
+            res.nummer =    c.getString(c.getColumnIndex(Akzession.COLUMN_NUMMER));
+            res.name =      c.getString(c.getColumnIndex(Akzession.COLUMN_NAME));
+            res.merkmale =  c.getString(c.getColumnIndex(Akzession.COLUMN_MERKMALE));
+
+            return res;
+        }
+
+        return null;
     }
 
 

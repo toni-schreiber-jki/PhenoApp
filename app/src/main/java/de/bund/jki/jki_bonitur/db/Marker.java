@@ -10,6 +10,7 @@ public class Marker extends DbModelInterface {
     public int id               = -1;
     public int versuchId        = -1;
     public String code          = null;
+    public String name          = null;
     public String beschreibung  = null;
     public String foto          = null;
     public int type             = -1;
@@ -22,6 +23,7 @@ public class Marker extends DbModelInterface {
     public static String COLUMN_ID              = "_id";
     public static String COLUMN_VERSUCH         = "versuchId";
     public static String COLUMN_CODE            = "code";
+    public static String COLUMN_NAME            = "name";
     public static String COLUMN_BESCHREIBUNG    = "beschreibung";
     public static String COLUMN_FOTO            = "foto";
     public static String COLUMN_TYPE            = "type";
@@ -32,6 +34,7 @@ public class Marker extends DbModelInterface {
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +'\n'+
             COLUMN_VERSUCH      + " INTEGER NOT NULL," + '\n' +
             COLUMN_CODE         + " TEXT NOT NULL," + '\n' +
+            COLUMN_NAME         + " TEXT NOT NULL," + '\n' +
             COLUMN_BESCHREIBUNG + " TEXT," + '\n' +
             COLUMN_FOTO         + " TEXT," + '\n' +
             COLUMN_TYPE         + " INTEGER NOT NULL," + '\n' +
@@ -51,6 +54,7 @@ public class Marker extends DbModelInterface {
         values.put(COLUMN_FOTO, foto);
         values.put(COLUMN_TYPE, type == -1 ? null: type);
 
-        return saveRow(id,values);
+        id = saveRow(id,values);
+        return id==-1;
     }
 }

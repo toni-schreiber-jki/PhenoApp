@@ -10,34 +10,36 @@ import de.bund.jki.jki_bonitur.BoniturSafe;
  */
 public abstract class DbModelInterface {
 
-    public static String TABLE_NAME;
-    public static String COLUMN_ID;
+    public String TABLE_NAME;
+    public String COLUMN_ID;
 
     public static String CREATE_TABLE;
     public static String[] ALL_COLUMMNS;
 
+    public int id;
+
     abstract boolean save();
 
-    protected boolean saveRow(int id, ContentValues values)
+    protected int saveRow(int id, ContentValues values)
     {
         if(id==-1)
         {
             try {
-                id = (int) BoniturSafe.db.insertOrThrow(TABLE_NAME, null, values);
+                this.id = (int) BoniturSafe.db.insertOrThrow(this.TABLE_NAME, null, values);
 
-                return id==-1 ? false : true;
+                return this.id;
             } catch (SQLException e){
                 e.printStackTrace();
-                return false;
+                return -1;
             }
         }
         else
         {
             if (BoniturSafe.db.update(TABLE_NAME,values,COLUMN_ID+"=?",new String[]{""+id}) == 1)
-                return true;
+                return id;
         }
 
-        return false;
+        return -1;
     }
 
 }
