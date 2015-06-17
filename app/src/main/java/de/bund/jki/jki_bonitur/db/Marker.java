@@ -1,6 +1,9 @@
 package de.bund.jki.jki_bonitur.db;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+
+import de.bund.jki.jki_bonitur.BoniturSafe;
 
 /**
  * Created by Toni on 10.05.2015.
@@ -14,6 +17,7 @@ public class Marker extends DbModelInterface {
     public String beschreibung  = null;
     public String foto          = null;
     public int type             = -1;
+    public MarkerWert[] werte   = null;
 
     public static final int MARKER_TYPE_BONITUR        = 1;
     public static final int MARKER_TYPE_MESSEN         = 2;
@@ -43,6 +47,56 @@ public class Marker extends DbModelInterface {
                 "ON UPDATE CASCADE " + '\n' +
                 "ON DELETE CASCADE " + '\n' +
     ")";
+
+    public Marker()
+    {
+        super.TABLE_NAME = TABLE_NAME;
+        super.COLUMN_ID = COLUMN_ID;
+    }
+
+    public static Marker findByPk(int id)
+    {
+        Marker res = new Marker();
+
+        Cursor c = BoniturSafe.db.rawQuery(
+                "SELECT * FROM "+ TABLE_NAME + " WHERE " + Standort.COLUMN_ID + " = ?",
+                new String[] {""+id}
+        );
+
+        if(c.getCount() == 1)
+        {
+            c.moveToFirst();
+            res.id = id;
+            res.versuchId = c.getInt(c.getColumnIndex(Marker.COLUMN_VERSUCH));
+            res.code = c.getString(c.getColumnIndex(Marker.COLUMN_CODE));
+            res.beschreibung = c.getString(c.getColumnIndex(Marker.COLUMN_BESCHREIBUNG));
+            res.type = c.getInt(c.getColumnIndex(Marker.COLUMN_TYPE));
+
+            if(res.type == MARKER_TYPE_BONITUR){
+                c = BoniturSafe.db.query(
+                        MarkerWert.TABLE_NAME,
+                        new String [] {MarkerWert.COLUMN_ID},
+                        MarkerWert.COLUMN_MARKER + "=?",
+                        new String [] {""+res.id},
+                        null,
+                        null,
+                        null);
+
+                res.werte = new MarkerWert[c.getCount()];
+                int i = 0;
+                c.moveToFirst();
+                do {
+                    res.werte[i] = MarkerWert.findByPk(c.getInt(c.getColumnIndex(MarkerWert.COLUMN_ID)));
+                    i++;
+                }while (c.moveToNext());
+            }else{
+                res.werte = null;
+            }
+        }
+
+        return res;
+    }
+
 
     @Override
     boolean save() {

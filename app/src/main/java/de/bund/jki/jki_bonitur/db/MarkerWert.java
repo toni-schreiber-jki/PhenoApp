@@ -1,6 +1,7 @@
 package de.bund.jki.jki_bonitur.db;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.SQLException;
 
 import de.bund.jki.jki_bonitur.BoniturSafe;
@@ -42,5 +43,24 @@ public class MarkerWert extends DbModelInterface {
 
         id = saveRow(id,values);
         return id==-1;
+    }
+
+    public static MarkerWert findByPk(int id) {
+        MarkerWert res = new MarkerWert();
+
+        Cursor c = BoniturSafe.db.rawQuery(
+                "SELECT * FROM " + TABLE_NAME + " WHERE " + MarkerWert.COLUMN_ID + " = ?",
+                new String[]{"" + id}
+        );
+
+        if (c.getCount() == 1) {
+            c.moveToFirst();
+            res.id = id;
+            res.markerId = c.getInt(c.getColumnIndex(MarkerWert.COLUMN_MARKER));
+            res.label = c.getString(c.getColumnIndex(MarkerWert.COLUMN_LABEL));
+            res.value = c.getString(c.getColumnIndex(MarkerWert.COLUMN_VALUE));
+        }
+
+        return res;
     }
 }

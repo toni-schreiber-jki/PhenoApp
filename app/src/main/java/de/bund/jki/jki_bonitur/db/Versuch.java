@@ -25,8 +25,14 @@ public class Versuch extends DbModelInterface {
             Versuch.COLUMN_NAME + " VARCHAR(100) NOT NULL" + '\n' +
     ")";
 
+    public Versuch()
+    {
+        super.TABLE_NAME = TABLE_NAME;
+        super.COLUMN_ID = COLUMN_ID;
+    }
+
     @Override
-    boolean save() {
+    public boolean save() {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
 

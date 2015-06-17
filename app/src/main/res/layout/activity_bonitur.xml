@@ -62,52 +62,57 @@
 
                     <Button
                         android:layout_width="150dp"
-                        android:layout_height="75dp"
+                        android:layout_height="wrap_content"
                         android:text="1. __"
                         android:id="@+id/button4"
-                        android:textSize="25dp"
+                        android:textSize="45dp"
                         android:onClick="onFirstEmpty"
-                        android:layout_alignParentTop="true" />
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp" />
 
                     <Button
-                        android:layout_width="66dp"
-                        android:layout_height="66dp"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
                         android:text="\uf063"
                         android:id="@+id/btnRichtungUnten"
-                        android:textSize="40dp"
+                        android:textSize="45dp"
                         android:layout_alignParentTop="true"
-                        android:onClick="onRichtungVert" />
+                        android:onClick="onRichtungVert"
+                        android:layout_marginRight="10dp" />
 
                     <Button
-                        android:layout_width="66dp"
-                        android:layout_height="66dp"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
                         android:text="\uf062"
                         android:id="@+id/btnRichtungOben"
-                        android:textSize="40dp"
+                        android:textSize="45dp"
                         android:layout_alignParentTop="true"
 
-                        android:onClick="onRichtungVert" />
+                        android:onClick="onRichtungVert"
+                        android:layout_marginRight="10dp" />
 
                     <Button
-                        android:layout_width="66dp"
-                        android:layout_height="66dp"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
                         android:text="\uf060"
                         android:id="@+id/btnRichtungLinks"
                         android:textSize="45dp"
                         android:nestedScrollingEnabled="true"
                         android:layout_alignParentTop="true"
 
-                        android:onClick="onRichtungHorizont" />
+                        android:onClick="onRichtungHorizont"
+                        android:layout_marginRight="10dp" />
 
                     <Button
-                        android:layout_width="66dp"
-                        android:layout_height="66dp"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
                         android:text="\uf061"
                         android:id="@+id/btnRichtungRechts"
-                        android:textSize="40dp"
+                        android:textSize="45dp"
                         android:layout_alignParentTop="true"
 
-                        android:onClick="onRichtungHorizont" />
+                        android:onClick="onRichtungHorizont"
+                        android:layout_marginRight="10dp" />
 
                     <Button
                         android:layout_width="75dp"
@@ -165,7 +170,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="150px"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Standort:"
@@ -188,20 +193,108 @@
                     android:layout_marginTop="5dp">
 
                     <TextView
-                        android:layout_width="150px"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Information"
+                        android:text="Akzession"
                         android:id="@+id/textView99"
+                        android:layout_alignParentTop="true" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spAkzession" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" >
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Passport"
+                        android:id="@+id/textView9"
+                        android:layout_alignParentTop="true" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinner" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" >
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Sorte/Z. Stamm"
+                        android:id="@+id/textView12"
                         android:layout_alignParentTop="true" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="XX-XXX-XXX"
-                        android:id="@+id/tvInformation"
-                        android:layout_above="@+id/tvCode" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Medium Text"
+                        android:id="@+id/tvSorteZucht"
+                        android:textColor="#000" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" >
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Eltern"
+                        android:id="@+id/textView10"
+                        android:layout_alignParentTop="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Medium Text"
+                        android:id="@+id/tvEltern"
+                        android:textColor="#000" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" >
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Sortimentsnr"
+                        android:id="@+id/textView14"
+                        android:layout_alignParentTop="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Medium Text"
+                        android:id="@+id/tvSortiment"
+                        android:textColor="#000" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -251,7 +344,7 @@
                         android:layout_height="66dp"
                         android:text="\uf061"
                         android:id="@+id/btnNextMarker"
-                        android:textSize="40dp"
+                        android:textSize="45dp"
                         android:onClick="onNextMarker"
                         android:layout_below="@+id/btnUp"
                         android:layout_alignParentRight="true"
@@ -304,7 +397,7 @@
                     android:text="\uf062"
                     android:id="@+id/btnUp"
 
-                    android:textSize="40dp"
+                    android:textSize="45dp"
                     android:onClick="onNachOben"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
@@ -315,7 +408,7 @@
                     android:layout_height="66dp"
                     android:text="\uf061"
                     android:id="@+id/btnRight"
-                    android:textSize="40dp"
+                    android:textSize="45dp"
                     android:onClick="onNachRechts"
                     android:layout_below="@+id/btnUp"
                     android:layout_alignParentRight="true"
@@ -326,7 +419,7 @@
                     android:layout_height="66dp"
                     android:text="\uf063"
                     android:id="@+id/btnDown"
-                    android:textSize="40dp"
+                    android:textSize="45dp"
                     android:onClick="onNachUnten"
                     android:layout_below="@+id/btnRight"
                     android:layout_centerHorizontal="true" />

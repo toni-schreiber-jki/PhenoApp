@@ -39,14 +39,20 @@ public class Reader {
     {
         Cursor dbCursor = BoniturSafe.db.query(Versuch.TABLE_NAME,new String[]{Versuch.COLUMN_ID},Versuch.COLUMN_NAME+"=?", new String[] {mFile},null,null,null);
         if(dbCursor.getCount()>0){
-
+            dbCursor.moveToFirst();
+            BoniturSafe.VERSUCH_NAME = mFile;
+            BoniturSafe.VERSUCH_ID = dbCursor.getInt(dbCursor.getColumnIndex(Versuch.COLUMN_ID));
         }
         else{
             ContentValues values = new ContentValues();
-            values.put(Versuch.COLUMN_NAME, mFile);
+            Versuch versuch = new Versuch();
 
-            BoniturSafe.VERSUCH_ID  = (int) BoniturSafe.db.insert(Versuch.TABLE_NAME,null,values);
-            BoniturSafe.VERSUCH_NAME= mFile;
+            versuch.name = mFile;
+
+            versuch.save();
+
+            BoniturSafe.VERSUCH_ID  = versuch.id;
+            BoniturSafe.VERSUCH_NAME= versuch.name;
 
             readMarker();
             readStandort();
@@ -113,9 +119,16 @@ public class Reader {
                         row.createCell(p).setCellValue(Integer.parseInt(standortDaten[p].trim()));
             }}}
 
-            standort.parzelle   = ExcelLib.getCellValueString(row,0,true);
-            standort.reihe      = (int) row.getCell(1).getNumericCellValue();//Integer.parseInt(tmp[1].replaceAll(" ",""));
-            standort.pflanze    = (int) row.getCell(2).getNumericCellValue();
+            standort.versuchId  = BoniturSafe.VERSUCH_ID;
+
+            standort.parzelle         = ExcelLib.getCellValueString(row,0,true);
+            standort.reihe            = (int) row.getCell(1).getNumericCellValue();//Integer.parseInt(tmp[1].replaceAll(" ",""));
+            standort.pflanze          = (int) row.getCell(2).getNumericCellValue();
+            standort.sorte            = ExcelLib.isCellEmpty(row, 8) ? null : ExcelLib.getCellValueString(row, 8,true);
+            standort.zuchtstamm       = ExcelLib.isCellEmpty(row, 9) ? null : ExcelLib.getCellValueString(row, 9,true);
+            standort.mutter           = ExcelLib.isCellEmpty(row,10) ? null : ExcelLib.getCellValueString(row,10,true);
+            standort.vater            = ExcelLib.isCellEmpty(row,11) ? null : ExcelLib.getCellValueString(row,11,true);
+            standort.sortimentsnummer = ExcelLib.isCellEmpty(row,12) ? null : ExcelLib.getCellValueString(row,12,true);
 
             if(!ExcelLib.isCellEmpty(row,5)){
                 standort.akzessionId = readAkzession(row);
@@ -152,7 +165,7 @@ public class Reader {
 
     private int readPassport(HSSFRow row)
     {
-        Cursor cursor = BoniturSafe.db.query(Passport.TABLE_NAME,new String[]{Passport.COLUMN_ID},Passport.COLUMN_VERSUCH+"=? AND "+Passport.COLUMN_KENN_NR+"=?",new String[]{""+BoniturSafe.VERSUCH_ID, ExcelLib.getCellValueString(row,7, true)},null,null,null);
+        Cursor cursor = BoniturSafe.db.query(Passport.TABLE_NAME, new String[]{Passport.COLUMN_ID}, Passport.COLUMN_VERSUCH + "=? AND " + Passport.COLUMN_KENN_NR + "=?", new String[]{"" + BoniturSafe.VERSUCH_ID, ExcelLib.getCellValueString(row, 7, true)}, null, null, null);
         if(cursor.getCount()==1){
             cursor.moveToFirst();
             return cursor.getInt(cursor.getColumnIndex(Passport.COLUMN_ID));

@@ -1,6 +1,9 @@
 package de.bund.jki.jki_bonitur.db;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+
+import de.bund.jki.jki_bonitur.BoniturSafe;
 
 /**
  * Created by Toni on 10.05.2015.
@@ -85,6 +88,36 @@ public class Standort extends DbModelInterface {
 
         id = saveRow(id,values);
         return id==-1;
+    }
+
+    public static Standort findByPk(int id)
+    {
+        Standort res = new Standort();
+
+        Cursor c = BoniturSafe.db.rawQuery(
+                "SELECT * FROM "+ Standort.TABLE_NAME + " WHERE " + Standort.COLUMN_ID + " = ?",
+                new String[] {""+id}
+        );
+
+        if(c.getCount() == 1){
+            c.moveToFirst();
+            res.id =        c.getInt(c.getColumnIndex(Standort.COLUMN_ID));
+            res.versuchId = c.getInt(c.getColumnIndex(Standort.COLUMN_VERSUCH));
+            res.parzelle = c.getString(c.getColumnIndex(Standort.COLUMN_PARZELLE));
+            res.reihe = c.getInt(c.getColumnIndex(Standort.COLUMN_REIHE));
+            res.pflanze = c.getInt(c.getColumnIndex(Standort.COLUMN_PFLANZE));
+            res.sorte = c.getString(c.getColumnIndex(Standort.COLUMN_SORTE));
+            res.zuchtstamm = c.getString(c.getColumnIndex(Standort.COLUMN_ZUCHTSTAMM));
+            res.mutter = c.getString(c.getColumnIndex(Standort.COLUMN_MUTTER));
+            res.vater = c.getString(c.getColumnIndex(Standort.COLUMN_VATER));
+            res.sortimentsnummer = c.getString(c.getColumnIndex(Standort.COLUMN_SORTIMENTNR));
+            res.akzessionId = c.getInt(c.getColumnIndex(Standort.COLUMN_AKZESSION));
+            res.passportId = c.getInt(c.getColumnIndex(Standort.COLUMN_PASSPORT));
+
+            return res;
+        }
+
+        return null;
     }
 
 }
