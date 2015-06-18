@@ -333,8 +333,8 @@
                         android:text="\uf060"
                         android:id="@+id/btnPrevMarker"
                         android:textSize="45dp"
-                        android:nestedScrollingEnabled="true"
-                        android:onClick="onPrevMarker"
+                        android:nestedScrollingEnabled="false"
+                        android:onClick="onClick"
                         android:layout_below="@+id/btnUp"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true" />
@@ -345,7 +345,7 @@
                         android:text="\uf061"
                         android:id="@+id/btnNextMarker"
                         android:textSize="45dp"
-                        android:onClick="onNextMarker"
+                        android:onClick="onClick"
                         android:layout_below="@+id/btnUp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true" />
@@ -455,19 +455,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:text="zurück"
-                    android:id="@+id/button5"
+                    android:id="@+id/btnPrev"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
-                    android:onClick="onZurueck" />
+                    android:onClick="onClick"
+                    android:nestedScrollingEnabled="false" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:text="vor"
-                    android:id="@+id/button6"
+                    android:id="@+id/btnNext"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
-                    android:onClick="onNichtBewerten" />
+                    android:onClick="onClick" />
 
             </LinearLayout>
 
@@ -475,9 +476,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="nicht bewerten"
-                android:id="@+id/button7"
+                android:id="@+id/btnNichtBewerten"
                 android:layout_alignParentBottom="true"
-                android:onClick="onNichtBewerten"
+                android:onClick="onClick"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 />
@@ -492,14 +493,14 @@
                 android:layoutMode="clipBounds"
                 android:numColumns="2"
                 android:layout_below="@+id/linearLayout"
-                android:layout_above="@+id/button7"
+                android:layout_above="@+id/btnNichtBewerten"
                 android:visibility="visible" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/linearLayout"
-                android:layout_above="@+id/button7"
+                android:layout_above="@+id/btnNichtBewerten"
                 android:id="@+id/rlDatum"
                 android:visibility="gone">
 
@@ -549,7 +550,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/linearLayout"
-                android:layout_above="@+id/button7"
+                android:layout_above="@+id/btnNichtBewerten"
                 android:id="@+id/rlBemerkung"
                 android:visibility="gone">
 
@@ -567,7 +568,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/linearLayout"
-                android:layout_above="@+id/button7"
+                android:layout_above="@+id/btnNichtBewerten"
                 android:id="@+id/rlMessen"
                 android:visibility="gone">
 

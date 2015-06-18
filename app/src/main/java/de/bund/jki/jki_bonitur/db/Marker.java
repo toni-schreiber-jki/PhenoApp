@@ -23,6 +23,7 @@ public class Marker extends DbModelInterface {
     public static final int MARKER_TYPE_MESSEN         = 2;
     public static final int MARKER_TYPE_DATUM          = 3;
     public static final int MARKER_TYPE_BEMERKUNG      = 4;
+    public static final int MARKER_TYPE_BBCH           = 5;
 
     public static String COLUMN_ID              = "_id";
     public static String COLUMN_VERSUCH         = "versuchId";
@@ -68,6 +69,7 @@ public class Marker extends DbModelInterface {
             c.moveToFirst();
             res.id = id;
             res.versuchId = c.getInt(c.getColumnIndex(Marker.COLUMN_VERSUCH));
+            res.name = c.getString(c.getColumnIndex(Marker.COLUMN_NAME));
             res.code = c.getString(c.getColumnIndex(Marker.COLUMN_CODE));
             res.beschreibung = c.getString(c.getColumnIndex(Marker.COLUMN_BESCHREIBUNG));
             res.type = c.getInt(c.getColumnIndex(Marker.COLUMN_TYPE));
