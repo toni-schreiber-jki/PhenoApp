@@ -1,5 +1,6 @@
 package de.bund.jki.jki_bonitur;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import de.bund.jki.jki_bonitur.config.Config;
 
 
-public class VersuchListActivity extends ActionBarActivity {
+public class VersuchListActivity extends Activity {
 
     private Context context;
 

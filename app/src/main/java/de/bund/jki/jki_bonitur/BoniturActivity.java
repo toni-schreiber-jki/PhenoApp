@@ -1,5 +1,6 @@
 package de.bund.jki.jki_bonitur;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +14,7 @@ import de.bund.jki.jki_bonitur.db.Standort;
 import de.bund.jki.jki_bonitur.excel.Reader;
 
 
-public class BoniturActivity extends ActionBarActivity {
+public class BoniturActivity extends Activity {
 
     private BoniturDatenbank bonDb;
     private BoniturActivityHelper bah;
