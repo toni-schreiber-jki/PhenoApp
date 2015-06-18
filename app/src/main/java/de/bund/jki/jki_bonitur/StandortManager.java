@@ -30,10 +30,10 @@ public class StandortManager {
             return first();
 
         Object[] marker = direction == NEXT ? MarkerManager.next() : MarkerManager.prev();
-        if(marker[1]==MarkerManager.MARKER_OK)
+        if(((int)marker[1])==MarkerManager.MARKER_OK)
             return sameStandort(marker[0]);
 
-        if(marker[1]== MarkerManager.MARKER_NEXT_STANDORT)
+        if(((int)marker[1])== MarkerManager.MARKER_NEXT_STANDORT)
             return direction == NEXT ? nextStandort(NEXT, marker[0]) : nextStandort(PREV, marker[0]);
 
         return null;

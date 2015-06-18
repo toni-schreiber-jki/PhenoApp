@@ -42,6 +42,7 @@ public class BoniturActivity extends ActionBarActivity {
         BoniturSafe.CURRENT_MARKER      = -1;
 
         bah.init_Spinner();
+        bah.init_typefaces();
         fillView(StandortManager.next());
     }
 

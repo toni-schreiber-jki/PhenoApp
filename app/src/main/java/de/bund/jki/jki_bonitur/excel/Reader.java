@@ -60,8 +60,7 @@ public class Reader {
     }
 
     private void readMarker() {
-        try
-        {
+        try{
             HSSFSheet sheet = mWorkbook.getSheet("Marker");
             int lastRow = sheet.getLastRowNum();
             for (int r = 1; r <= lastRow; r++) {
@@ -76,7 +75,7 @@ public class Reader {
                 values.put(Marker.COLUMN_TYPE, (int) row.getCell(2).getNumericCellValue());
 
                 int marker_id = (int) BoniturSafe.db.insert(Marker.TABLE_NAME, null, values);
-                if (values.get(Marker.COLUMN_TYPE) == 1) {
+                if ((int)values.get(Marker.COLUMN_TYPE) == 1) {
                     readMarkerWerte(row, marker_id);
                 }
             }

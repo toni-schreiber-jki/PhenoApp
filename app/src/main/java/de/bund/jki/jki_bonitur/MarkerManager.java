@@ -36,9 +36,9 @@ public class MarkerManager {
         else
             tmpResult =nextMarker(direction);
 
-        if(tmpResult[1]==MARKER_OK)
+        if(((int)tmpResult[1])==MARKER_OK)
             return tmpResult;
-        if(tmpResult[1]==MARKER_NEXT_STANDORT)
+        if(((int)tmpResult[1])==MARKER_NEXT_STANDORT)
             if(direction == NEXT)
                 return first(MARKER_NEXT_STANDORT);
             else

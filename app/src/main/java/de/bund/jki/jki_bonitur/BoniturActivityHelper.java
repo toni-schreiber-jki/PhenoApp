@@ -3,6 +3,7 @@ package de.bund.jki.jki_bonitur;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -40,6 +41,28 @@ public class BoniturActivityHelper {
     public void init_Spinner(){
         getMarkerSpinner().setAdapter(getMarkerSpinnerAdpter());
         markerSpinnerAddSelectListener();
+    }
+
+    public void init_typefaces() {
+        Typeface typeface = Typeface.createFromAsset(mBa.getAssets(),"fonts/fontawesome.ttf");
+        int[] buttonIds = new int[]{
+                R.id.btnFoto,
+                R.id.btnSpeichenClose,
+                R.id.btnLeft,
+                R.id.btnRight,
+                R.id.btnDown,
+                R.id.btnUp,
+                R.id.btnRichtungLinks,
+                R.id.btnRichtungOben,
+                R.id.btnRichtungRechts,
+                R.id.btnRichtungUnten,
+                R.id.btnPrevMarker,
+                R.id.btnNextMarker,
+        };
+
+        for (int id: buttonIds) {
+            ((Button) mBa.findViewById(id)).setTypeface(typeface);
+        }
     }
 
     //--------------- zurück / vor Buttons ---------------------------------------------------------
