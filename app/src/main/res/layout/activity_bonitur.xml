@@ -121,9 +121,10 @@
                         android:id="@+id/btnSpeichenClose"
                         android:layout_alignParentBottom="true"
                         android:layout_marginRight="10dp"
-                        android:onClick="onSpeichern"
+                        android:onClick="onClick"
                         android:textSize="45dp"
-                        android:layout_alignParentTop="true" />
+                        android:layout_alignParentTop="true"
+                        android:nestedScrollingEnabled="false" />
 
                     <Button
                         android:layout_width="75dp"
@@ -224,7 +225,7 @@
                     <Spinner
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/spinner" />
+                        android:id="@+id/spPassport" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -494,7 +495,7 @@
                 android:numColumns="2"
                 android:layout_below="@+id/linearLayout"
                 android:layout_above="@+id/btnNichtBewerten"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -502,7 +503,7 @@
                 android:layout_below="@+id/linearLayout"
                 android:layout_above="@+id/btnNichtBewerten"
                 android:id="@+id/rlDatum"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <EditText
                     android:layout_width="fill_parent"
@@ -522,26 +523,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Heute"
-                        android:id="@+id/button"
+                        android:id="@+id/btnDatumHeute"
                         android:layout_below="@+id/etDatumEingabe"
                         android:layout_weight="1"
-                        android:onClick="onHeuteClick" />
+                        android:onClick="onClick" />
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Datum wählen"
-                        android:id="@+id/button2"
+                        android:id="@+id/btnDatumWaehlen"
                         android:layout_weight="1"
-                        android:onClick="onDatumWaehlen" />
+                        android:onClick="onClick" />
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="löschen"
-                        android:id="@+id/button3"
+                        android:id="@+id/btnDatumLoeschen"
                         android:layout_weight="1"
-                        android:onClick="onDatumLoeschen" />
+                        android:onClick="onClick" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -581,6 +582,46 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/linearLayout"
+                android:id="@+id/rlBBCH"
+                android:visibility="gone"
+                android:layout_above="@+id/btnNichtBewerten" >
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/etBbchWert"
+                    android:layout_alignParentTop="true" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/etBbchWert" >
+
+                    <Spinner
+                        style="@android:style/Widget.Holo.Light.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spBbchStadium"
+                        android:spinnerMode="dropdown"
+                        android:layout_marginTop="20dp"
+                        android:transitionGroup="false" />
+
+                    <Spinner
+                        style="@android:style/Widget.Holo.Light.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spBbchDetail"
+                        android:spinnerMode="dialog" />
+                </LinearLayout>
             </RelativeLayout>
 
         </RelativeLayout>

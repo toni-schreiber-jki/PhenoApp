@@ -1,6 +1,9 @@
 package de.bund.jki.jki_bonitur.db;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+
+import de.bund.jki.jki_bonitur.BoniturSafe;
 
 /**
  * Created by Toni on 11.05.2015.
@@ -15,6 +18,8 @@ public class VersuchWert extends DbModelInterface {
     public String wert_datum    = null;
     public String wert_text     = null;
     public int wert_id          = -1;
+
+    public MarkerWert markerWert = null;
 
 
     public static String COLUMN_ID          = "_id";
@@ -69,5 +74,31 @@ public class VersuchWert extends DbModelInterface {
 
         id = saveRow(id,values);
         return id==-1;
+    }
+
+    public static VersuchWert findByPk(int id){
+        VersuchWert res = new VersuchWert();
+
+        Cursor c = BoniturSafe.db.query(
+                VersuchWert.TABLE_NAME,
+                new String[]{VersuchWert.COLUMN_ID, VersuchWert.COLUMN_VERSUCH, VersuchWert.COLUMN_WERT_INT, VersuchWert.COLUMN_WERT_TEXT, VersuchWert.COLUMN_WERT_ID},
+                VersuchWert.COLUMN_ID+"=?",
+                new String [] {""+id},
+                null,
+                null,
+                null);
+
+        if(c.getCount() == 1){
+            c.moveToFirst();
+            res.id =        c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID));
+            res.versuchId   = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_VERSUCH));
+            res.wert_id     = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_WERT_ID));
+            res.wert_int    = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_WERT_INT));
+            res.wert_text   = c.getString(c.getColumnIndex(VersuchWert.COLUMN_WERT_TEXT));
+
+            return res;
+        }
+
+        return null;
     }
 }

@@ -64,8 +64,7 @@ public class Akzession extends DbModelInterface {
         return id==-1;
     }
 
-    static Akzession findByPk(int id)
-    {
+    public static Akzession findByPk(int id){
         Akzession res = new Akzession();
 
         Cursor c = BoniturSafe.db.query(

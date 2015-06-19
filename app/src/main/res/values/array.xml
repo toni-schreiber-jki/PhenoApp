@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bbch_stadien">
+        <item>bitte Auswählen</item>
+        <item>0: Austrieb</item>
+        <item>1: Blattentwicklung</item>
+        <item>5: Entwicklung der Blütenanlagen</item>
+        <item>6: Blüte</item>
+        <item>7: Fruchtentwicklung</item>
+        <item>8: Fruchtreife</item>
+        <item>9: Eintreten der Vegetationsruhe</item>
+    </string-array>
+
+    <string-array name="bbch_stadien_details_0">
+        <item>bitte Auswählen</item>
+        <item>00: Vegetationsruhe: Winteraugen spitz bis rundbogenförmig,
+je nach Rebsorte hell- bis dunkelbraun; Knospenschuppen je
+nach Rebsorte mehr oder weniger geschlossen</item>
+        <item>01: Beginn des Knospenschwellens: Augen beginnen sich innerhalb
+der Knospenschuppen zu vergrössern</item>
+        <item>03: Ende des Knospenschwellens: Knospen geschwollen, aber
+noch nicht grün</item>
+        <item>05: «Wolle-Stadium»: wolleartiger brauner Haarbesatz deutlich
+sichtbar</item>
+        <item>07: Beginn des Knospenaufbruchs: grüne Triebspitzen werden
+sichtbar</item>
+        <item>09: Knospenaufbruch: grüne Triebspitzen deutlich sichtbar</item>
+    </string-array>
+
+    <string-array name="bbch_stadien_details_1">
+        <item>bitte Auswählen</item>
+        <item>11: 1. Laubblatt entfaltet und vom Trieb abgespreizt</item>
+        <item>12: 2 Laubblätter entfaltet</item>
+        <item>13: 3 Laubblätter entfaltet</item>
+        <item>14: 4 Laubblätter entfaltet</item>
+        <item>15: 5 Laubblätter entfaltet</item>
+        <item>16: 6 Laubblätter entfaltet</item>
+        <item>17: 7 Laubblätter entfaltet</item>
+        <item>18: 8 Laubblätter entfaltet</item>
+        <item>19: 9 oder mehr Laubblätter entfaltet</item>
+    </string-array>
+
+    <string-array name="bbch_stadien_details_5">
+        <item>bitte Auswählen</item>
+        <item>53: Gescheine (Infloreszenzen) deutlich sichtbar</item>
+        <item>55: Gescheine (Infloreszenzen) vergrössern sich;
+Einzelblüten sind dicht zusammengedrängt</item>
+        <item>57: Gescheine (Infloreszenzen) sind voll entwickelt;
+die Einzelblüten spreizen sich</item>
+    </string-array>
+
+    <string-array name="bbch_stadien_details_6">
+        <item>bitte Auswählen</item>
+        <item>60: Erste Blütenkäppchen lösen sich vom Blütenboden</item>
+        <item>61: Beginn der Blüte: 10% der Blütenkäppchen abgeworfen</item>
+        <item>62: 20% der Blütenkäppchen abgeworfen</item>
+        <item>63: Vorblüte: 30% der Blütenkäppchen abgeworfen</item>
+        <item>64: 40% der Blütenkäppchen abgeworfen</item>
+        <item>65: Vollblüte: 50% der Blütenkäppchen abgeworfen</item>
+        <item>66: 60% der Blütenkäppchen abgeworfen</item>
+        <item>67: 70% der Blütenkäppchen abgeworfen</item>
+        <item>68: 80% der Blütenkäppchen abgeworfen</item>
+        <item>69: Ende der Blüte</item>
+    </string-array>
+
+    <string-array name="bbch_stadien_details_7">
+        <item>bitte Auswählen</item>
+        <item>71: Fruchtansatz; Fruchtknoten beginnen sich zu vergrössern;
+«Putzen der Beeren» wird abgeschlossen</item>
+        <item>73: Beeren sind schrotkorngross; Trauben beginnen sich
+abzusenken</item>
+        <item>75: Beeren sind erbsengross; Trauben hängen</item>
+        <item>77: Beginn des Traubenschlusses</item>
+        <item>79: Ende des Traubenschlusses</item>
+    </string-array>
+
+    <string-array name="bbch_stadien_details_8">
+        <item>bitte Auswählen</item>
+        <item>81: Beginn der Reife, Beeren beginnen hell zu werden
+(bzw. beginnen sich zu verfärben)</item>
+        <item>83: Fortschreiten der Beeren-Aufhellung
+(bzw. Beerenverfärbung)</item>
+        <item>85: Weichwerden der Beeren</item>
+        <item>89: Vollreife der Beeren (Lesereife)</item>
+    </string-array>
+
+    <string-array name="bbch_stadien_details_9">
+        <item>bitte Auswählen</item>
+        <item>91: Nach der Lese: Abschluss der Holzreife</item>
+        <item>92: Beginn der Laubblattverfärbung</item>
+        <item>93: Beginn des Laubblattfalls</item>
+        <item>95: 50% der Laubblätter abgefallen</item>
+        <item>97: Ende des Laubblattfalls</item>
+        <item>99: Erntegut /Trauben</item>
+    </string-array>
+</resources>

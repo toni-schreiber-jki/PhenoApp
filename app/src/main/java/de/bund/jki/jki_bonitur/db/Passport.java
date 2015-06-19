@@ -1,6 +1,9 @@
 package de.bund.jki.jki_bonitur.db;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+
+import de.bund.jki.jki_bonitur.BoniturSafe;
 
 /**
  * Created by Toni on 11.05.2015.
@@ -33,10 +36,35 @@ public class Passport extends DbModelInterface {
             "ON DELETE CASCADE " + '\n' +
     ")";
 
-    public Passport()
-    {
+    public Passport(){
         super.TABLE_NAME = TABLE_NAME;
         super.COLUMN_ID = COLUMN_ID;
+    }
+
+    public static Passport findByPk(int id){
+        Passport res = new Passport();
+
+        Cursor c = BoniturSafe.db.query(
+                Passport.TABLE_NAME,
+                new String[]{Passport.COLUMN_ID, Passport.COLUMN_VERSUCH, Passport.COLUMN_LEITNAME, Passport.COLUMN_KENN_NR, Passport.COLUMN_MERKMALE},
+                Passport.COLUMN_ID+"=?",
+                new String [] {""+id},
+                null,
+                null,
+                null);
+
+        if(c.getCount() == 1){
+            c.moveToFirst();
+            res.id =        c.getInt(c.getColumnIndex(Passport.COLUMN_ID));
+            res.versuchId = c.getInt(c.getColumnIndex(Passport.COLUMN_VERSUCH));
+            res.kennNr =    c.getString(c.getColumnIndex(Passport.COLUMN_KENN_NR));
+            res.leitname =      c.getString(c.getColumnIndex(Passport.COLUMN_LEITNAME));
+            res.merkmale =  c.getString(c.getColumnIndex(Passport.COLUMN_MERKMALE));
+
+            return res;
+        }
+
+        return null;
     }
 
     @Override

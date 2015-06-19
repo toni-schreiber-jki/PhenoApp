@@ -6,18 +6,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import de.bund.jki.jki_bonitur.db.BoniturDatenbank;
 import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.Standort;
+import de.bund.jki.jki_bonitur.dialoge.DatePicker;
+import de.bund.jki.jki_bonitur.dialoge.SpeichernDialog;
 import de.bund.jki.jki_bonitur.excel.Reader;
 
 
 public class BoniturActivity extends Activity {
 
     private BoniturDatenbank bonDb;
-    private BoniturActivityHelper bah;
+    public BoniturActivityHelper bah;
     public Marker currentMarker;
 
     @Override
@@ -44,6 +47,7 @@ public class BoniturActivity extends Activity {
 
         bah.init_Spinner();
         bah.init_typefaces();
+        bah.init_textListener();
         fillView(StandortManager.next());
     }
 
@@ -70,11 +74,23 @@ public class BoniturActivity extends Activity {
     }
 
     public void fillView(Object[] daten){
+        Standort s = null;
         if(daten[0] != null ) {
-            ((TextView) findViewById(R.id.tvStandort)).setText(((Standort) daten[0]).parzelle + "-" + String.format("%03d-%03d", ((Standort) daten[0]).reihe, ((Standort) daten[0]).pflanze));
+            s = (Standort) daten[0];
+            ((TextView) findViewById(R.id.tvStandort)).setText(s.getName());
             ((TextView) findViewById(R.id.tvSorteZucht)).setText(((Standort) daten[0]).sorte + " / " + ((Standort) daten[0]).zuchtstamm);
             ((TextView) findViewById(R.id.tvEltern)).setText(((Standort) daten[0]).mutter + " / " + ((Standort) daten[0]).vater);
             ((TextView) findViewById(R.id.tvSortiment)).setText(((Standort) daten[0]).sortimentsnummer);
+
+            if(bah.akzesionIdPos.containsKey(s.akzessionId)){
+                bah.spAkzessionCheck = 0;
+                bah.getAkzessionSpinner().setSelection(bah.akzesionIdPos.get(s.akzessionId),false);
+            }
+
+            if(bah.passportIdPos.containsKey(s.passportId)){
+                bah.spPassportCheck = 0;
+                bah.getPassportSpinner().setSelection(bah.passportIdPos.get(s.passportId),false);
+            }
         }
 
         if(daten[1] != null){
@@ -93,14 +109,19 @@ public class BoniturActivity extends Activity {
                     break;
                 case Marker.MARKER_TYPE_DATUM:
                     bah.getRlDatum().setVisibility(View.VISIBLE);
+                    bah.getEtDatumEingabe().setText(s.getValue(marker.id));
                     break;
                 case Marker.MARKER_TYPE_MESSEN:
                     bah.getRlMessen().setVisibility(View.VISIBLE);
+                    bah.getEtMessenEingabe().setText(s.getValue(marker.id));
                     break;
                 case Marker.MARKER_TYPE_BEMERKUNG:
                     bah.getRlBemerkung().setVisibility(View.VISIBLE);
+                    bah.getEtBemerkungEingabe().setText(s.getValue(marker.id));
                     break;
                 case Marker.MARKER_TYPE_BBCH:
+                    bah.getRlBBCH().setVisibility(View.VISIBLE);
+                    bah.getEtBbchWert().setText(s.getValue(marker.id));
                     break;
             }
 
@@ -118,18 +139,14 @@ public class BoniturActivity extends Activity {
         switch (v.getId())
         {
             case R.id.btnNext:
-            case R.id.btnNichtBewerten:
-                bah.onNextMarkerOrStandort();
-                break;
-            case R.id.btnPrev:
-                bah.onPrevMarkerOrStandort();
-                break;
-            case R.id.btnPrevMarker:
-                bah.onPrevMarker();
-                break;
-            case R.id.btnNextMarker:
-                bah.onNextMarker();
-                break;
+            case R.id.btnNichtBewerten: bah.onNextMarkerOrStandort(); break;
+            case R.id.btnPrev:          bah.onPrevMarkerOrStandort(); break;
+            case R.id.btnPrevMarker:    bah.onPrevMarker();break;
+            case R.id.btnNextMarker:    bah.onNextMarker(); break;
+            case R.id.btnDatumHeute:    bah.setDatumHeute();  break;
+            case R.id.btnDatumWaehlen:  new DatePicker(this); break;
+            case R.id.btnDatumLoeschen: ((EditText) findViewById(R.id.etDatumEingabe)).setText(""); break;
+            case R.id.btnSpeichenClose: new SpeichernDialog(this); break;
         }
     }
 }

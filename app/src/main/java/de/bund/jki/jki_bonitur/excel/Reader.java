@@ -25,8 +25,7 @@ public class Reader {
     String mFile;
     HSSFWorkbook mWorkbook;
 
-    public Reader(String file)
-    {
+    public Reader(String file){
         try {
             mFile = file;
             mWorkbook = ExcelLib.openExcelFile( Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/in/"+ mFile);
@@ -35,8 +34,7 @@ public class Reader {
         }
     }
 
-    public void read()
-    {
+    public void read(){
         Cursor dbCursor = BoniturSafe.db.query(Versuch.TABLE_NAME,new String[]{Versuch.COLUMN_ID},Versuch.COLUMN_NAME+"=?", new String[] {mFile},null,null,null);
         if(dbCursor.getCount()>0){
             dbCursor.moveToFirst();
@@ -85,8 +83,7 @@ public class Reader {
         }
     }
 
-    private void readMarkerWerte(HSSFRow row, int marker_id)
-    {
+    private void readMarkerWerte(HSSFRow row, int marker_id){
         String data = row.getCell(3).getStringCellValue();
         String[] keyValues = data.split(";");
 
@@ -131,17 +128,20 @@ public class Reader {
 
             if(!ExcelLib.isCellEmpty(row,5)){
                 standort.akzessionId = readAkzession(row);
+            } else {
+                standort.akzessionId = -1;
             }
             if(!ExcelLib.isCellEmpty(row,7)){
                 standort.passportId = readPassport(row);
+            } else {
+                standort.passportId = -1;
             }
 
             standort.save();
         }
     }
 
-    private int readAkzession(HSSFRow row)
-    {
+    private int readAkzession(HSSFRow row){
         Cursor cursor = BoniturSafe.db.query(Akzession.TABLE_NAME,new String[]{Akzession.COLUMN_ID},Akzession.COLUMN_VERSUCH+"=? AND "+Akzession.COLUMN_NUMMER+"=?",new String[]{""+BoniturSafe.VERSUCH_ID, row.getCell(5).getStringCellValue()},null,null,null);
         if(cursor.getCount()==1)
         {
@@ -162,8 +162,7 @@ public class Reader {
 
     }
 
-    private int readPassport(HSSFRow row)
-    {
+    private int readPassport(HSSFRow row){
         Cursor cursor = BoniturSafe.db.query(Passport.TABLE_NAME, new String[]{Passport.COLUMN_ID}, Passport.COLUMN_VERSUCH + "=? AND " + Passport.COLUMN_KENN_NR + "=?", new String[]{"" + BoniturSafe.VERSUCH_ID, ExcelLib.getCellValueString(row, 7, true)}, null, null, null);
         if(cursor.getCount()==1){
             cursor.moveToFirst();

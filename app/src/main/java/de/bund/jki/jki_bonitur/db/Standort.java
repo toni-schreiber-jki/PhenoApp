@@ -90,8 +90,7 @@ public class Standort extends DbModelInterface {
         return id==-1;
     }
 
-    public static Standort findByPk(int id)
-    {
+    public static Standort findByPk(int id){
         Standort res = new Standort();
 
         Cursor c = BoniturSafe.db.rawQuery(
@@ -118,6 +117,45 @@ public class Standort extends DbModelInterface {
         }
 
         return null;
+    }
+
+    public String getName(){
+        return (this.parzelle + "-" + String.format("%03d-%03d", this.reihe, this.pflanze));
+    }
+
+    public String getValue(int markerId)
+    {
+        Cursor c = BoniturSafe.db.query(
+                VersuchWert.TABLE_NAME,
+                new String[]{ VersuchWert.COLUMN_ID },
+                VersuchWert.COLUMN_STANDORT+"=? AND "+VersuchWert.COLUMN_MARKER+"=?",
+                new String[] {""+this.id, ""+markerId},
+                null,
+                null,
+                null);
+
+        if(c.getCount() == 0)
+            return "";
+
+        c.moveToFirst();
+
+        if(c.getCount() == 1){
+            VersuchWert vw = VersuchWert.findByPk(c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID)));
+            if(vw.wert_id > 0)
+                return ""+MarkerWert.findByPk(vw.wert_id).value;
+            if(vw.wert_text != null)
+                return  vw.wert_text;
+            return ""+vw.wert_int;
+        }
+
+        String res = "";
+
+        do{
+            VersuchWert vw = VersuchWert.findByPk(c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID)));
+            res = res + MarkerWert.findByPk(vw.wert_id).value + "|";
+        }while (c.moveToNext());
+
+        return res.substring(0,res.length()-1);
     }
 
 }
