@@ -121,7 +121,9 @@ public class BoniturActivity extends Activity {
                     break;
                 case Marker.MARKER_TYPE_BBCH:
                     bah.getRlBBCH().setVisibility(View.VISIBLE);
+                    bah.getIvBild().setVisibility(View.VISIBLE);
                     bah.getEtBbchWert().setText(s.getValue(marker.id));
+                    bah.setBbchWert(s.getValue(marker.id));
                     break;
             }
 

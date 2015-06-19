@@ -313,6 +313,15 @@ public class BoniturActivityHelper {
                     if(res == 0 ) return;
                     getIvBild().setImageResource(imageRes);
                     updateSpinner(getSpBbchDetail(), res);
+                    if(setBbchDetail != -1 && setBbchDetail != getSpBbchDetail().getSelectedItemPosition()){
+                        spBbchDetailCheck = 0;
+                        getSpBbchDetail().setSelection(setBbchDetail, false);
+                    }
+                    else
+                    {
+                        spBbchStatiumCheck++;
+                        spBbchDetailCheck++;
+                    }
                 }
 
             }
@@ -364,7 +373,7 @@ public class BoniturActivityHelper {
     private ImageView ivBild = null;
     public ImageView getIvBild(){
         if(ivBild != null) return ivBild;
-        ivBild = (ImageView) mBa.findViewById(R.id.imageView);
+        ivBild = (ImageView) mBa.findViewById(R.id.ivBild);
         return ivBild;
     }
 
@@ -414,6 +423,7 @@ public class BoniturActivityHelper {
         getRlBemerkung().setVisibility(View.GONE);
         getRlMessen().setVisibility(View.GONE);
         getRlBBCH().setVisibility(View.GONE);
+        getIvBild().setVisibility(View.GONE);
     }
 
     public MarkerWert[] werte;
@@ -458,6 +468,137 @@ public class BoniturActivityHelper {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
         spin.setSelection(Adapter.NO_SELECTION, false);
+    }
+
+    private int setBbchDetail = -1;
+    public void setBbchWert(String wert){
+        spBbchStatiumCheck++;
+        spBbchDetailCheck++;
+        try{
+            boolean setNull = false;
+            if(wert == null)
+                setNull = true;
+            else
+            {
+                if(wert.length() == 0)
+                {
+                    setNull = true;
+                }
+            }
+
+            if(setNull)
+            {
+                if(getSpBbchStadium().getSelectedItemPosition() == 0) {
+                    spBbchStatiumCheck++;
+                    return;
+                }
+
+                spBbchStatiumCheck = 0;
+                setBbchDetail = 0;
+                getSpBbchStadium().setSelection(0,false);
+                spBbchDetailCheck = 0;
+                getSpBbchDetail().setSelection(0,false);
+            }
+            else {
+                int bbch = Integer.parseInt(wert.replaceAll("^0", ""));
+                switch (bbch % 10) {
+                    case 0:
+                        setBbchDetail = 1;
+                        break;
+                    case 1:
+                        setBbchDetail = 2;
+                        break;
+                    case 3:
+                        setBbchDetail = 3;
+                        break;
+                    case 5:
+                        setBbchDetail = 4;
+                        break;
+                    case 7:
+                        setBbchDetail = 5;
+                        break;
+                    case 9:
+                        setBbchDetail = 6;
+                        break;
+                }
+                switch (bbch / 10) {
+                    case 0:
+
+                        if (getSpBbchStadium().getSelectedItemPosition() == 1) {
+                            spBbchDetailCheck = 0;
+                            getSpBbchDetail().setSelection(setBbchDetail, false);
+                            setBbchDetail = -1;
+                        } else {
+                            spBbchStatiumCheck = 1;
+                            getSpBbchStadium().setSelection(1, false);
+                        }
+                        break;
+                    case 1:
+                        if (getSpBbchStadium().getSelectedItemPosition() == 2) {
+                            spBbchDetailCheck = 0;
+                            getSpBbchDetail().setSelection(setBbchDetail, false);
+                            setBbchDetail = -1;
+                        } else {
+                            spBbchStatiumCheck = 1;
+                            getSpBbchStadium().setSelection(2, false);
+                        }
+                        break;
+                    case 5:
+                        if (getSpBbchStadium().getSelectedItemPosition() == 3) {
+                            spBbchDetailCheck = 0;
+                            getSpBbchDetail().setSelection(setBbchDetail, false);
+                            setBbchDetail = -1;
+                        } else {
+                            spBbchStatiumCheck = 1;
+                            getSpBbchStadium().setSelection(3, false);
+                        }
+                        break;
+                    case 6:
+                        if (getSpBbchStadium().getSelectedItemPosition() == 4) {
+                            spBbchDetailCheck = 0;
+                            getSpBbchDetail().setSelection(setBbchDetail, false);
+                            setBbchDetail = -1;
+                        } else {
+                            spBbchStatiumCheck = 1;
+                            getSpBbchStadium().setSelection(4, false);
+                        }
+                        break;
+                    case 7:
+                        if (getSpBbchStadium().getSelectedItemPosition() == 5) {
+                            spBbchDetailCheck = 0;
+                            getSpBbchDetail().setSelection(setBbchDetail, false);
+                            setBbchDetail = -1;
+                        } else {
+                            spBbchStatiumCheck = 1;
+                            getSpBbchStadium().setSelection(5, false);
+                        }
+                        break;
+                    case 8:
+                        if (getSpBbchStadium().getSelectedItemPosition() == 6) {
+                            spBbchDetailCheck = 0;
+                            getSpBbchDetail().setSelection(setBbchDetail, false);
+                            setBbchDetail = -1;
+                        } else {
+                            spBbchStatiumCheck = 1;
+                            getSpBbchStadium().setSelection(6, false);
+                        }
+                        break;
+                    case 9:
+                        if (getSpBbchStadium().getSelectedItemPosition() == 7) {
+                            spBbchDetailCheck = 0;
+                            getSpBbchDetail().setSelection(setBbchDetail, false);
+                            setBbchDetail = -1;
+                        } else {
+                            spBbchStatiumCheck = 1;
+                            getSpBbchStadium().setSelection(7, false);
+                        }
+                        break;
+                }
+            }
+        }catch (Exception e){
+            getSpBbchStadium().setSelection(0);
+            getSpBbchDetail().setSelection(0);
+        }
     }
 
     //----------------Textfelder--------------------------------------------------------------------

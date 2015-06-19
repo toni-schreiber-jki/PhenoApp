@@ -163,7 +163,8 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="fill_parent"
+                android:weightSum="1">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -384,6 +385,7 @@
                     android:layout_marginTop="10dp"
                     android:textColor="#000"
                     android:textIsSelectable="true" />
+
             </LinearLayout>
 
             <RelativeLayout
@@ -438,6 +440,17 @@
                     android:layout_alignParentStart="true" />
 
             </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivBild"
+                android:layout_alignParentBottom="true"
+                android:focusableInTouchMode="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/relativeLayout2"
+                android:layout_toEndOf="@+id/relativeLayout2" />
 
         </RelativeLayout>
 
