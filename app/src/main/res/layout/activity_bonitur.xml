@@ -50,6 +50,34 @@
                     android:layout_marginTop="5dp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" >
+
+                <Spinner
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/spParzelle"
+                    android:layout_marginLeft="20dp" />
+
+                <Spinner
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spReihe"
+                    android:layout_marginLeft="10dp" />
+
+                <Spinner
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spPflanze"
+                    android:layout_marginLeft="10dp" />
+
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
@@ -68,7 +96,8 @@
                         android:textSize="45dp"
                         android:onClick="onFirstEmpty"
                         android:layout_alignParentTop="true"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone" />
 
                     <Button
                         android:layout_width="75dp"
@@ -78,7 +107,8 @@
                         android:textSize="45dp"
                         android:layout_alignParentTop="true"
                         android:onClick="onRichtungVert"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone" />
 
                     <Button
                         android:layout_width="75dp"
@@ -89,7 +119,8 @@
                         android:layout_alignParentTop="true"
 
                         android:onClick="onRichtungVert"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone" />
 
                     <Button
                         android:layout_width="75dp"
@@ -101,7 +132,8 @@
                         android:layout_alignParentTop="true"
 
                         android:onClick="onRichtungHorizont"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone" />
 
                     <Button
                         android:layout_width="75dp"
@@ -112,7 +144,8 @@
                         android:layout_alignParentTop="true"
 
                         android:onClick="onRichtungHorizont"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone" />
 
                     <Button
                         android:layout_width="75dp"

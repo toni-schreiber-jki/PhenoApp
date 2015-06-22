@@ -127,10 +127,16 @@ public class BoniturActivity extends Activity {
                     break;
             }
 
+            bah.setNewPosition();
+
             if(bah.markerIdPos.containsKey(marker.id))
             {
-                bah.spMarkerCheck = 0;
-                bah.getMarkerSpinner().setSelection(bah.markerIdPos.get(marker.id),false);
+                if(bah.getMarkerSpinner().getSelectedItemPosition() != bah.markerIdPos.get(marker.id)) {
+                    bah.spMarkerCheck = 0;
+                    bah.getMarkerSpinner().setSelection(bah.markerIdPos.get(marker.id), false);
+                } else {
+                    bah.spMarkerCheck = 1;
+                }
             }
         }
     }

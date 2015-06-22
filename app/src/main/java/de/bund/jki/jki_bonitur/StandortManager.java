@@ -106,6 +106,28 @@ public class StandortManager {
         return new Object[] {getValuesFromStandort(c), MarkerManager.next()[0]};
     }
 
+    public static Object[] gotoStandort(String parzelle, int reihe, int pflanze, Marker marker)
+    {
+        Cursor c = BoniturSafe.db.query(Standort.TABLE_NAME,
+                new String[] {Standort.COLUMN_ID},
+                Standort.COLUMN_PARZELLE+"=? AND "+Standort.COLUMN_REIHE+"= ? AND "+Standort.COLUMN_PFLANZE+"=?",
+                new String[]{parzelle,""+reihe, ""+pflanze},
+                null,
+                null,
+                null,
+                "1");
+
+        if(c.getCount()==1)
+        {
+            c.moveToFirst();
+            return new Object[]{
+                    getStandortFromId(c.getInt(c.getColumnIndex(Standort.COLUMN_ID))),
+                    marker
+            };
+        }
+        return null;
+    }
+
     private static Object getValuesFromStandort(Cursor c){
         if(c.getCount() == 1) {
             c.moveToFirst();

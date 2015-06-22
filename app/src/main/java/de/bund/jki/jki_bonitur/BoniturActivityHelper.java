@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -27,6 +28,7 @@ import de.bund.jki.jki_bonitur.db.Akzession;
 import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
+import de.bund.jki.jki_bonitur.db.Standort;
 import de.bund.jki.jki_bonitur.db.Versuch;
 import de.bund.jki.jki_bonitur.db.VersuchWert;
 import de.bund.jki.jki_bonitur.tools.BoniturTextWatcher;
@@ -63,6 +65,18 @@ public class BoniturActivityHelper {
         updateSpinner(getSpBbchStadium(),R.array.bbch_stadien);
         spBbchStadiumAddSelectListener();
         spBbchDetailAddSelectListener();
+
+        //Pazellen:
+        init_spParzelleValues();
+        spParzelleAddSelectListener();
+
+        //Reihe:
+        spReiheAddSelectListener();
+
+        //Pflanze:
+        spPflanzenAddSelectListener();
+
+
 
 
     }
@@ -314,6 +328,8 @@ public class BoniturActivityHelper {
                     getIvBild().setImageResource(imageRes);
                     updateSpinner(getSpBbchDetail(), res);
                     if(setBbchDetail != -1 && setBbchDetail != getSpBbchDetail().getSelectedItemPosition()){
+                        if(getSpBbchDetail().getCount() < setBbchDetail)
+                           return;
                         spBbchDetailCheck = 0;
                         getSpBbchDetail().setSelection(setBbchDetail, false);
                     }
@@ -368,6 +384,238 @@ public class BoniturActivityHelper {
     }
     //------------Ende BBCH Detail Spinner----------------------------------------------------------
 
+    //-----------------Parzellen Spinner------------------------------------------------------------
+    private Spinner spParzelle = null;
+    public int spParzelleCheck = 0;
+    public String[] parzellenNr;
+    public HashMap<String, Integer> parzellenNrPos;
+    public Spinner getSpParzelle(){
+        if(spParzelle != null) return spParzelle;
+        spParzelle = (Spinner) mBa.findViewById(R.id.spParzelle);
+        return spParzelle;
+    }
+    private void spParzelleAddSelectListener(){
+        getSpParzelle().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spParzelleCheck ++;
+                if(spParzelleCheck > 1)
+                {
+                    setNewPflanzen = true;
+                    updateSpReihenValues(parzellenNr[position]);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    private void init_spParzelleValues() {
+        List<String> parzellenList = new ArrayList<>();
+        Cursor c = BoniturSafe.db.query(true,
+                Standort.TABLE_NAME,
+                new String[] {Standort.COLUMN_PARZELLE},
+                Standort.COLUMN_VERSUCH+"=?",
+                new String[] {""+BoniturSafe.VERSUCH_ID},
+                null,
+                null,
+                Standort.COLUMN_PARZELLE + " ASC",
+                null);
+        if(c.getCount()>0){
+            parzellenNrPos = new HashMap<>();
+            parzellenNr = new String [c.getCount()];
+            c.moveToNext();
+            int p = 0;
+            do{
+                parzellenNr[p] = c.getString(c.getColumnIndex(Standort.COLUMN_PARZELLE));
+                parzellenNrPos.put(parzellenNr[p], p);
+                parzellenList.add(parzellenNr[p]);
+                p++;
+            }while (c.moveToNext());
+            getSpParzelle().setAdapter(new ArrayAdapter<String>(mBa,android.R.layout.simple_list_item_1, parzellenList){});
+        }
+    }
+    //------------Ende Parzellen Spinner------------------------------------------------------------
+
+    //-----------------Reihen Spinner---------------------------------------------------------------
+    private Spinner spReihe = null;
+    public int spReiheCheck = 0;
+    public int setSpReihePos = -1;
+    public int[] reihenNr;
+    public HashMap<Integer, Integer> reihenNrPos;
+    public Spinner getSpReihe(){
+        if(spReihe != null) return spReihe;
+        spReihe = (Spinner) mBa.findViewById(R.id.spReihe);
+        return spReihe;
+    }
+    private void updateSpReihenValues(String parzelle) {
+        try {
+            List<String> reihenList = new ArrayList<>();
+            Cursor c = BoniturSafe.db.query(true,
+                    Standort.TABLE_NAME,
+                    new String[]{Standort.COLUMN_REIHE},
+                    Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + " = ?",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID, parzelle},
+                    null,
+                    null,
+                    Standort.COLUMN_REIHE + " ASC",
+                    null);
+            if (c.getCount() > 0) {
+                reihenNrPos = new HashMap<>();
+                reihenNr = new int[c.getCount()];
+                c.moveToNext();
+                int p = 0;
+                do {
+                    reihenNr[p] = c.getInt(c.getColumnIndex(Standort.COLUMN_REIHE));
+                    reihenNrPos.put(reihenNr[p], p);
+                    reihenList.add("" + reihenNr[p]);
+                    p++;
+                } while (c.moveToNext());
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, reihenList) {};
+                getSpReihe().setAdapter(adapter);
+                if(setCurrentPosition){
+                    spReiheCheck = 0;
+                    getSpReihe().setSelection(reihenNrPos.get(BoniturSafe.CURRENT_REIHE),false);
+                    updateSpPflanzenValues(BoniturSafe.CURRENT_REIHE);
+                }
+                if(setNewPflanzen)
+                {
+                    updateSpPflanzenValues(reihenNr[0]);
+                }
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    private void spReiheAddSelectListener(){
+        getSpReihe().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spReiheCheck++;
+                if(spReiheCheck > 1)
+                {
+                    updateSpPflanzenValues(reihenNr[position]);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    //------------Ende Reihen Spinner---------------------------------------------------------------
+
+    //-----------------Pflanzen Spinner-------------------------------------------------------------
+    private boolean setNewPflanzen = false;
+    private Spinner spPflanzen = null;
+    public HashMap<Integer, Integer> pflanzenPos;
+    public int[] pflanzen;
+    public int spPflanzenCheck = 0;
+    public int setSpPflanzenPos = -1;
+    public Spinner getSpPflanzen(){
+        if(spPflanzen != null) return spPflanzen;
+        spPflanzen = (Spinner) mBa.findViewById(R.id.spPflanze);
+        return spPflanzen;
+    }
+    private void updateSpPflanzenValues(int reihe){
+        try {
+            List<String> pflanzenList = new ArrayList<>();
+            Cursor c = BoniturSafe.db.query(true,
+                    Standort.TABLE_NAME,
+                    new String[]{Standort.COLUMN_PFLANZE},
+                    Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + " = ? AND " + Standort.COLUMN_REIHE + "=?",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID, parzellenNr[getSpParzelle().getSelectedItemPosition()], "" + reihe},
+                    null,
+                    null,
+                    Standort.COLUMN_PFLANZE + " ASC",
+                    null);
+            if (c.getCount() > 0) {
+                pflanzenPos = new HashMap<>();
+                pflanzen = new int[c.getCount()];
+                c.moveToNext();
+                int p = 0;
+                do {
+                    pflanzen[p] = c.getInt(c.getColumnIndex(Standort.COLUMN_PFLANZE));
+                    pflanzenPos.put(pflanzen[p], p);
+                    pflanzenList.add("" + pflanzen[p]);
+                    p++;
+                } while (c.moveToNext());
+                getSpPflanzen().setAdapter(new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, pflanzenList) {
+                });
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void spPflanzenAddSelectListener(){
+        getSpPflanzen().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spPflanzenCheck ++;
+                if(spPflanzenCheck > 1)
+                {
+                    mBa.fillView(StandortManager.gotoStandort(
+                        parzellenNr[getSpParzelle().getSelectedItemPosition()],
+                        reihenNr[getSpReihe().getSelectedItemPosition()],
+                        pflanzen[getSpPflanzen().getSelectedItemPosition()],
+                        mBa.currentMarker
+                        )
+                    );
+                }
+                setNewPflanzen = false;
+                setCurrentPosition = false;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    //------------Ende Pflanzen Spinner-------------------------------------------------------------
+
+
+    private boolean setCurrentPosition = false;
+    public void setNewPosition() {
+        if (parzellenNr[getSpParzelle().getSelectedItemPosition()].compareTo(BoniturSafe.CURRENT_PARZELLE)==0) {
+            if (getSpReihe().getCount() > 0) {
+                if(reihenNr[getSpReihe().getSelectedItemPosition()]==BoniturSafe.CURRENT_REIHE)
+                {
+                    if(pflanzen[getSpPflanzen().getSelectedItemPosition()]==BoniturSafe.CURRENT_PFLANZE)
+                    {
+
+                    } else {
+                        spPflanzenCheck = 0;
+                        getSpPflanzen().setSelection(pflanzenPos.get(BoniturSafe.CURRENT_PFLANZE), false);
+                    }
+                } else {
+                    spReiheCheck = spPflanzenCheck = 0;
+                    setCurrentPosition = true;
+                    getSpReihe().setSelection(reihenNrPos.get(BoniturSafe.CURRENT_REIHE), false);
+                    updateSpPflanzenValues(BoniturSafe.CURRENT_REIHE);
+                }
+            } else {
+                spReiheCheck = spPflanzenCheck = 0;
+                setCurrentPosition = true;
+                getSpParzelle().setSelection(parzellenNrPos.get(BoniturSafe.CURRENT_PARZELLE), false);
+                updateSpReihenValues(BoniturSafe.CURRENT_PARZELLE);
+            }
+        }
+        else {
+            spParzelleCheck = spReiheCheck = spPflanzenCheck =0;
+            setCurrentPosition = true;
+            getSpParzelle().setSelection(parzellenNrPos.get(BoniturSafe.CURRENT_PARZELLE), false);
+            updateSpReihenValues(BoniturSafe.CURRENT_PARZELLE);
+        }
+    }
 
     //----------------ImageView---------------------------------------------------------------------
     private ImageView ivBild = null;
@@ -467,7 +715,8 @@ public class BoniturActivityHelper {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mBa,res,android.R.layout.simple_list_item_1);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
-        spin.setSelection(Adapter.NO_SELECTION, false);
+        //spin.setSelection(Adapter.NO_SELECTION, false);
+        //adapter.notifyDataSetChanged();
     }
 
     private int setBbchDetail = -1;
@@ -501,103 +750,96 @@ public class BoniturActivityHelper {
             }
             else {
                 int bbch = Integer.parseInt(wert.replaceAll("^0", ""));
-                switch (bbch % 10) {
-                    case 0:
-                        setBbchDetail = 1;
-                        break;
-                    case 1:
-                        setBbchDetail = 2;
-                        break;
-                    case 3:
-                        setBbchDetail = 3;
-                        break;
-                    case 5:
-                        setBbchDetail = 4;
-                        break;
-                    case 7:
-                        setBbchDetail = 5;
-                        break;
-                    case 9:
-                        setBbchDetail = 6;
-                        break;
-                }
+                int setSpBbchStatdium = 0;
                 switch (bbch / 10) {
                     case 0:
-
-                        if (getSpBbchStadium().getSelectedItemPosition() == 1) {
-                            spBbchDetailCheck = 0;
-                            getSpBbchDetail().setSelection(setBbchDetail, false);
-                            setBbchDetail = -1;
-                        } else {
-                            spBbchStatiumCheck = 1;
-                            getSpBbchStadium().setSelection(1, false);
+                        switch (bbch%10) {
+                            case 0: setBbchDetail = 1; break;
+                            case 1: setBbchDetail = 2; break;
+                            case 3: setBbchDetail = 3; break;
+                            case 5: setBbchDetail = 4; break;
+                            case 7: setBbchDetail = 5; break;
+                            case 9: setBbchDetail = 6; break;
                         }
+                        setSpBbchStatdium = 1;
                         break;
                     case 1:
-                        if (getSpBbchStadium().getSelectedItemPosition() == 2) {
-                            spBbchDetailCheck = 0;
-                            getSpBbchDetail().setSelection(setBbchDetail, false);
-                            setBbchDetail = -1;
-                        } else {
-                            spBbchStatiumCheck = 1;
-                            getSpBbchStadium().setSelection(2, false);
-                        }
+                        setBbchDetail = bbch%10;
+                        setSpBbchStatdium = 2;
                         break;
                     case 5:
-                        if (getSpBbchStadium().getSelectedItemPosition() == 3) {
-                            spBbchDetailCheck = 0;
-                            getSpBbchDetail().setSelection(setBbchDetail, false);
-                            setBbchDetail = -1;
-                        } else {
-                            spBbchStatiumCheck = 1;
-                            getSpBbchStadium().setSelection(3, false);
+                        switch (bbch%10)
+                        {
+                            case 3: setBbchDetail = 1; break;
+                            case 5: setBbchDetail = 2; break;
+                            case 7: setBbchDetail = 3; break;
                         }
+                        setSpBbchStatdium = 3;
                         break;
                     case 6:
-                        if (getSpBbchStadium().getSelectedItemPosition() == 4) {
-                            spBbchDetailCheck = 0;
-                            getSpBbchDetail().setSelection(setBbchDetail, false);
-                            setBbchDetail = -1;
-                        } else {
-                            spBbchStatiumCheck = 1;
-                            getSpBbchStadium().setSelection(4, false);
-                        }
+                        setBbchDetail = (bbch%10)+1;
+                        setSpBbchStatdium = 4;
                         break;
                     case 7:
-                        if (getSpBbchStadium().getSelectedItemPosition() == 5) {
-                            spBbchDetailCheck = 0;
-                            getSpBbchDetail().setSelection(setBbchDetail, false);
-                            setBbchDetail = -1;
-                        } else {
-                            spBbchStatiumCheck = 1;
-                            getSpBbchStadium().setSelection(5, false);
+                        switch (bbch%10)
+                        {
+                            case 1: setBbchDetail = 1; break;
+                            case 3: setBbchDetail = 2; break;
+                            case 5: setBbchDetail = 3; break;
+                            case 7: setBbchDetail = 4; break;
+                            case 9: setBbchDetail = 5; break;
                         }
+                        setSpBbchStatdium = 5;
                         break;
                     case 8:
-                        if (getSpBbchStadium().getSelectedItemPosition() == 6) {
-                            spBbchDetailCheck = 0;
-                            getSpBbchDetail().setSelection(setBbchDetail, false);
-                            setBbchDetail = -1;
-                        } else {
-                            spBbchStatiumCheck = 1;
-                            getSpBbchStadium().setSelection(6, false);
+                        switch (bbch%10)
+                        {
+                            case 1: setBbchDetail = 1; break;
+                            case 3: setBbchDetail = 2; break;
+                            case 5: setBbchDetail = 3; break;
+                            case 9: setBbchDetail = 4; break;
                         }
+                        setSpBbchStatdium = 6;
                         break;
                     case 9:
-                        if (getSpBbchStadium().getSelectedItemPosition() == 7) {
-                            spBbchDetailCheck = 0;
-                            getSpBbchDetail().setSelection(setBbchDetail, false);
-                            setBbchDetail = -1;
-                        } else {
-                            spBbchStatiumCheck = 1;
-                            getSpBbchStadium().setSelection(7, false);
+                        switch (bbch%10)
+                        {
+                            case 1: setBbchDetail = 1; break;
+                            case 2: setBbchDetail = 2; break;
+                            case 3: setBbchDetail = 3; break;
+                            case 5: setBbchDetail = 4; break;
+                            case 7: setBbchDetail = 5; break;
+                            case 9: setBbchDetail = 6; break;
                         }
+                        setSpBbchStatdium = 7;
                         break;
                 }
+                if(getSpBbchStadium().getSelectedItemPosition() == setSpBbchStatdium)
+                    setSpBbchDetailSelection(setBbchDetail);
+                else
+                    setSpBbchStadiumSelection(setSpBbchStatdium);
+
             }
         }catch (Exception e){
             getSpBbchStadium().setSelection(0);
             getSpBbchDetail().setSelection(0);
+        }
+    }
+
+    private void setSpBbchStadiumSelection(int selection){
+        if(getSpBbchStadium().getSelectedItemPosition()==selection)
+            spBbchStatiumCheck = 1;
+        else {
+            spBbchStatiumCheck = 1;
+            getSpBbchStadium().setSelection(selection, true);
+        }
+    }
+    private void setSpBbchDetailSelection(int selection){
+        if(getSpBbchDetail().getSelectedItemPosition()==selection)
+            spBbchDetailCheck = 1;
+        else {
+            spBbchDetailCheck = 0;
+            getSpBbchDetail().setSelection(selection, false);
         }
     }
 
