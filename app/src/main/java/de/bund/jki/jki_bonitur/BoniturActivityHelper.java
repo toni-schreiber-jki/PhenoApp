@@ -4,13 +4,13 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -29,7 +29,6 @@ import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
-import de.bund.jki.jki_bonitur.db.Versuch;
 import de.bund.jki.jki_bonitur.db.VersuchWert;
 import de.bund.jki.jki_bonitur.tools.BoniturTextWatcher;
 
@@ -110,6 +109,10 @@ public class BoniturActivityHelper {
         getEtMessenEingabe().addTextChangedListener(new BoniturTextWatcher(mBa));
     }
 
+    public void init_checkBox(){
+        cbMarkerAddSelectionListener();
+    }
+
     //--------------- zurück / vor Buttons ---------------------------------------------------------
     public void onPrevMarkerOrStandort(){
         mBa.fillView(StandortManager.prev());
@@ -120,11 +123,15 @@ public class BoniturActivityHelper {
     }
 
     public void onPrevMarker() {
+        BoniturSafe.MARKER_FILTER_ACTIVE = false;
         mBa.fillView(StandortManager.sameStandort(MarkerManager.prev()[0]));
+        BoniturSafe.MARKER_FILTER_ACTIVE = true;
     }
 
     public void onNextMarker(){
+        BoniturSafe.MARKER_FILTER_ACTIVE = false;
         mBa.fillView(StandortManager.sameStandort(MarkerManager.next()[0]));
+        BoniturSafe.MARKER_FILTER_ACTIVE = true;
     }
     //-----------Ende zurück / vor Buttons ---------------------------------------------------------
 
@@ -582,6 +589,39 @@ public class BoniturActivityHelper {
 
     //------------Ende Pflanzen Spinner-------------------------------------------------------------
 
+
+    //-----------------Checkbox---------------------------------------------------------------------
+    public int cbMarkerCheck = 1;
+    private CheckBox cbMarker = null;
+    public CheckBox getCbMarker(){
+        if(cbMarker != null) return cbMarker;
+        cbMarker = (CheckBox) mBa.findViewById(R.id.cbMarker);
+        return cbMarker;
+    }
+    private void cbMarkerAddSelectionListener()
+    {
+        getCbMarker().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                cbMarkerCheck++;
+                if(cbMarkerCheck > 1) {
+                    if (isChecked) {
+                        BoniturSafe.MARKER_FILTER.add(new Integer(BoniturSafe.CURRENT_MARKER));
+                    } else {
+                        BoniturSafe.MARKER_FILTER.remove(new Integer(BoniturSafe.CURRENT_MARKER));
+                    }
+                }
+            }
+        });
+    }
+    public void setCbMarkerValue(boolean value)
+    {
+        if(value==getCbMarker().isChecked())
+            return;
+        cbMarkerCheck = 0;
+        getCbMarker().setChecked(value);
+    }
+    //------------Ende Checkbox---------------------------------------------------------------------
 
     private boolean setCurrentPosition = false;
     public void setNewPosition() {

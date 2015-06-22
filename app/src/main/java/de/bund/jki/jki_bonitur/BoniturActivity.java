@@ -1,13 +1,14 @@
 package de.bund.jki.jki_bonitur;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import de.bund.jki.jki_bonitur.db.BoniturDatenbank;
 import de.bund.jki.jki_bonitur.db.Marker;
@@ -45,9 +46,13 @@ public class BoniturActivity extends Activity {
 
         BoniturSafe.CURRENT_MARKER      = -1;
 
+        BoniturSafe.MARKER_FILTER = new ArrayList<>();
+
         bah.init_Spinner();
         bah.init_typefaces();
         bah.init_textListener();
+        bah.init_checkBox();
+
         fillView(StandortManager.next());
     }
 
@@ -96,6 +101,8 @@ public class BoniturActivity extends Activity {
         if(daten[1] != null){
             Marker marker = (Marker) daten[1];
             currentMarker  = marker;
+
+            bah.setCbMarkerValue(BoniturSafe.MARKER_FILTER.contains(new Integer(marker.id)));
 
             ((TextView) findViewById(R.id.tvMerkmal)).setText(marker.name);
             ((TextView) findViewById(R.id.tvBeschreibung)).setText(marker.beschreibung);

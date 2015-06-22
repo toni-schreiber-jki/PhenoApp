@@ -362,6 +362,14 @@
                         android:layout_weight="1"
                         style="@android:style/Widget.Holo.Light.Spinner"/>
 
+                    <CheckBox
+                        android:layout_width="66dp"
+                        android:layout_height="66dp"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:id="@+id/cbMarker"
+                        android:gravity="center_vertical|center_horizontal" />
+
                     <Button
                         android:layout_width="66dp"
                         android:layout_height="66dp"
