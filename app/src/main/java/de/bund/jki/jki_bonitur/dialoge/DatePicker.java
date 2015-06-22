@@ -44,7 +44,7 @@ public class DatePicker {
         }
 
         public void onDateSet(android.widget.DatePicker view, int year, int month, int day) {
-            mBa.bah.getEtDatumEingabe().setText(String.format("%02d.%02d.%04d", day, month, year));
+            mBa.bah.getEtDatumEingabe().setText(String.format("%02d.%02d.%04d", day, month+1, year));
         }
     }
 }

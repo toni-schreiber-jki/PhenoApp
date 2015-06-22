@@ -4,6 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import de.bund.jki.jki_bonitur.db.Standort;
+
 /**
  * Created by Toni on 11.05.2015.
  */
@@ -21,6 +23,9 @@ public class BoniturSafe {
 
     public static ArrayList<Integer> MARKER_FILTER;
     public static boolean   MARKER_FILTER_ACTIVE = true;
+
+    public static int       PFLANZEN_RICHTUNG   = StandortManager.NEXT;
+    public static int       REIHEN_RICHTUNG     = StandortManager.NEXT;
 
     public static SQLiteDatabase db;
 }

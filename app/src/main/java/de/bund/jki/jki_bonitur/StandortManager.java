@@ -3,6 +3,7 @@ package de.bund.jki.jki_bonitur;
 import android.database.Cursor;
 import android.view.animation.BounceInterpolator;
 
+import de.bund.jki.jki_bonitur.config.Config;
 import de.bund.jki.jki_bonitur.db.Akzession;
 import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.MarkerWert;
@@ -14,8 +15,11 @@ import de.bund.jki.jki_bonitur.db.Standort;
  */
 public class StandortManager {
 
-    private static int NEXT = 1;
-    private static int PREV = 2;
+    public static int NEXT = 1;
+    public static int PREV = 2;
+
+    private static int PFLANZEN_RICHTUNG = 1;
+    private static int REIHEN_RICHTUNG = 2;
 
     private static String[] columns =  {Standort.COLUMN_ID, Standort.COLUMN_PARZELLE, Standort.COLUMN_REIHE, Standort.COLUMN_PFLANZE};
 
@@ -106,8 +110,7 @@ public class StandortManager {
         return new Object[] {getValuesFromStandort(c), MarkerManager.next()[0]};
     }
 
-    public static Object[] gotoStandort(String parzelle, int reihe, int pflanze, Marker marker)
-    {
+    public static Object[] gotoStandort(String parzelle, int reihe, int pflanze, Marker marker){
         Cursor c = BoniturSafe.db.query(Standort.TABLE_NAME,
                 new String[] {Standort.COLUMN_ID},
                 Standort.COLUMN_PARZELLE+"=? AND "+Standort.COLUMN_REIHE+"= ? AND "+Standort.COLUMN_PFLANZE+"=?",
@@ -224,6 +227,38 @@ public class StandortManager {
         }
 
         return res;
+    }
+
+    private static int getRealDirection(int art, int richtung)
+    {
+        if(!Config.ZICK_ZACK_MODUS)
+            return richtung;
+
+        if(art == PFLANZEN_RICHTUNG)
+        {
+            if(BoniturSafe.PFLANZEN_RICHTUNG == NEXT)
+                return richtung;
+            else
+                return richtung == NEXT ? PREV : NEXT;
+
+        } else { //REIHEN_RICHTUNG
+            if(BoniturSafe.REIHEN_RICHTUNG == NEXT)
+                return richtung;
+            else
+                return richtung == NEXT ? PREV : NEXT;
+        }
+    }
+
+    private static void changeRichtung(int art)
+    {
+        if(!Config.ZICK_ZACK_MODUS) return;
+
+        if(art == PFLANZEN_RICHTUNG){
+            BoniturSafe.PFLANZEN_RICHTUNG = BoniturSafe.PFLANZEN_RICHTUNG == NEXT ? PREV : NEXT;
+        } else{
+            BoniturSafe.REIHEN_RICHTUNG = BoniturSafe.REIHEN_RICHTUNG == NEXT ? PREV : NEXT;
+        }
+
     }
 
 }
