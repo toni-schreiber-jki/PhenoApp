@@ -62,6 +62,7 @@ public class VersuchListActivity extends Activity {
     private void showFiles()
     {
         try {
+            Config.load(this);
             String path = Environment.getExternalStorageDirectory().toString() + Config.BaseFolder +  "/in/";
             File folder = new File(path);
             //folder.mkdirs();
@@ -92,4 +93,12 @@ public class VersuchListActivity extends Activity {
             int a = 1;
         }
     }
+
+    public void loadSettings()
+    {
+        Config.load(this);
+
+    }
+
+
 }

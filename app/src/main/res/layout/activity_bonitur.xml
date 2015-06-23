@@ -89,63 +89,70 @@
                     android:gravity="right">
 
                     <Button
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:text="1. __"
-                        android:id="@+id/button4"
-                        android:textSize="45dp"
-                        android:onClick="onFirstEmpty"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="10dp"
-                        android:visibility="gone" />
-
-                    <Button
                         android:layout_width="75dp"
                         android:layout_height="wrap_content"
-                        android:text="\uf063"
-                        android:id="@+id/btnRichtungUnten"
+                        android:text="\uf120"
+                        android:id="@+id/btnFirstEmpty"
                         android:textSize="45dp"
+                        android:onClick="onClick"
                         android:layout_alignParentTop="true"
-                        android:onClick="onRichtungVert"
                         android:layout_marginRight="10dp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
-                    <Button
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="\uf062"
-                        android:id="@+id/btnRichtungOben"
-                        android:textSize="45dp"
-                        android:layout_alignParentTop="true"
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/llZickZackRichtung">
 
-                        android:onClick="onRichtungVert"
-                        android:layout_marginRight="10dp"
-                        android:visibility="gone" />
+                        <Button
+                            android:layout_width="75dp"
+                            android:layout_height="wrap_content"
+                            android:text="\uf063"
+                            android:id="@+id/btnRichtungUnten"
+                            android:textSize="45dp"
+                            android:layout_alignParentTop="true"
+                            android:onClick="onClick"
+                            android:layout_marginRight="10dp"
+                            android:visibility="visible" />
 
-                    <Button
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="\uf060"
-                        android:id="@+id/btnRichtungLinks"
-                        android:textSize="45dp"
-                        android:nestedScrollingEnabled="true"
-                        android:layout_alignParentTop="true"
+                        <Button
+                            android:layout_width="75dp"
+                            android:layout_height="wrap_content"
+                            android:text="\uf062"
+                            android:id="@+id/btnRichtungOben"
+                            android:textSize="45dp"
+                            android:layout_alignParentTop="true"
 
-                        android:onClick="onRichtungHorizont"
-                        android:layout_marginRight="10dp"
-                        android:visibility="gone" />
+                            android:onClick="onClick"
+                            android:layout_marginRight="10dp"
+                            android:visibility="visible" />
 
-                    <Button
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="\uf061"
-                        android:id="@+id/btnRichtungRechts"
-                        android:textSize="45dp"
-                        android:layout_alignParentTop="true"
+                        <Button
+                            android:layout_width="75dp"
+                            android:layout_height="wrap_content"
+                            android:text="\uf060"
+                            android:id="@+id/btnRichtungLinks"
+                            android:textSize="45dp"
+                            android:nestedScrollingEnabled="true"
+                            android:layout_alignParentTop="true"
 
-                        android:onClick="onRichtungHorizont"
-                        android:layout_marginRight="10dp"
-                        android:visibility="gone" />
+                            android:onClick="onClick"
+                            android:layout_marginRight="10dp"
+                            android:visibility="visible" />
+
+                        <Button
+                            android:layout_width="75dp"
+                            android:layout_height="wrap_content"
+                            android:text="\uf061"
+                            android:id="@+id/btnRichtungRechts"
+                            android:textSize="45dp"
+                            android:layout_alignParentTop="true"
+
+                            android:onClick="onClick"
+                            android:layout_marginRight="10dp"
+                            android:visibility="visible" />
+                    </LinearLayout>
 
                     <Button
                         android:layout_width="75dp"
@@ -165,8 +172,18 @@
                         android:text="\uf030"
                         android:id="@+id/btnFoto"
                         android:textSize="45dp"
-                        android:onClick="onFoto"
+                        android:onClick="onClick"
                         android:layout_alignParentTop="true" />
+
+                    <Button
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:text="\uf013"
+                        android:id="@+id/btnSettings"
+                        android:textSize="45dp"
+                        android:onClick="onClick"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="20dp" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -225,7 +242,8 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/llAkzession">
 
                     <TextView
                         android:layout_width="150dp"
@@ -246,7 +264,8 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" >
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/llPassport">
 
                     <TextView
                         android:layout_width="150dp"
@@ -266,7 +285,8 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" >
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/llSorte">
 
                     <TextView
                         android:layout_width="150dp"
@@ -289,7 +309,8 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" >
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/llEltern">
 
                     <TextView
                         android:layout_width="150dp"
@@ -313,7 +334,8 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" >
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/llSortiment">
 
                     <TextView
                         android:layout_width="150dp"
@@ -442,7 +464,7 @@
                     android:id="@+id/btnUp"
 
                     android:textSize="45dp"
-                    android:onClick="onNachOben"
+                    android:onClick="onClick"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="66dp" />
@@ -453,7 +475,7 @@
                     android:text="\uf061"
                     android:id="@+id/btnRight"
                     android:textSize="45dp"
-                    android:onClick="onNachRechts"
+                    android:onClick="onClick"
                     android:layout_below="@+id/btnUp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -464,7 +486,7 @@
                     android:text="\uf063"
                     android:id="@+id/btnDown"
                     android:textSize="45dp"
-                    android:onClick="onNachUnten"
+                    android:onClick="onClick"
                     android:layout_below="@+id/btnRight"
                     android:layout_centerHorizontal="true" />
 
@@ -475,7 +497,7 @@
                     android:id="@+id/btnLeft"
                     android:textSize="45dp"
                     android:nestedScrollingEnabled="true"
-                    android:onClick="onNachLinks"
+                    android:onClick="onClick"
                     android:layout_below="@+id/btnUp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />

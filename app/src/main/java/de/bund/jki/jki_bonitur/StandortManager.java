@@ -9,6 +9,7 @@ import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
+import de.bund.jki.jki_bonitur.db.VersuchWert;
 
 /**
  * Created by toni.schreiber on 15.06.2015.
@@ -18,8 +19,8 @@ public class StandortManager {
     public static int NEXT = 1;
     public static int PREV = 2;
 
-    private static int PFLANZEN_RICHTUNG = 1;
-    private static int REIHEN_RICHTUNG = 2;
+    public static int PFLANZEN_RICHTUNG = 1;
+    public static int REIHEN_RICHTUNG = 2;
 
     private static String[] columns =  {Standort.COLUMN_ID, Standort.COLUMN_PARZELLE, Standort.COLUMN_REIHE, Standort.COLUMN_PFLANZE};
 
@@ -54,11 +55,11 @@ public class StandortManager {
             Cursor c = BoniturSafe.db.query(
                     Standort.TABLE_NAME,
                     columns,
-                    Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + "= ? AND " + Standort.COLUMN_REIHE + " = ? AND " + Standort.COLUMN_PFLANZE + " " + (direction == NEXT ? ">" : "<") + "  ?",
+                    Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + "= ? AND " + Standort.COLUMN_REIHE + " = ? AND " + Standort.COLUMN_PFLANZE + " " + (getRealDirection(PFLANZEN_RICHTUNG,direction) == NEXT ? ">" : "<") + "  ?",
                     new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_PARZELLE, "" + BoniturSafe.CURRENT_REIHE, ""+BoniturSafe.CURRENT_PFLANZE},
                     null,
                     null,
-                    Standort.COLUMN_PARZELLE + " ASC, CAST(" + Standort.COLUMN_REIHE + " AS INTEGER) ASC, CAST(" + Standort.COLUMN_PFLANZE + " AS INTEGER) " + (direction == NEXT ? "ASC" : "DESC"),
+                    "CAST(" + Standort.COLUMN_PFLANZE + " AS INTEGER) " + (getRealDirection(PFLANZEN_RICHTUNG,direction) == NEXT ? "ASC" : "DESC"),
                     "" + 1);
             if (c.getCount() == 1)
                 return new Object[]{getValuesFromStandort(c), marker};
@@ -77,14 +78,15 @@ public class StandortManager {
     }
 
     public static Object[] nextReihe(int direction, Object marker) {
+        changeRichtung(PFLANZEN_RICHTUNG);
         Cursor c = BoniturSafe.db.query(
                 Standort.TABLE_NAME,
                 columns,
-                Standort.COLUMN_VERSUCH+"=? AND " + Standort.COLUMN_PARZELLE + "= ? AND " + Standort.COLUMN_REIHE + " "+(direction == NEXT ? ">" : "<")+" ? ",
+                Standort.COLUMN_VERSUCH+"=? AND " + Standort.COLUMN_PARZELLE + "= ? AND " + Standort.COLUMN_REIHE + " "+(getRealDirection(REIHEN_RICHTUNG,direction) == NEXT ? ">" : "<")+" ? ",
                 new String[]{""+BoniturSafe.VERSUCH_ID, ""+BoniturSafe.CURRENT_PARZELLE,  ""+BoniturSafe.CURRENT_REIHE},
                 null,
                 null,
-                "CAST(" + Standort.COLUMN_REIHE + " AS INTEGER) "+(direction == NEXT ? "ASC" : "DESC")+", CAST(" + Standort.COLUMN_PFLANZE+ " AS INTEGER) "+(direction == NEXT ? "ASC" : "DESC"),
+                "CAST(" + Standort.COLUMN_REIHE + " AS INTEGER) "+(getRealDirection(REIHEN_RICHTUNG,direction) == NEXT ? "ASC" : "DESC")+", CAST(" + Standort.COLUMN_PFLANZE+ " AS INTEGER) "+(getRealDirection(PFLANZEN_RICHTUNG, direction) == NEXT ? "ASC" : "DESC"),
                 ""+1);
         return new Object[] {getValuesFromStandort(c), marker};
     }
@@ -229,28 +231,26 @@ public class StandortManager {
         return res;
     }
 
-    private static int getRealDirection(int art, int richtung)
-    {
+    private static int getRealDirection(int art, int richtung){
         if(!Config.ZICK_ZACK_MODUS)
             return richtung;
 
         if(art == PFLANZEN_RICHTUNG)
         {
-            if(BoniturSafe.PFLANZEN_RICHTUNG == NEXT)
+            if( BoniturSafe.PFLANZEN_RICHTUNG == NEXT)
                 return richtung;
             else
                 return richtung == NEXT ? PREV : NEXT;
 
         } else { //REIHEN_RICHTUNG
-            if(BoniturSafe.REIHEN_RICHTUNG == NEXT)
+            if(BoniturSafe.REIHEN_RICHTUNG  == NEXT)
                 return richtung;
             else
                 return richtung == NEXT ? PREV : NEXT;
         }
     }
 
-    private static void changeRichtung(int art)
-    {
+    public static void changeRichtung(int art){
         if(!Config.ZICK_ZACK_MODUS) return;
 
         if(art == PFLANZEN_RICHTUNG){
@@ -258,6 +258,29 @@ public class StandortManager {
         } else{
             BoniturSafe.REIHEN_RICHTUNG = BoniturSafe.REIHEN_RICHTUNG == NEXT ? PREV : NEXT;
         }
+    }
+
+    public static Object[] gotoFirstEmpty(){
+        Cursor c = BoniturSafe.db.rawQuery(
+                "SELECT standort._id FROM "+Standort.TABLE_NAME+"  LEFT JOIN versuchWert ON "+Standort.TABLE_NAME+"._id = versuchWert.standortId " + "\n" +
+                        "WHERE "+Standort.TABLE_NAME+".versuchId = ? " + "\n" +
+                        "GROUP By "+Standort.TABLE_NAME+"._id " + "\n" +
+                        "HAVING GROUP_CONCAT(versuchWert.markerId) <> (SELECT DISTINCT GROUP_CONCAT(_id) FROM marker WHERE versuchId=? GROUP BY versuchId ORDER BY _id) OR GROUP_CONCAT(versuchWert.markerId) is null " + "\n" +
+                        "ORDER BY "+Standort.TABLE_NAME+".parzelle ASC, "+Standort.TABLE_NAME+".reihe ASC, "+Standort.TABLE_NAME+".pflanze ASC, versuchWert.markerId ASC " + "\n" +
+                        "LIMIT 1",
+                new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.VERSUCH_ID}
+        );
+
+        if (c.getCount() == 1) {
+            c.moveToFirst();
+            Standort s = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+            Marker m = MarkerManager.getFirstUnusedMarker(s.id);
+            return new Object[]{s, m};
+        }
+
+
+        return new Object[]{null, null};
+
 
     }
 

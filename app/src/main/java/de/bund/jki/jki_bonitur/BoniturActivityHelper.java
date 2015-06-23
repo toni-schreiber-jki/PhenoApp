@@ -95,6 +95,8 @@ public class BoniturActivityHelper {
                 R.id.btnRichtungUnten,
                 R.id.btnPrevMarker,
                 R.id.btnNextMarker,
+                R.id.btnSettings,
+                R.id.btnFirstEmpty,
         };
 
         for (int id: buttonIds) {
@@ -555,6 +557,11 @@ public class BoniturActivityHelper {
                 } while (c.moveToNext());
                 getSpPflanzen().setAdapter(new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, pflanzenList) {
                 });
+                if(setCurrentPosition){
+                    spPflanzenCheck = 0;
+                    getSpPflanzen().setSelection(pflanzenPos.get(BoniturSafe.CURRENT_PFLANZE), false);
+                    setCurrentPosition = false;
+                }
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -1012,4 +1019,47 @@ public class BoniturActivityHelper {
     //----------Ende: Datum-------------------------------------------------------------------------
 
     //----------Ende: Werte-------------------------------------------------------------------------
+
+
+    //----------------ZickZackModus-----------------------------------------------------------------
+
+    private Button btnZzUnten = null;
+    public Button getBtnZzUnten(){
+        if(btnZzUnten != null) return btnZzUnten;
+        btnZzUnten = (Button) mBa.findViewById(R.id.btnRichtungUnten);
+        return btnZzUnten;
+    }
+    private Button btnZzOben = null;
+    public Button getBtnZzOben(){
+        if(btnZzOben != null) return btnZzOben;
+        btnZzOben = (Button) mBa.findViewById(R.id.btnRichtungOben);
+        return btnZzOben;
+    }
+    private Button btnZzLinks = null;
+    public Button getBtnZzLinks(){
+        if(btnZzLinks != null) return btnZzLinks;
+        btnZzLinks = (Button) mBa.findViewById(R.id.btnRichtungLinks);
+        return btnZzLinks;
+    }
+    private Button btnZzRechts = null;
+    public Button getBtnZzRechts(){
+        if(btnZzRechts != null) return btnZzRechts;
+        btnZzRechts = (Button) mBa.findViewById(R.id.btnRichtungRechts);
+        return btnZzRechts;
+    }
+
+    public void updateZickZackRichtung(){
+        getBtnZzLinks().setVisibility(BoniturSafe.PFLANZEN_RICHTUNG == StandortManager.PREV ? View.VISIBLE : View.GONE);
+        getBtnZzRechts().setVisibility(BoniturSafe.PFLANZEN_RICHTUNG == StandortManager.NEXT ? View.VISIBLE : View.GONE);
+        getBtnZzOben().setVisibility(BoniturSafe.REIHEN_RICHTUNG == StandortManager.PREV ? View.VISIBLE : View.GONE);
+        getBtnZzUnten().setVisibility(BoniturSafe.REIHEN_RICHTUNG == StandortManager.NEXT ? View.VISIBLE : View.GONE);
+    }
+    //-----------Ende ZickZackModus-----------------------------------------------------------------
+
+    //---------------First Empty--------------------------------------------------------------------
+    public void gotoFirstEmpty(){
+        mBa.fillView(StandortManager.gotoFirstEmpty());
+    }
+
+    //----------Ende First Empty--------------------------------------------------------------------
 }

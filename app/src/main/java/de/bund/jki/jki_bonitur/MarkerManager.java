@@ -170,4 +170,21 @@ public class MarkerManager {
         }
         return res;
     }
+
+    public static Marker getFirstUnusedMarker(int standortId)
+    {
+        Cursor c = BoniturSafe.db.rawQuery(
+                "SELECT _id FROM marker " +
+                "WHERE versuchId = ? AND _id not in (" +
+                        "SELECT markerId FROM versuchWert WHERE standortId = ?" +
+                ") ORDER BY _id ASC LIMIT 1",
+                new String[]{""+BoniturSafe.VERSUCH_ID, ""+standortId});
+
+        if(c.getCount()==1){
+            c.moveToFirst();
+            return Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
+        }
+
+        return null;
+    }
 }
