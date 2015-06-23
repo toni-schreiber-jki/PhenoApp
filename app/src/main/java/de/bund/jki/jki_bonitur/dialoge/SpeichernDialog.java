@@ -16,7 +16,6 @@ import de.bund.jki.jki_bonitur.BoniturActivity;
 import de.bund.jki.jki_bonitur.BoniturSafe;
 import de.bund.jki.jki_bonitur.R;
 import de.bund.jki.jki_bonitur.config.Config;
-import de.bund.jki.jki_bonitur.db.Versuch;
 import de.bund.jki.jki_bonitur.excel.Writer;
 
 /**

@@ -3,7 +3,6 @@ package de.bund.jki.jki_bonitur.excel;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Environment;
-import android.view.animation.BounceInterpolator;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;

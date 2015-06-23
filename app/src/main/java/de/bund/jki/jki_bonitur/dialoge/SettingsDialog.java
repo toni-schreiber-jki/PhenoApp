@@ -7,10 +7,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -20,7 +17,6 @@ import android.widget.TextView;
 import de.bund.jki.jki_bonitur.BoniturActivity;
 import de.bund.jki.jki_bonitur.R;
 import de.bund.jki.jki_bonitur.config.Config;
-import de.bund.jki.jki_bonitur.excel.Writer;
 
 /**
  * Created by toni.schreiber on 23.06.2015.

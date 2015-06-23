@@ -1,15 +1,12 @@
 package de.bund.jki.jki_bonitur;
 
 import android.database.Cursor;
-import android.view.animation.BounceInterpolator;
 
 import de.bund.jki.jki_bonitur.config.Config;
 import de.bund.jki.jki_bonitur.db.Akzession;
 import de.bund.jki.jki_bonitur.db.Marker;
-import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
-import de.bund.jki.jki_bonitur.db.VersuchWert;
 
 /**
  * Created by toni.schreiber on 15.06.2015.
