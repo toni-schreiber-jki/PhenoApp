@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class BoniturDatenbank extends SQLiteOpenHelper {
 
     public static final String DATENBANK_NAME = "bonitur.sqlite";
-    public static final int DATENBANK_VERSION = 1;
+    public static final int DATENBANK_VERSION = 2;
 
     public BoniturDatenbank(Context context) {
          super(
@@ -47,8 +47,7 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
         {
             switch (newVersion)
             {
-
-
+                case 2: break;
             }
         }catch (Exception e)
         {

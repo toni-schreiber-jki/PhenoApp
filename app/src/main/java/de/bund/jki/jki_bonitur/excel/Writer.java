@@ -83,7 +83,7 @@ public class Writer{
             row.createCell(2).setCellValue(akzession != null ? akzession.name : "");
             row.createCell(3).setCellValue(passport != null ? passport.kennNr : "");
             row.createCell(4).setCellValue(passport != null ? passport.leitname : "");
-            row.createCell(5).setCellValue(""); // ToDo: Standortinformationen Implementieren
+            row.createCell(5).setCellValue(standort.freifeld != null ? standort.freifeld : "");
             row.createCell(6).setCellValue(akzession != null ? akzession.merkmale : "");
 
             int mp = 0;

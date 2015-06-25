@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import de.bund.jki.jki_bonitur.config.Config;
+import de.bund.jki.jki_bonitur.dialoge.SettingsDialog;
 
 
 public class VersuchListActivity extends Activity {
@@ -96,7 +97,15 @@ public class VersuchListActivity extends Activity {
     public void loadSettings()
     {
         Config.load(this);
+        showFiles();
 
+    }
+
+    public void onClick(final View v)
+    {
+        if(v.getId() == R.id.btnSettings){
+            new SettingsDialog(this);
+        }
     }
 
 

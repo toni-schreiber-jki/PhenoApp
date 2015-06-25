@@ -272,6 +272,14 @@ public class StandortManager {
             c.moveToFirst();
             Standort s = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
             Marker m = MarkerManager.getFirstUnusedMarker(s.id);
+
+            BoniturSafe.CURRENT_STANDORT_ID = s.id;
+            BoniturSafe.CURRENT_PARZELLE    = s.parzelle;
+            BoniturSafe.CURRENT_REIHE       = s.reihe;
+            BoniturSafe.CURRENT_PFLANZE     = s.pflanze;
+
+            BoniturSafe.CURRENT_MARKER      = m.id;
+
             return new Object[]{s, m};
         }
 

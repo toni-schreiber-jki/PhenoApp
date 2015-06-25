@@ -22,6 +22,7 @@ public class Standort extends DbModelInterface {
     public String mutter;
     public String vater;
     public String sortimentsnummer;
+    public String freifeld;
 
     public static String COLUMN_ID              = "_id";
     public static String COLUMN_VERSUCH         = "versuchId";
@@ -35,6 +36,7 @@ public class Standort extends DbModelInterface {
     public static String COLUMN_MUTTER          = "Mutter";
     public static String COLUMN_VATER           = "Vater";
     public static String COLUMN_SORTIMENTNR     = "Sortimentsnummer";
+    public static String COLUMN_FREIFELD        = "freifeld";
 
     public static String TABLE_NAME = "standort";
 
@@ -56,8 +58,10 @@ public class Standort extends DbModelInterface {
             "ON UPDATE CASCADE " + '\n' +
             "ON DELETE CASCADE " + '\n' +
     ")";
-    public static String ALTER_TABLE_1 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN "+ COLUMN_AKZESSION+" INTEGER REFERENCES "+ Akzession.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n';
-    public static String ALTER_TABLE_2 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN  "+COLUMN_PASSPORT+" INTEGER REFERENCES "+ Passport.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n';
+    public static String ALTER_TABLE_1 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_AKZESSION+" INTEGER REFERENCES "+ Akzession.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n';
+    public static String ALTER_TABLE_2 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_PASSPORT +" INTEGER REFERENCES "+ Passport.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n';
+    public static String ALTER_TABLE_3 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_FREIFELD +" TEXT" +'\n';
+
 
     public Standort()
     {
@@ -112,6 +116,7 @@ public class Standort extends DbModelInterface {
             res.sortimentsnummer = c.getString(c.getColumnIndex(Standort.COLUMN_SORTIMENTNR));
             res.akzessionId = c.getInt(c.getColumnIndex(Standort.COLUMN_AKZESSION));
             res.passportId = c.getInt(c.getColumnIndex(Standort.COLUMN_PASSPORT));
+            res.freifeld = c.getString(c.getColumnIndex(Standort.COLUMN_FREIFELD));
 
             return res;
         }

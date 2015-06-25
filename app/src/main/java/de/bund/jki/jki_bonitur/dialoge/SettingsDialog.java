@@ -1,5 +1,6 @@
 package de.bund.jki.jki_bonitur.dialoge;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -8,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.test.ActivityTestCase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -16,13 +18,14 @@ import android.widget.TextView;
 
 import de.bund.jki.jki_bonitur.BoniturActivity;
 import de.bund.jki.jki_bonitur.R;
+import de.bund.jki.jki_bonitur.VersuchListActivity;
 import de.bund.jki.jki_bonitur.config.Config;
 
 /**
  * Created by toni.schreiber on 23.06.2015.
  */
 public class SettingsDialog {
-    public SettingsDialog(BoniturActivity ba){
+    public SettingsDialog(Activity ba){
         SettingsDialogFragment sdf = new SettingsDialogFragment();
         sdf.mBa = ba;
         sdf.setCancelable(false);
@@ -31,7 +34,7 @@ public class SettingsDialog {
 
     public static class SettingsDialogFragment extends DialogFragment
     {
-        public BoniturActivity mBa;
+        public Activity mBa;
         private View mView;
 
         @Override
@@ -45,7 +48,7 @@ public class SettingsDialog {
             mView = inflater.inflate(R.layout.dialog_settings,null);
 
             builder.setView(mView)
-                    .setPositiveButton("Speichern",new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Speichern", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mBa);
@@ -78,11 +81,15 @@ public class SettingsDialog {
                             editor.apply();
 
                             SettingsDialogFragment.this.getDialog().cancel();
-                            mBa.loadSettings();
+                            if (mBa.getLocalClassName().toString().contains("BoniturActivity")) {
+                                ((BoniturActivity) mBa).loadSettings();
+                            } else {
+                                ((VersuchListActivity) mBa).loadSettings();
+                            }
                         }
                     })
 
-                    .setNegativeButton("Nicht Speichern", new DialogInterface.OnClickListener(){
+                    .setNegativeButton("Nicht Speichern", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 

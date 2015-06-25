@@ -57,6 +57,8 @@ public class BoniturActivity extends Activity {
         bah.init_textListener();
         bah.init_checkBox();
 
+        ((TextView) findViewById(R.id.tvDocument)).setText("Datei: "+BoniturSafe.VERSUCH_NAME);
+
         loadSettings();
 
         fillView(StandortManager.next());
@@ -99,6 +101,7 @@ public class BoniturActivity extends Activity {
             ((TextView) findViewById(R.id.tvSorteZucht)).setText(((Standort) daten[0]).sorte + " / " + ((Standort) daten[0]).zuchtstamm);
             ((TextView) findViewById(R.id.tvEltern)).setText(((Standort) daten[0]).mutter + " / " + ((Standort) daten[0]).vater);
             ((TextView) findViewById(R.id.tvSortiment)).setText(((Standort) daten[0]).sortimentsnummer);
+            ((TextView) findViewById(R.id.tvFreifeld)).setText(s.freifeld);
 
             if(bah.akzesionIdPos.containsKey(s.akzessionId)){
                 bah.spAkzessionCheck = 0;
@@ -186,6 +189,10 @@ public class BoniturActivity extends Activity {
             case R.id.btnRichtungOben:
             case R.id.btnRichtungUnten:StandortManager.changeRichtung(StandortManager.REIHEN_RICHTUNG); fillView(new Object[] {currentStandort, currentMarker}); break;
             case R.id.btnFirstEmpty:    bah.gotoFirstEmpty();
+            case R.id.btnRight:         fillView(StandortManager.nextStandort(StandortManager.NEXT,currentMarker)); break;
+            case R.id.btnLeft:          fillView(StandortManager.nextStandort(StandortManager.PREV,currentMarker)); break;
+            case R.id.btnUp:            fillView(StandortManager.nextReihe(StandortManager.PREV,currentMarker)); break;
+            case R.id.btnDown:            fillView(StandortManager.nextReihe(StandortManager.NEXT,currentMarker)); break;
 
         }
     }
