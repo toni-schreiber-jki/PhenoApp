@@ -292,7 +292,7 @@ public class StandortManager {
                     "SELECT standort._id FROM " + Standort.TABLE_NAME + "  LEFT JOIN versuchWert ON " + Standort.TABLE_NAME + "._id = versuchWert.standortId " + "\n" +
                             "WHERE " + Standort.TABLE_NAME + ".versuchId = ? " + "\n" +
                             "GROUP By " + Standort.TABLE_NAME + "._id " + "\n" +
-                            "HAVING GROUP_CONCAT(versuchWert.markerId) <> (SELECT DISTINCT GROUP_CONCAT(_id) FROM marker WHERE versuchId=? GROUP BY versuchId ORDER BY _id) OR GROUP_CONCAT(versuchWert.markerId) is null " + "\n" +
+                            "HAVING GROUP_CONCAT(DISTINCT versuchWert.markerId) <> (SELECT DISTINCT GROUP_CONCAT(_id) FROM marker WHERE versuchId=? GROUP BY versuchId ORDER BY _id) OR GROUP_CONCAT(versuchWert.markerId) is null " + "\n" +
                             "ORDER BY " + Standort.TABLE_NAME + ".parzelle ASC, " + Standort.TABLE_NAME + ".reihe ASC, " + Standort.TABLE_NAME + ".pflanze ASC, versuchWert.markerId ASC " + "\n" +
                             "LIMIT 1",
                     new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.VERSUCH_ID}

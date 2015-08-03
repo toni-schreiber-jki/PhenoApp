@@ -297,7 +297,6 @@ public class BoniturActivityHelper {
         }catch (Exception e){
             new ErrorLog(e,mBa.getApplicationContext());
         }
-        //Todo: Logik für Akzessionswechsel bei mehren Akzessionen
     }
     //-----------Ende Akzession Spinner-------------------------------------------------------------
 

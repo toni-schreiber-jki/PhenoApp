@@ -1,6 +1,10 @@
 package de.bund.jki.jki_bonitur;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,48 +26,57 @@ import de.bund.jki.jki_bonitur.excel.Reader;
 
 public class BoniturActivity extends Activity {
 
+    public static String RELOAD_VIEW = "de.bund.jki.bonitur.reload";
+
     private BoniturDatenbank bonDb;
     public BoniturActivityHelper bah;
 
     public Marker currentMarker;
     public Standort currentStandort;
 
+    public BoniturIntentReceiver bir = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bonitur);
+        bir = new BoniturIntentReceiver();
+        IntentFilter filter = new IntentFilter(RELOAD_VIEW);
+        this.registerReceiver(bir,filter);
         init();
     }
 
-    private void init() {
+    public void init() {
         try {
             bonDb = new BoniturDatenbank(this);
             BoniturSafe.db = bonDb.getWritableDatabase();
             BoniturSafe.APP_CONTEXT = getApplicationContext();
+            BoniturSafe.BON_ACTIVITY = this;
 
             bah = new BoniturActivityHelper(this);
 
             Reader reader = new Reader(getIntent().getStringExtra("FILE"));
-            reader.read();
+            if(reader.read()) {
 
-            BoniturSafe.CURRENT_PARZELLE = "-";
-            BoniturSafe.CURRENT_REIHE = -1;
-            BoniturSafe.CURRENT_PFLANZE = -1;
+                BoniturSafe.CURRENT_PARZELLE = "-";
+                BoniturSafe.CURRENT_REIHE = -1;
+                BoniturSafe.CURRENT_PFLANZE = -1;
 
-            BoniturSafe.CURRENT_MARKER = -1;
+                BoniturSafe.CURRENT_MARKER = -1;
 
-            BoniturSafe.MARKER_FILTER = new ArrayList<>();
+                BoniturSafe.MARKER_FILTER = new ArrayList<>();
 
-            bah.init_Spinner();
-            bah.init_typefaces();
-            bah.init_textListener();
-            bah.init_checkBox();
+                bah.init_Spinner();
+                bah.init_typefaces();
+                bah.init_textListener();
+                bah.init_checkBox();
 
-            ((TextView) findViewById(R.id.tvDocument)).setText("Datei: " + BoniturSafe.VERSUCH_NAME);
+                ((TextView) findViewById(R.id.tvDocument)).setText("Datei: " + BoniturSafe.VERSUCH_NAME);
 
-            loadSettings();
+                loadSettings();
 
-            fillView(StandortManager.next());
+                fillView(StandortManager.next());
+            }
         } catch (Exception e) {
             new ErrorLog(e,getApplicationContext());
         }
@@ -238,6 +251,14 @@ public class BoniturActivity extends Activity {
             findViewById(R.id.llSortiment).setVisibility(Config.SHOW_SORTIMENT ? View.VISIBLE : View.GONE);
         }catch (Exception e){
             new ErrorLog(e,getApplicationContext());
+        }
+    }
+
+    public class BoniturIntentReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            init();
         }
     }
 }

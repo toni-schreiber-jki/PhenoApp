@@ -15,6 +15,15 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
 
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/imageView"
+
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/logo" />
+
             <Button
                 android:layout_width="75dp"
                 android:layout_height="75dp"
@@ -25,13 +34,6 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="20dp" />
 
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:id="@+id/imageView"
-
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp" />
             <!--android:src="@drawable/icon" -->
 
             <LinearLayout

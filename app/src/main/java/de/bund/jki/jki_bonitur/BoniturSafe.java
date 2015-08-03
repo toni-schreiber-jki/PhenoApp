@@ -29,6 +29,7 @@ public class BoniturSafe {
     public static int       REIHEN_RICHTUNG     = StandortManager.NEXT;
 
     public static Context   APP_CONTEXT = null;
+    public static BoniturActivity BON_ACTIVITY = null;
 
     public static SQLiteDatabase db;
 }

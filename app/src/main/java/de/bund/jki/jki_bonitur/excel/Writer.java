@@ -42,7 +42,6 @@ public class Writer{
         } catch (Exception e){
             new ErrorLog(e,null);
             e.printStackTrace();
-            //ToDo: Fehlermeldung speichern Fehlgeschlagen....
         }
     }
 

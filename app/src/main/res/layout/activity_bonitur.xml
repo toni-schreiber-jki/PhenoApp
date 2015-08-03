@@ -20,7 +20,8 @@
                 android:id="@+id/imageView2"
 
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="5dp"
+                android:src="@drawable/logo" />
             <!--
             android:src="@drawable/icon"
             -->
@@ -53,28 +54,31 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent" >
+                android:layout_height="75dp" >
 
                 <Spinner
                     style="@android:style/Widget.Holo.Light.Spinner"
                     android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="75dp"
                     android:id="@+id/spParzelle"
-                    android:layout_marginLeft="20dp" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="top" />
 
                 <Spinner
                     style="@android:style/Widget.Holo.Light.Spinner"
                     android:layout_width="100dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="75dp"
                     android:id="@+id/spReihe"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="top" />
 
                 <Spinner
                     style="@android:style/Widget.Holo.Light.Spinner"
                     android:layout_width="100dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="75dp"
                     android:id="@+id/spPflanze"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="top" />
 
             </LinearLayout>
 
@@ -90,35 +94,38 @@
 
                     <Button
                         android:layout_width="75dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="75dp"
                         android:text="\uf120"
                         android:id="@+id/btnFirstEmpty"
                         android:textSize="45dp"
                         android:onClick="onClick"
                         android:layout_alignParentTop="true"
                         android:layout_marginRight="10dp"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        android:layout_gravity="top" />
 
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
-                        android:id="@+id/llZickZackRichtung">
+                        android:id="@+id/llZickZackRichtung"
+                        android:layout_gravity="top">
 
                         <Button
                             android:layout_width="75dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="75dp"
                             android:text="\uf063"
                             android:id="@+id/btnRichtungUnten"
                             android:textSize="45dp"
                             android:layout_alignParentTop="true"
                             android:onClick="onClick"
                             android:layout_marginRight="10dp"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            android:layout_gravity="top" />
 
                         <Button
                             android:layout_width="75dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="75dp"
                             android:text="\uf062"
                             android:id="@+id/btnRichtungOben"
                             android:textSize="45dp"
@@ -126,11 +133,12 @@
 
                             android:onClick="onClick"
                             android:layout_marginRight="10dp"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            android:layout_gravity="top" />
 
                         <Button
                             android:layout_width="75dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="75dp"
                             android:text="\uf060"
                             android:id="@+id/btnRichtungLinks"
                             android:textSize="45dp"
@@ -139,11 +147,12 @@
 
                             android:onClick="onClick"
                             android:layout_marginRight="10dp"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            android:layout_gravity="top" />
 
                         <Button
                             android:layout_width="75dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="75dp"
                             android:text="\uf061"
                             android:id="@+id/btnRichtungRechts"
                             android:textSize="45dp"
@@ -151,12 +160,13 @@
 
                             android:onClick="onClick"
                             android:layout_marginRight="10dp"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            android:layout_gravity="top" />
                     </LinearLayout>
 
                     <Button
                         android:layout_width="75dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="75dp"
                         android:text="\uf0c7"
                         android:id="@+id/btnSpeichenClose"
                         android:layout_alignParentBottom="true"
@@ -164,7 +174,8 @@
                         android:onClick="onClick"
                         android:textSize="45dp"
                         android:layout_alignParentTop="true"
-                        android:nestedScrollingEnabled="false" />
+                        android:nestedScrollingEnabled="false"
+                        android:layout_gravity="top" />
 
                     <Button
                         android:layout_width="75dp"
@@ -173,7 +184,8 @@
                         android:id="@+id/btnFoto"
                         android:textSize="45dp"
                         android:onClick="onClick"
-                        android:layout_alignParentTop="true" />
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="top" />
 
                     <Button
                         android:layout_width="75dp"
@@ -183,7 +195,8 @@
                         android:textSize="45dp"
                         android:onClick="onClick"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="20dp" />
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="top" />
                 </LinearLayout>
             </RelativeLayout>
 

@@ -1,13 +1,16 @@
 package de.bund.jki.jki_bonitur.excel;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Environment;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import de.bund.jki.jki_bonitur.BoniturActivity;
 import de.bund.jki.jki_bonitur.BoniturSafe;
 import de.bund.jki.jki_bonitur.config.Config;
 import de.bund.jki.jki_bonitur.db.Akzession;
@@ -16,6 +19,7 @@ import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
 import de.bund.jki.jki_bonitur.db.Versuch;
+import de.bund.jki.jki_bonitur.dialoge.WartenDialog;
 
 /**
  * Created by toni.schreiber on 12.06.2015.
@@ -33,27 +37,46 @@ public class Reader {
         }
     }
 
-    public void read(){
+    public boolean read(){
         Cursor dbCursor = BoniturSafe.db.query(Versuch.TABLE_NAME,new String[]{Versuch.COLUMN_ID},Versuch.COLUMN_NAME+"=?", new String[] {mFile},null,null,null);
         if(dbCursor.getCount()>0){
             dbCursor.moveToFirst();
             BoniturSafe.VERSUCH_NAME = mFile;
             BoniturSafe.VERSUCH_ID = dbCursor.getInt(dbCursor.getColumnIndex(Versuch.COLUMN_ID));
+            return true;
         }
         else{
-            ContentValues values = new ContentValues();
-            Versuch versuch = new Versuch();
+            AsyncTask execute = new AsyncTask() {
+                @Override
+                protected Object doInBackground(Object[] params) {
 
-            versuch.name = mFile;
+                    WartenDialog wd = new WartenDialog(BoniturSafe.BON_ACTIVITY);
 
-            versuch.save();
+                    ContentValues values = new ContentValues();
+                    Versuch versuch = new Versuch();
 
-            BoniturSafe.VERSUCH_ID  = versuch.id;
-            BoniturSafe.VERSUCH_NAME= versuch.name;
+                    versuch.name = mFile;
 
-            readMarker();
-            readStandort();
-            readValues();
+                    versuch.save();
+
+                    BoniturSafe.VERSUCH_ID  = versuch.id;
+                    BoniturSafe.VERSUCH_NAME= versuch.name;
+
+                    readMarker();
+                    readStandort();
+                    readValues();
+
+                    wd.close();
+
+                    Intent i = new Intent(BoniturActivity.RELOAD_VIEW);
+                    BoniturSafe.APP_CONTEXT.sendBroadcast(i);
+
+                    return null;
+                }
+            };
+
+            execute.execute();
+            return false;
         }
     }
 
