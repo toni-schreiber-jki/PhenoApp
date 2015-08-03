@@ -1,5 +1,6 @@
 package de.bund.jki.jki_bonitur;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class BoniturSafe {
 
     public static int       PFLANZEN_RICHTUNG   = StandortManager.NEXT;
     public static int       REIHEN_RICHTUNG     = StandortManager.NEXT;
+
+    public static Context   APP_CONTEXT = null;
 
     public static SQLiteDatabase db;
 }

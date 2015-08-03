@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import de.bund.jki.jki_bonitur.ErrorLog;
+
 
 /**
  * Created by Toni on 10.05.2015.
@@ -37,6 +39,7 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
             db.execSQL(Standort.ALTER_TABLE_2);
         } catch (Exception e)
         {
+            new ErrorLog(e,null);
             e.printStackTrace();
         }
     }
@@ -51,6 +54,7 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
             }
         }catch (Exception e)
         {
+            new ErrorLog(e,null);
             e.printStackTrace();
         }
     }

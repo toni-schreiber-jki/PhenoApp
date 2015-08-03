@@ -18,13 +18,11 @@ public class MarkerManager {
     private static int NEXT = 1;
     private static int PREV = 2;
 
-    public static Object[] next()
-    {
+    public static Object[] next(){
         return prevNext(NEXT);
     }
 
-    public static Object[] prev()
-    {
+    public static Object[] prev(){
         return prevNext(PREV);
     }
 
@@ -69,8 +67,8 @@ public class MarkerManager {
 
             return new Object[]{null, MARKER_NEXT_STANDORT};
         }
-        catch (Exception e)
-        {
+        catch (Exception e){
+            new ErrorLog(e,null);
             e.printStackTrace();
             return null;
         }
@@ -80,13 +78,11 @@ public class MarkerManager {
         return first(MARKER_OK);
     }
 
-    private static Object[] first(int flag)
-    {
+    private static Object[] first(int flag){
         return getFirstLast(flag , "ASC");
     }
 
-    private static Object[] last(int flag)
-    {
+    private static Object[] last(int flag){
         return getFirstLast(flag , "DESC");
     }
 
@@ -160,8 +156,7 @@ public class MarkerManager {
         return res;
     }
 
-    private static String getMarkerFilter()
-    {
+    private static String getMarkerFilter(){
         String res = "";
         for(int i =0; i< BoniturSafe.MARKER_FILTER.size(); i++){
             if(i>0)
@@ -171,8 +166,7 @@ public class MarkerManager {
         return res;
     }
 
-    public static Marker getFirstUnusedMarker(int standortId)
-    {
+    public static Marker getFirstUnusedMarker(int standortId){
         Cursor c = BoniturSafe.db.rawQuery(
                 "SELECT _id FROM marker " +
                 "WHERE versuchId = ? AND _id not in (" +

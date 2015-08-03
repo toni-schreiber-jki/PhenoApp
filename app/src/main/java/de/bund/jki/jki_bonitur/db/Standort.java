@@ -116,7 +116,7 @@ public class Standort extends DbModelInterface {
             res.sortimentsnummer = c.getString(c.getColumnIndex(Standort.COLUMN_SORTIMENTNR));
             res.akzessionId = c.getInt(c.getColumnIndex(Standort.COLUMN_AKZESSION));
             res.passportId = c.getInt(c.getColumnIndex(Standort.COLUMN_PASSPORT));
-            res.freifeld = c.getString(c.getColumnIndex(Standort.COLUMN_FREIFELD));
+            res.freifeld = c.isNull(c.getColumnIndex(Standort.COLUMN_FREIFELD)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_FREIFELD));
 
             return res;
         }
@@ -126,6 +126,30 @@ public class Standort extends DbModelInterface {
 
     public String getName(){
         return (this.parzelle + "-" + String.format("%03d-%03d", this.reihe, this.pflanze));
+    }
+
+
+    public String getDate(int markerId){
+        Cursor c = BoniturSafe.db.query(
+                VersuchWert.TABLE_NAME,
+                new String[]{ VersuchWert.COLUMN_WERT_DATUM },
+                VersuchWert.COLUMN_STANDORT+"=? AND "+VersuchWert.COLUMN_MARKER+"=?",
+                new String[] {""+this.id, ""+markerId},
+                null,
+                null,
+                VersuchWert.COLUMN_ID + " DESC");
+
+        if(c.getCount() == 0)
+            return "";
+
+        c.moveToFirst();
+
+        if(c.getCount() >= 1){
+            return c.getString(c.getColumnIndex(VersuchWert.COLUMN_WERT_DATUM));
+        }
+
+        return "";
+
     }
 
     public String getValue(int markerId)

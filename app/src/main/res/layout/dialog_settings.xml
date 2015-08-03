@@ -46,7 +46,7 @@
                     android:id="@+id/tvFolderIcon" />
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Speicherort:"
@@ -72,7 +72,7 @@
                     android:id="@+id/tvZickZackIcon" />
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="&quot;Zick Zack Modus&quot;:"
@@ -98,7 +98,7 @@
                     android:id="@+id/tvFirstEmptyIcon" />
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="&quot;First Empty Button&quot;:"
@@ -122,7 +122,7 @@
                     android:id="@+id/textView13" />
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Akzession:"
@@ -146,7 +146,7 @@
                     android:id="@+id/textView21" />
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Passport:"
@@ -170,7 +170,7 @@
                     android:id="@+id/textView25" />
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Sorte /Zuchtstamm:"
@@ -195,7 +195,7 @@
                     android:id="@+id/tvElternIcon" />
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Eltern:"
@@ -219,7 +219,7 @@
                     android:id="@+id/textView27" />
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Sortimentsnummer:"
@@ -229,6 +229,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/cbSortNr" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="420dp"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="\uf073"
+                    android:id="@+id/textView30" />
+
+                <TextView
+                    android:layout_width="225dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Excelausgabe mit Datum:"
+                    android:id="@+id/textView31" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cbExcelDatum" />
             </LinearLayout>
 
         </LinearLayout>

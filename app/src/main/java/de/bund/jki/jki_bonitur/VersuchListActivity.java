@@ -90,7 +90,7 @@ public class VersuchListActivity extends Activity {
             });
 
         }catch (Exception e){
-            int a = 1;
+            new ErrorLog(e,getApplication());
         }
     }
 

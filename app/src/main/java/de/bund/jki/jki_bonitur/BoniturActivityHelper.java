@@ -1,9 +1,13 @@
 package de.bund.jki.jki_bonitur;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,12 +22,16 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import de.bund.jki.jki_bonitur.config.Config;
 import de.bund.jki.jki_bonitur.db.Akzession;
 import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.MarkerWert;
@@ -31,6 +39,7 @@ import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
 import de.bund.jki.jki_bonitur.db.VersuchWert;
 import de.bund.jki.jki_bonitur.tools.BoniturTextWatcher;
+import de.bund.jki.jki_bonitur.tools.DateTool;
 
 /**
  * Created by toni.schreiber on 18.06.2015.
@@ -152,30 +161,38 @@ public class BoniturActivityHelper {
         return  spMarker;
     }
     private ArrayAdapter getMarkerSpinnerAdpter(){
-        List<String> markerList = new ArrayList<>();
-        ArrayList<Integer> markerIdList = new ArrayList<>();
-        markerIdPos = new HashMap<>();
-        int p = 0;
-        for (Marker m: MarkerManager.getAllMarker())
-        {
-            markerList.add(m.code);
-            markerIdList.add(m.id);
-            markerIdPos.put(m.id,p);
-            p++;
+        try {
+            List<String> markerList = new ArrayList<>();
+            ArrayList<Integer> markerIdList = new ArrayList<>();
+            markerIdPos = new HashMap<>();
+            int p = 0;
+            for (Marker m : MarkerManager.getAllMarker()) {
+                markerList.add(m.code);
+                markerIdList.add(m.id);
+                markerIdPos.put(m.id, p);
+                p++;
+            }
+            markerIds = markerIdList.toArray(new Integer[]{});
+            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, markerList) {
+            };
+        }catch (Exception e){
+            new ErrorLog(e,mBa.getApplicationContext());
+            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, new ArrayList<String>());
         }
-        markerIds =  markerIdList.toArray(new Integer[]{});
-        return new ArrayAdapter<String>(mBa,android.R.layout.simple_list_item_1, markerList){};
     }
     private void markerSpinnerAddSelectListener() {
         getMarkerSpinner().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spMarkerCheck++;
-                if(spMarkerCheck > 1)
-                {
-                    Marker marker = Marker.findByPk(markerIds[position]);
-                    BoniturSafe.CURRENT_MARKER = marker.id;
-                    mBa.fillView(StandortManager.sameStandort(marker));
+                try {
+                    spMarkerCheck++;
+                    if (spMarkerCheck > 1) {
+                        Marker marker = Marker.findByPk(markerIds[position]);
+                        BoniturSafe.CURRENT_MARKER = marker.id;
+                        mBa.fillView(StandortManager.sameStandort(marker));
+                    }
+                }catch (Exception e){
+                    new ErrorLog(e,mBa.getApplicationContext());
                 }
             }
 
@@ -198,31 +215,40 @@ public class BoniturActivityHelper {
         return  spAkzession;
     }
     private ArrayAdapter getAkzessionAdpter(){
-        List<String> akzessionList = new ArrayList<>();
-        List<Integer> akzessionNrList = new ArrayList<>();
-        akzesionIdPos = new HashMap<>();
-        akzessionNrList.add(-1);
-        akzessionList.add("---");
-        akzesionIdPos.put(-1,0);
-        int p = 1;
-        for (Akzession a: StandortManager.getAllAkzessionen())
-        {
-            akzesionIdPos.put(a.id,p);
-            akzessionNrList.add(a.id);
-            akzessionList.add(a.name + " ("+a.nummer+")");
-            p++;
+        try {
+            List<String> akzessionList = new ArrayList<>();
+            List<Integer> akzessionNrList = new ArrayList<>();
+            akzesionIdPos = new HashMap<>();
+            akzessionNrList.add(-1);
+            akzessionList.add("---");
+            akzesionIdPos.put(-1, 0);
+            int p = 1;
+            for (Akzession a : StandortManager.getAllAkzessionen()) {
+                akzesionIdPos.put(a.id, p);
+                akzessionNrList.add(a.id);
+                akzessionList.add(a.name + " (" + a.nummer + ")");
+                p++;
+            }
+            akzessionsIds = akzessionNrList.toArray(new Integer[]{});
+            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, akzessionList) {
+            };
+        }catch (Exception e){
+            new ErrorLog(e,mBa.getApplicationContext());
+            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, new ArrayList<String>());
         }
-        akzessionsIds = akzessionNrList.toArray(new Integer[]{});
-        return new ArrayAdapter<String>(mBa,android.R.layout.simple_list_item_1, akzessionList){};
     }
     private void akzessionSpinnerAddSelectListener(){
         getAkzessionSpinner().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spAkzessionCheck++;
-                if(position > 0 && spAkzessionCheck > 1) {
-                    Akzession a = Akzession.findByPk(akzessionsIds[position]);
-                    gotoAkzession(a);
+                try {
+                    spAkzessionCheck++;
+                    if (position > 0 && spAkzessionCheck > 1) {
+                        Akzession a = Akzession.findByPk(akzessionsIds[position]);
+                        gotoAkzession(a);
+                    }
+                }catch (Exception e){
+                    new ErrorLog(e,mBa.getApplicationContext());
                 }
             }
 
@@ -233,9 +259,27 @@ public class BoniturActivityHelper {
         });
     }
 
-    private void gotoAkzession(Akzession akzession)
-    {
-        //Todo: Logik für Akzessionswechsel
+    private void gotoAkzession(Akzession akzession){
+        try {
+            Cursor c = BoniturSafe.db.query(
+                    Standort.TABLE_NAME,
+                    new String[]{Standort.COLUMN_ID},
+                    Standort.COLUMN_AKZESSION + "=?",
+                    new String[]{akzession.id + ""},
+                    null,
+                    null,
+                    Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC"
+            );
+
+            if (c.getCount() >= 1) {
+                c.moveToFirst();
+                Standort s = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+                mBa.fillView(new Object[]{s, mBa.currentMarker});
+            }
+        }catch (Exception e){
+            new ErrorLog(e,mBa.getApplicationContext());
+        }
+        //Todo: Logik für Akzessionswechsel bei mehren Akzessionen
     }
     //-----------Ende Akzession Spinner-------------------------------------------------------------
 
@@ -250,31 +294,40 @@ public class BoniturActivityHelper {
         return  spPassport;
     }
     private ArrayAdapter getPassportAdpter(){
-        List<String> passportList = new ArrayList<>();
-        List<Integer> passportNrList = new ArrayList<>();
-        passportIdPos = new HashMap<>();
-        passportNrList.add(-1);
-        passportList.add("---");
-        passportIdPos.put(-1,0);
-        int p = 1;
-        for (Passport pp: StandortManager.getAllPassport())
-        {
-            passportIdPos.put(pp.id,p);
-            passportNrList.add(pp.id);
-            passportList.add(pp.leitname + " ("+pp.kennNr+")");
-            p++;
+        try {
+            List<String> passportList = new ArrayList<>();
+            List<Integer> passportNrList = new ArrayList<>();
+            passportIdPos = new HashMap<>();
+            passportNrList.add(-1);
+            passportList.add("---");
+            passportIdPos.put(-1, 0);
+            int p = 1;
+            for (Passport pp : StandortManager.getAllPassport()) {
+                passportIdPos.put(pp.id, p);
+                passportNrList.add(pp.id);
+                passportList.add(pp.leitname + " (" + pp.kennNr + ")");
+                p++;
+            }
+            passportIds = passportNrList.toArray(new Integer[]{});
+            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, passportList) {
+            };
+        }catch (Exception e) {
+            new ErrorLog(e,mBa.getApplicationContext());
+            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, new ArrayList<String>());
         }
-        passportIds = passportNrList.toArray(new Integer[]{});
-        return new ArrayAdapter<String>(mBa,android.R.layout.simple_list_item_1, passportList){};
     }
     private void passportSpinnerAddSelectListener(){
-        getAkzessionSpinner().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        getPassportSpinner().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spAkzessionCheck++;
-                if(position > 0 && spAkzessionCheck > 1) {
-                    Akzession a = Akzession.findByPk(akzessionsIds[position]);
-                    gotoAkzession(a);
+                try {
+                    spAkzessionCheck++;
+                    if (position > 0 && spAkzessionCheck > 1) {
+                        Passport p = Passport.findByPk(passportIds[position]);
+                        gotoPassport(p);
+                    }
+                }catch (Exception e){
+                    new ErrorLog(e,mBa.getApplicationContext());
                 }
             }
 
@@ -286,7 +339,26 @@ public class BoniturActivityHelper {
     }
 
     private void gotoPassport(Passport passport){
-        //Todo: Logik für Akzessionswechsel
+        try {
+            Cursor c = BoniturSafe.db.query(
+                    Standort.TABLE_NAME,
+                    new String[]{Standort.COLUMN_ID},
+                    Standort.COLUMN_PASSPORT + "=?",
+                    new String[]{passport.id + ""},
+                    null,
+                    null,
+                    Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC"
+            );
+
+            if (c.getCount() >= 1) {
+                c.moveToFirst();
+                Standort s = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+                mBa.fillView(new Object[]{s, mBa.currentMarker});
+            }
+            //Todo: Logik für Akzessionswechsel
+        }catch (Exception e) {
+            new ErrorLog(e,mBa.getApplicationContext());
+        }
     }
     //-----------Ende Passport Spinner--------------------------------------------------------------
 
@@ -303,50 +375,59 @@ public class BoniturActivityHelper {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spBbchStatiumCheck++;
-                if(spBbchStatiumCheck > 1)
-                {
-                    int res = 0;
-                    int imageRes = 0;
-                    switch (position){
-                        case 0: return;
-                        case 1:
-                            res = R.array.bbch_stadien_details_0;
-                            imageRes = R.drawable.bbch_0; break;
-                        case 2:
-                            res = R.array.bbch_stadien_details_1;
-                            imageRes = R.drawable.bbch_1; break;
-                        case 3:
-                            res = R.array.bbch_stadien_details_5;
-                            imageRes = R.drawable.bbch_5; break;
-                        case 4:
-                            res = R.array.bbch_stadien_details_6;
-                            imageRes = R.drawable.bbch_6; break;
-                        case 5:
-                            res = R.array.bbch_stadien_details_7;
-                            imageRes = R.drawable.bbch_7; break;
-                        case 6:
-                            res = R.array.bbch_stadien_details_8;
-                            imageRes = R.drawable.bbch_8; break;
-                        case 7:
-                            res = R.array.bbch_stadien_details_9;
-                            imageRes = R.drawable.bbch_9; break;
-                    }
+                try {
+                    spBbchStatiumCheck++;
+                    if (spBbchStatiumCheck > 1) {
+                        int res = 0;
+                        int imageRes = 0;
+                        switch (position) {
+                            case 0:
+                                return;
+                            case 1:
+                                res = R.array.bbch_stadien_details_0;
+                                imageRes = R.drawable.bbch_0;
+                                break;
+                            case 2:
+                                res = R.array.bbch_stadien_details_1;
+                                imageRes = R.drawable.bbch_1;
+                                break;
+                            case 3:
+                                res = R.array.bbch_stadien_details_5;
+                                imageRes = R.drawable.bbch_5;
+                                break;
+                            case 4:
+                                res = R.array.bbch_stadien_details_6;
+                                imageRes = R.drawable.bbch_6;
+                                break;
+                            case 5:
+                                res = R.array.bbch_stadien_details_7;
+                                imageRes = R.drawable.bbch_7;
+                                break;
+                            case 6:
+                                res = R.array.bbch_stadien_details_8;
+                                imageRes = R.drawable.bbch_8;
+                                break;
+                            case 7:
+                                res = R.array.bbch_stadien_details_9;
+                                imageRes = R.drawable.bbch_9;
+                                break;
+                        }
 
-                    if(res == 0 ) return;
-                    getIvBild().setImageResource(imageRes);
-                    updateSpinner(getSpBbchDetail(), res);
-                    if(setBbchDetail != -1 && setBbchDetail != getSpBbchDetail().getSelectedItemPosition()){
-                        if(getSpBbchDetail().getCount() < setBbchDetail)
-                           return;
-                        spBbchDetailCheck = 0;
-                        getSpBbchDetail().setSelection(setBbchDetail, false);
+                        if (res == 0) return;
+                        getIvBild().setImageResource(imageRes);
+                        updateSpinner(getSpBbchDetail(), res);
+                        if (setBbchDetail != -1 && setBbchDetail != getSpBbchDetail().getSelectedItemPosition()) {
+                            if (getSpBbchDetail().getCount() < setBbchDetail)
+                                return;
+                            spBbchDetailCheck = 0;
+                            getSpBbchDetail().setSelection(setBbchDetail, false);
+                        } else {
+                            spBbchStatiumCheck++;
+                            spBbchDetailCheck++;
+                        }
                     }
-                    else
-                    {
-                        spBbchStatiumCheck++;
-                        spBbchDetailCheck++;
-                    }
+                }catch (Exception e){
+                    new ErrorLog(e,mBa.getApplicationContext());
                 }
 
             }
@@ -372,16 +453,18 @@ public class BoniturActivityHelper {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spBbchDetailCheck++;
-                if(spBbchDetailCheck > 1)
-                {
-                    String text = ((TextView) view.findViewById(android.R.id.text1)).getText().toString();
-                    //if(ignoreBbchChange) return;
-                    if(text.contains(":"))
-                    {
-                        ((EditText) mBa.findViewById(R.id.etBbchWert)).setText(text.split(":")[0]);
-                        //ignoreBbchChange = true;
+                try {
+                    spBbchDetailCheck++;
+                    if (spBbchDetailCheck > 1) {
+                        String text = ((TextView) view.findViewById(android.R.id.text1)).getText().toString();
+                        //if(ignoreBbchChange) return;
+                        if (text.contains(":")) {
+                            ((EditText) mBa.findViewById(R.id.etBbchWert)).setText(text.split(":")[0]);
+                            //ignoreBbchChange = true;
+                        }
                     }
+                }catch (Exception e){
+                    new ErrorLog(e,mBa.getApplicationContext());
                 }
             }
 
@@ -408,11 +491,14 @@ public class BoniturActivityHelper {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spParzelleCheck ++;
-                if(spParzelleCheck > 1)
-                {
-                    setNewPflanzen = true;
-                    updateSpReihenValues(parzellenNr[position]);
+                try {
+                    spParzelleCheck++;
+                    if (spParzelleCheck > 1) {
+                        setNewPflanzen = true;
+                        updateSpReihenValues(parzellenNr[position]);
+                    }
+                }catch (Exception e){
+                    new ErrorLog(e,mBa.getApplicationContext());
                 }
             }
 
@@ -423,28 +509,33 @@ public class BoniturActivityHelper {
         });
     }
     private void init_spParzelleValues() {
-        List<String> parzellenList = new ArrayList<>();
-        Cursor c = BoniturSafe.db.query(true,
-                Standort.TABLE_NAME,
-                new String[] {Standort.COLUMN_PARZELLE},
-                Standort.COLUMN_VERSUCH+"=?",
-                new String[] {""+BoniturSafe.VERSUCH_ID},
-                null,
-                null,
-                Standort.COLUMN_PARZELLE + " ASC",
-                null);
-        if(c.getCount()>0){
-            parzellenNrPos = new HashMap<>();
-            parzellenNr = new String [c.getCount()];
-            c.moveToNext();
-            int p = 0;
-            do{
-                parzellenNr[p] = c.getString(c.getColumnIndex(Standort.COLUMN_PARZELLE));
-                parzellenNrPos.put(parzellenNr[p], p);
-                parzellenList.add(parzellenNr[p]);
-                p++;
-            }while (c.moveToNext());
-            getSpParzelle().setAdapter(new ArrayAdapter<String>(mBa,android.R.layout.simple_list_item_1, parzellenList){});
+        try {
+            List<String> parzellenList = new ArrayList<>();
+            Cursor c = BoniturSafe.db.query(true,
+                    Standort.TABLE_NAME,
+                    new String[]{Standort.COLUMN_PARZELLE},
+                    Standort.COLUMN_VERSUCH + "=?",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID},
+                    null,
+                    null,
+                    Standort.COLUMN_PARZELLE + " ASC",
+                    null);
+            if (c.getCount() > 0) {
+                parzellenNrPos = new HashMap<>();
+                parzellenNr = new String[c.getCount()];
+                c.moveToNext();
+                int p = 0;
+                do {
+                    parzellenNr[p] = c.getString(c.getColumnIndex(Standort.COLUMN_PARZELLE));
+                    parzellenNrPos.put(parzellenNr[p], p);
+                    parzellenList.add(parzellenNr[p]);
+                    p++;
+                } while (c.moveToNext());
+                getSpParzelle().setAdapter(new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, parzellenList) {
+                });
+            }
+        }catch (Exception e){
+            new ErrorLog(e,mBa.getApplicationContext());
         }
     }
     //------------Ende Parzellen Spinner------------------------------------------------------------
@@ -497,6 +588,7 @@ public class BoniturActivityHelper {
             }
         }catch (Exception e)
         {
+            new ErrorLog(e,mBa.getApplication());
             e.printStackTrace();
         }
     }
@@ -505,10 +597,13 @@ public class BoniturActivityHelper {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spReiheCheck++;
-                if(spReiheCheck > 1)
-                {
-                    updateSpPflanzenValues(reihenNr[position]);
+                try {
+                    spReiheCheck++;
+                    if (spReiheCheck > 1) {
+                        updateSpPflanzenValues(reihenNr[position]);
+                    }
+                }catch (Exception e){
+                    new ErrorLog(e,mBa.getApplicationContext());
                 }
             }
 
@@ -564,6 +659,7 @@ public class BoniturActivityHelper {
                 }
             }
         }catch (Exception e) {
+            new ErrorLog(e,mBa.getApplication());
             e.printStackTrace();
         }
     }
@@ -572,19 +668,22 @@ public class BoniturActivityHelper {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spPflanzenCheck ++;
-                if(spPflanzenCheck > 1)
-                {
-                    mBa.fillView(StandortManager.gotoStandort(
-                        parzellenNr[getSpParzelle().getSelectedItemPosition()],
-                        reihenNr[getSpReihe().getSelectedItemPosition()],
-                        pflanzen[getSpPflanzen().getSelectedItemPosition()],
-                        mBa.currentMarker
-                        )
-                    );
+                try {
+                    spPflanzenCheck++;
+                    if (spPflanzenCheck > 1) {
+                        mBa.fillView(StandortManager.gotoStandort(
+                                        parzellenNr[getSpParzelle().getSelectedItemPosition()],
+                                        reihenNr[getSpReihe().getSelectedItemPosition()],
+                                        pflanzen[getSpPflanzen().getSelectedItemPosition()],
+                                        mBa.currentMarker
+                                )
+                        );
+                    }
+                    setNewPflanzen = false;
+                    setCurrentPosition = false;
+                }catch (Exception e){
+                    new ErrorLog(e,mBa.getApplicationContext());
                 }
-                setNewPflanzen = false;
-                setCurrentPosition = false;
             }
 
             @Override
@@ -605,8 +704,7 @@ public class BoniturActivityHelper {
         cbMarker = (CheckBox) mBa.findViewById(R.id.cbMarker);
         return cbMarker;
     }
-    private void cbMarkerAddSelectionListener()
-    {
+    private void cbMarkerAddSelectionListener(){
         getCbMarker().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -621,8 +719,7 @@ public class BoniturActivityHelper {
             }
         });
     }
-    public void setCbMarkerValue(boolean value)
-    {
+    public void setCbMarkerValue(boolean value){
         if(value==getCbMarker().isChecked())
             return;
         cbMarkerCheck = 0;
@@ -632,35 +729,36 @@ public class BoniturActivityHelper {
 
     private boolean setCurrentPosition = false;
     public void setNewPosition() {
-        if (parzellenNr[getSpParzelle().getSelectedItemPosition()].compareTo(BoniturSafe.CURRENT_PARZELLE)==0) {
-            if (getSpReihe().getCount() > 0) {
-                if(reihenNr[getSpReihe().getSelectedItemPosition()]==BoniturSafe.CURRENT_REIHE)
-                {
-                    if(pflanzen[getSpPflanzen().getSelectedItemPosition()]==BoniturSafe.CURRENT_PFLANZE)
-                    {
+        try {
+            if (parzellenNr[getSpParzelle().getSelectedItemPosition()].compareTo(BoniturSafe.CURRENT_PARZELLE) == 0) {
+                if (getSpReihe().getCount() > 0) {
+                    if (reihenNr[getSpReihe().getSelectedItemPosition()] == BoniturSafe.CURRENT_REIHE) {
+                        if (pflanzen[getSpPflanzen().getSelectedItemPosition()] == BoniturSafe.CURRENT_PFLANZE) {
 
+                        } else {
+                            spPflanzenCheck = 0;
+                            getSpPflanzen().setSelection(pflanzenPos.get(BoniturSafe.CURRENT_PFLANZE), false);
+                        }
                     } else {
-                        spPflanzenCheck = 0;
-                        getSpPflanzen().setSelection(pflanzenPos.get(BoniturSafe.CURRENT_PFLANZE), false);
+                        spReiheCheck = spPflanzenCheck = 0;
+                        setCurrentPosition = true;
+                        getSpReihe().setSelection(reihenNrPos.get(BoniturSafe.CURRENT_REIHE), false);
+                        updateSpPflanzenValues(BoniturSafe.CURRENT_REIHE);
                     }
                 } else {
                     spReiheCheck = spPflanzenCheck = 0;
                     setCurrentPosition = true;
-                    getSpReihe().setSelection(reihenNrPos.get(BoniturSafe.CURRENT_REIHE), false);
-                    updateSpPflanzenValues(BoniturSafe.CURRENT_REIHE);
+                    getSpParzelle().setSelection(parzellenNrPos.get(BoniturSafe.CURRENT_PARZELLE), false);
+                    updateSpReihenValues(BoniturSafe.CURRENT_PARZELLE);
                 }
             } else {
-                spReiheCheck = spPflanzenCheck = 0;
+                spParzelleCheck = spReiheCheck = spPflanzenCheck = 0;
                 setCurrentPosition = true;
                 getSpParzelle().setSelection(parzellenNrPos.get(BoniturSafe.CURRENT_PARZELLE), false);
                 updateSpReihenValues(BoniturSafe.CURRENT_PARZELLE);
             }
-        }
-        else {
-            spParzelleCheck = spReiheCheck = spPflanzenCheck =0;
-            setCurrentPosition = true;
-            getSpParzelle().setSelection(parzellenNrPos.get(BoniturSafe.CURRENT_PARZELLE), false);
-            updateSpReihenValues(BoniturSafe.CURRENT_PARZELLE);
+        }catch (Exception e){
+            new ErrorLog(e,mBa.getApplicationContext());
         }
     }
 
@@ -723,39 +821,42 @@ public class BoniturActivityHelper {
 
     public MarkerWert[] werte;
     public void fillGridView(final MarkerWert[] werte){
-        this.werte = werte;
-        ArrayAdapter arrayAdapter = new ArrayAdapter (mBa, android.R.layout.simple_list_item_2, android.R.id.text1, werte){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                try {
-                    View view = super.getView(position, convertView, parent);
+        try {
+            this.werte = werte;
+            ArrayAdapter arrayAdapter = new ArrayAdapter(mBa, android.R.layout.simple_list_item_2, android.R.id.text1, werte) {
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    try {
+                        View view = super.getView(position, convertView, parent);
 
-                    ((TextView) view.findViewById(android.R.id.text1)).setText(werte[position].value);
-                    ((TextView) view.findViewById(android.R.id.text2)).setText(werte[position].label);
+                        ((TextView) view.findViewById(android.R.id.text1)).setText(werte[position].value);
+                        ((TextView) view.findViewById(android.R.id.text2)).setText(werte[position].label);
 
-                    String where = VersuchWert.COLUMN_VERSUCH+"=? AND "+ VersuchWert.COLUMN_STANDORT+"=? AND "+VersuchWert.COLUMN_MARKER+"=? AND "+VersuchWert.COLUMN_WERT_ID+"=?";
-                    String[] whereArg = new String[] {""+BoniturSafe.VERSUCH_ID, ""+BoniturSafe.CURRENT_STANDORT_ID, ""+mBa.currentMarker.id, ""+werte[position].id};
+                        String where = VersuchWert.COLUMN_VERSUCH + "=? AND " + VersuchWert.COLUMN_STANDORT + "=? AND " + VersuchWert.COLUMN_MARKER + "=? AND " + VersuchWert.COLUMN_WERT_ID + "=?";
+                        String[] whereArg = new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_STANDORT_ID, "" + mBa.currentMarker.id, "" + werte[position].id};
 
-                    Cursor c = BoniturSafe.db.query(
-                            VersuchWert.TABLE_NAME,new String[] {VersuchWert.COLUMN_ID},
-                            where, whereArg, null,null,null);
+                        Cursor c = BoniturSafe.db.query(
+                                VersuchWert.TABLE_NAME, new String[]{VersuchWert.COLUMN_ID},
+                                where, whereArg, null, null, null);
 
-                    if(c.getCount() > 0)
-                        view.setBackgroundColor(gvSelected);
-                    else
-                        view.setBackgroundColor(gvUnSelected);
+                        if (c.getCount() > 0)
+                            view.setBackgroundColor(gvSelected);
+                        else
+                            view.setBackgroundColor(gvUnSelected);
 
-                    return view;
-                }catch (Exception e)
-                {
-                    int a = 1;
+                        return view;
+                    } catch (Exception e) {
+                        new ErrorLog(e, mBa.getApplication());
+                    }
+                    return null;
                 }
-                return null;
-            }
-        };
+            };
 
-        getGvWerte().setAdapter(arrayAdapter);
-        gvWerteAddOnClickListener();
+            getGvWerte().setAdapter(arrayAdapter);
+            gvWerteAddOnClickListener();
+        } catch (Exception e) {
+            new ErrorLog(e,mBa.getApplicationContext());
+        }
     }
 
     private void updateSpinner(Spinner spin, int res){
@@ -925,48 +1026,55 @@ public class BoniturActivityHelper {
 
     //----------------WerteSpeichern----------------------------------------------------------------
     public void saveValue() {
-        switch (mBa.currentMarker.type)
-        {
-            case Marker.MARKER_TYPE_BONITUR: //im gvWerteAddOnClickListener implementiert
-                break;
-            case Marker.MARKER_TYPE_MESSEN:
-                try {
-                    writeValue(VersuchWert.COLUMN_WERT_INT, Integer.parseInt("" + getEtMessenEingabe().getText()));
-                }catch (NumberFormatException e){
-                    //ToDo: implement Fehlermeldung "NUR ZAHLEN ERLAUBT!"
-                    writeValue(VersuchWert.COLUMN_WERT_INT, 0);
-                }
-                break;
-            case Marker.MARKER_TYPE_DATUM:
+        try {
+            switch (mBa.currentMarker.type) {
+                case Marker.MARKER_TYPE_BONITUR: //im gvWerteAddOnClickListener implementiert
+                    break;
+                case Marker.MARKER_TYPE_MESSEN:
+                    try {
+                        writeValue(VersuchWert.COLUMN_WERT_INT, Integer.parseInt("" + getEtMessenEingabe().getText()));
+                    } catch (NumberFormatException e) {
+                        //ToDo: implement Fehlermeldung "NUR ZAHLEN ERLAUBT!"
+                        writeValue(VersuchWert.COLUMN_WERT_INT, 0);
+                    }
+                    break;
+                case Marker.MARKER_TYPE_DATUM:
                     writeValue(VersuchWert.COLUMN_WERT_TEXT, getEtDatumEingabe().getText().toString());
-                break;
-            case Marker.MARKER_TYPE_BEMERKUNG:
+                    break;
+                case Marker.MARKER_TYPE_BEMERKUNG:
                     writeValue(VersuchWert.COLUMN_WERT_TEXT, getEtBemerkungEingabe().getText().toString());
-                break;
-            case Marker.MARKER_TYPE_BBCH:
+                    break;
+                case Marker.MARKER_TYPE_BBCH:
                     writeValue(VersuchWert.COLUMN_WERT_TEXT, getEtBbchWert().getText().toString());
-                break;
+                    break;
+            }
+        }catch (Exception e) {
+            new ErrorLog(e,mBa.getApplicationContext());
         }
     }
 
-    private void writeValue(String column, Object wert)
-    {
-        BoniturSafe.db.delete(
-                VersuchWert.TABLE_NAME,
-                VersuchWert.COLUMN_VERSUCH+"=? AND "+VersuchWert.COLUMN_MARKER+"=? AND "+VersuchWert.COLUMN_STANDORT+"=?",
-                new String[] {""+BoniturSafe.VERSUCH_ID, ""+BoniturSafe.CURRENT_MARKER, ""+BoniturSafe.CURRENT_STANDORT_ID});
+    private void writeValue(String column, Object wert){
+        try {
+            BoniturSafe.db.delete(
+                    VersuchWert.TABLE_NAME,
+                    VersuchWert.COLUMN_VERSUCH + "=? AND " + VersuchWert.COLUMN_MARKER + "=? AND " + VersuchWert.COLUMN_STANDORT + "=?",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_MARKER, "" + BoniturSafe.CURRENT_STANDORT_ID});
 
-        ContentValues values = new ContentValues();
-        values.put(VersuchWert.COLUMN_VERSUCH, BoniturSafe.VERSUCH_ID);
-        values.put(VersuchWert.COLUMN_MARKER, BoniturSafe.CURRENT_MARKER);
-        values.put(VersuchWert.COLUMN_STANDORT, BoniturSafe.CURRENT_STANDORT_ID);
+            ContentValues values = new ContentValues();
+            values.put(VersuchWert.COLUMN_VERSUCH, BoniturSafe.VERSUCH_ID);
+            values.put(VersuchWert.COLUMN_MARKER, BoniturSafe.CURRENT_MARKER);
+            values.put(VersuchWert.COLUMN_STANDORT, BoniturSafe.CURRENT_STANDORT_ID);
+            values.put(VersuchWert.COLUMN_WERT_DATUM, DateTool.currentDate());
 
-        if(wert instanceof String)
-            values.put(column, wert.toString());
-        else
-            values.put(column, (int) wert);
+            if (wert instanceof String)
+                values.put(column, wert.toString());
+            else
+                values.put(column, (int) wert);
 
-        BoniturSafe.db.insert(VersuchWert.TABLE_NAME,null,values);
+            BoniturSafe.db.insert(VersuchWert.TABLE_NAME, null, values);
+        }catch (Exception e){
+            new ErrorLog(e,mBa.getApplicationContext());
+        }
     }
 
     public void gvWerteAddOnClickListener(){
@@ -974,27 +1082,31 @@ public class BoniturActivityHelper {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
 
-                String where = VersuchWert.COLUMN_VERSUCH+"=? AND "+ VersuchWert.COLUMN_STANDORT+"=? AND "+VersuchWert.COLUMN_MARKER+"=? AND "+VersuchWert.COLUMN_WERT_ID+"=?";
-                String[] whereArg = new String[] {""+BoniturSafe.VERSUCH_ID, ""+BoniturSafe.CURRENT_STANDORT_ID, ""+mBa.currentMarker.id, ""+werte[position].id};
+                    String where = VersuchWert.COLUMN_VERSUCH + "=? AND " + VersuchWert.COLUMN_STANDORT + "=? AND " + VersuchWert.COLUMN_MARKER + "=? AND " + VersuchWert.COLUMN_WERT_ID + "=?";
+                    String[] whereArg = new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_STANDORT_ID, "" + mBa.currentMarker.id, "" + werte[position].id};
 
-                Cursor c = BoniturSafe.db.query(
-                        VersuchWert.TABLE_NAME,new String[] {VersuchWert.COLUMN_ID},
-                        where, whereArg, null,null,null);
+                    Cursor c = BoniturSafe.db.query(
+                            VersuchWert.TABLE_NAME, new String[]{VersuchWert.COLUMN_ID},
+                            where, whereArg, null, null, null);
 
-                if(c.getCount() == 0){
-                    view.setBackgroundColor(gvSelected);
-                    ContentValues values = new ContentValues();
-                    values.put(VersuchWert.COLUMN_VERSUCH, BoniturSafe.VERSUCH_ID);
-                    values.put(VersuchWert.COLUMN_MARKER, BoniturSafe.CURRENT_MARKER);
-                    values.put(VersuchWert.COLUMN_STANDORT, BoniturSafe.CURRENT_STANDORT_ID);
-                    values.put(VersuchWert.COLUMN_WERT_ID, werte[position].id);
-                    BoniturSafe.db.insert(VersuchWert.TABLE_NAME,null,values);
-                }
-                else{
-                    view.setBackgroundColor(gvUnSelected);
-                    BoniturSafe.db.delete(
-                            VersuchWert.TABLE_NAME, where, whereArg);
+                    if (c.getCount() == 0) {
+                        view.setBackgroundColor(gvSelected);
+                        ContentValues values = new ContentValues();
+                        values.put(VersuchWert.COLUMN_VERSUCH, BoniturSafe.VERSUCH_ID);
+                        values.put(VersuchWert.COLUMN_MARKER, BoniturSafe.CURRENT_MARKER);
+                        values.put(VersuchWert.COLUMN_STANDORT, BoniturSafe.CURRENT_STANDORT_ID);
+                        values.put(VersuchWert.COLUMN_WERT_ID, werte[position].id);
+                        values.put(VersuchWert.COLUMN_WERT_DATUM, DateTool.currentDate());
+                        BoniturSafe.db.insert(VersuchWert.TABLE_NAME, null, values);
+                    } else {
+                        view.setBackgroundColor(gvUnSelected);
+                        BoniturSafe.db.delete(
+                                VersuchWert.TABLE_NAME, where, whereArg);
+                    }
+                }catch (Exception e){
+                    new ErrorLog(e,mBa.getApplicationContext());
                 }
 
             }
@@ -1013,6 +1125,7 @@ public class BoniturActivityHelper {
             editText.setText(datum);
         }catch (Exception e)
         {
+            new ErrorLog(e,mBa.getApplication());
             e.printStackTrace();
         }
     }
@@ -1058,8 +1171,44 @@ public class BoniturActivityHelper {
 
     //---------------First Empty--------------------------------------------------------------------
     public void gotoFirstEmpty(){
-        mBa.fillView(StandortManager.gotoFirstEmpty());
+        try {
+            mBa.fillView(StandortManager.gotoFirstEmpty());
+        }catch (Exception e){
+            new ErrorLog(e,mBa.getApplicationContext());
+        }
     }
-
     //----------Ende First Empty--------------------------------------------------------------------
+    public void createFoto(){
+        try {
+            // Create an image file name
+            String timeStamp = new SimpleDateFormat("yyMMdd_HHmmss").format(new Date());
+            String imageFileName = mBa.currentStandort.getName() + "_" + timeStamp;
+            File storageDir = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/fotos/");
+
+            if(!storageDir.exists()){
+                storageDir.mkdir();
+            }
+
+            File image = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/fotos/"+imageFileName+".jpg");
+            image.createNewFile();
+
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(mBa.getPackageManager()) != null) {
+                // Create the File where the photo should go
+                // Continue only if the File was successfully created
+                if (image != null) {
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(image));
+                    mBa.startActivityForResult(takePictureIntent, 1);
+                }
+            }
+
+
+
+
+        } catch (IOException e) {
+            new ErrorLog(e,mBa.getApplication());
+            e.printStackTrace();
+        }
+    }
 }

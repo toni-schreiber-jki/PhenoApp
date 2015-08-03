@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.SQLException;
 
 import de.bund.jki.jki_bonitur.BoniturSafe;
+import de.bund.jki.jki_bonitur.ErrorLog;
 
 /**
  * Created by Toni on 10.05.2015.
@@ -29,6 +30,7 @@ public abstract class DbModelInterface {
 
                 return this.id;
             } catch (SQLException e){
+                new ErrorLog(e,null);
                 e.printStackTrace();
                 return -1;
             }

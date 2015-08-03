@@ -53,6 +53,7 @@ public class Reader {
 
             readMarker();
             readStandort();
+            readValues();
         }
     }
 
@@ -177,6 +178,13 @@ public class Reader {
             passport.save();
 
             return passport.id;
+        }
+    }
+
+    private void readValues(){
+        HSSFSheet sheet = mWorkbook.getSheet("Report");
+        if(sheet != null){
+
         }
     }
 

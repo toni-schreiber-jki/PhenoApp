@@ -78,6 +78,9 @@ public class SettingsDialog {
                             Config.SHOW_SORTIMENT = ((CheckBox) mView.findViewById(R.id.cbSortNr)).isChecked();
                             editor.putBoolean(Config.NAME_SHOW_SORTIMENT, Config.SHOW_SORTIMENT);
 
+                            Config.SHOW_EXCEL_DATUM = ((CheckBox) mView.findViewById(R.id.cbExcelDatum)).isChecked();
+                            editor.putBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM);
+
                             editor.apply();
 
                             SettingsDialogFragment.this.getDialog().cancel();
@@ -121,6 +124,7 @@ public class SettingsDialog {
             ((CheckBox) mView.findViewById(R.id.cbPassport)).setChecked(preferences.getBoolean(Config.NAME_SHOW_PASSPORT, Config.SHOW_PASSPORT));
             ((CheckBox) mView.findViewById(R.id.cbSorte)).setChecked(preferences.getBoolean(Config.NAME_SHOW_SORTE, Config.SHOW_SORTE));
             ((CheckBox) mView.findViewById(R.id.cbSortNr)).setChecked(preferences.getBoolean(Config.NAME_SHOW_SORTIMENT, Config.SHOW_SORTIMENT));
+            ((CheckBox) mView.findViewById(R.id.cbExcelDatum)).setChecked(preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM));
         }
     }
 }

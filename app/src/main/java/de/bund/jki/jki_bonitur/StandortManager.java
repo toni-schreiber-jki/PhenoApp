@@ -62,11 +62,10 @@ public class StandortManager {
                 return new Object[]{getValuesFromStandort(c), marker};
 
             return nextReihe(direction, marker);
-        }catch (Exception e)
-        {
-            int a = 1;
+        }catch (Exception e){
+            new ErrorLog(e,null);
             e.printStackTrace();
-            return null;
+            return new Object[]{null,null};
         }
     }
 
@@ -75,17 +74,22 @@ public class StandortManager {
     }
 
     public static Object[] nextReihe(int direction, Object marker) {
-        changeRichtung(PFLANZEN_RICHTUNG);
-        Cursor c = BoniturSafe.db.query(
-                Standort.TABLE_NAME,
-                columns,
-                Standort.COLUMN_VERSUCH+"=? AND " + Standort.COLUMN_PARZELLE + "= ? AND " + Standort.COLUMN_REIHE + " "+(getRealDirection(REIHEN_RICHTUNG,direction) == NEXT ? ">" : "<")+" ? ",
-                new String[]{""+BoniturSafe.VERSUCH_ID, ""+BoniturSafe.CURRENT_PARZELLE,  ""+BoniturSafe.CURRENT_REIHE},
-                null,
-                null,
-                "CAST(" + Standort.COLUMN_REIHE + " AS INTEGER) "+(getRealDirection(REIHEN_RICHTUNG,direction) == NEXT ? "ASC" : "DESC")+", CAST(" + Standort.COLUMN_PFLANZE+ " AS INTEGER) "+(getRealDirection(PFLANZEN_RICHTUNG, direction) == NEXT ? "ASC" : "DESC"),
-                ""+1);
-        return new Object[] {getValuesFromStandort(c), marker};
+        try {
+            changeRichtung(PFLANZEN_RICHTUNG);
+            Cursor c = BoniturSafe.db.query(
+                    Standort.TABLE_NAME,
+                    columns,
+                    Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + "= ? AND " + Standort.COLUMN_REIHE + " " + (getRealDirection(REIHEN_RICHTUNG, direction) == NEXT ? ">" : "<") + " ? ",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_PARZELLE, "" + BoniturSafe.CURRENT_REIHE},
+                    null,
+                    null,
+                    "CAST(" + Standort.COLUMN_REIHE + " AS INTEGER) " + (getRealDirection(REIHEN_RICHTUNG, direction) == NEXT ? "ASC" : "DESC") + ", CAST(" + Standort.COLUMN_PFLANZE + " AS INTEGER) " + (getRealDirection(PFLANZEN_RICHTUNG, direction) == NEXT ? "ASC" : "DESC"),
+                    "" + 1);
+            return new Object[]{getValuesFromStandort(c), marker};
+        }catch (Exception e){
+            new ErrorLog(e,null);
+            return new Object[] {null,null};
+        }
     }
 
     public static Object[] sameStandort(Object marker){
@@ -96,38 +100,46 @@ public class StandortManager {
     }
 
     private static Object[] first(){
-        Cursor c = BoniturSafe.db.query(
-                Standort.TABLE_NAME,
-                columns,
-                Standort.COLUMN_VERSUCH+"=?",
-                new String[]{""+BoniturSafe.VERSUCH_ID},
-                null,
-                null,
-                Standort.COLUMN_PARZELLE+" ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE+ " ASC",
-                ""+1);
+        try {
+            Cursor c = BoniturSafe.db.query(
+                    Standort.TABLE_NAME,
+                    columns,
+                    Standort.COLUMN_VERSUCH + "=?",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID},
+                    null,
+                    null,
+                    Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC",
+                    "" + 1);
 
-        return new Object[] {getValuesFromStandort(c), MarkerManager.next()[0]};
+            return new Object[]{getValuesFromStandort(c), MarkerManager.next()[0]};
+        }catch (Exception e) {
+            new ErrorLog(e,null);
+            return new Object[]{null,null};
+        }
     }
 
     public static Object[] gotoStandort(String parzelle, int reihe, int pflanze, Marker marker){
-        Cursor c = BoniturSafe.db.query(Standort.TABLE_NAME,
-                new String[] {Standort.COLUMN_ID},
-                Standort.COLUMN_PARZELLE+"=? AND "+Standort.COLUMN_REIHE+"= ? AND "+Standort.COLUMN_PFLANZE+"=?",
-                new String[]{parzelle,""+reihe, ""+pflanze},
-                null,
-                null,
-                null,
-                "1");
+        try {
+            Cursor c = BoniturSafe.db.query(Standort.TABLE_NAME,
+                    new String[]{Standort.COLUMN_ID},
+                    Standort.COLUMN_PARZELLE + "=? AND " + Standort.COLUMN_REIHE + "= ? AND " + Standort.COLUMN_PFLANZE + "=?",
+                    new String[]{parzelle, "" + reihe, "" + pflanze},
+                    null,
+                    null,
+                    null,
+                    "1");
 
-        if(c.getCount()==1)
-        {
-            c.moveToFirst();
-            return new Object[]{
-                    getStandortFromId(c.getInt(c.getColumnIndex(Standort.COLUMN_ID))),
-                    marker
-            };
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                return new Object[]{
+                        getStandortFromId(c.getInt(c.getColumnIndex(Standort.COLUMN_ID))),
+                        marker
+                };
+            }
+        }catch (Exception e){
+            new ErrorLog(e,null);
         }
-        return null;
+        return new Object[]{null,null};
     }
 
     private static Object getValuesFromStandort(Cursor c){
@@ -142,90 +154,107 @@ public class StandortManager {
     private static Object getStandortFromId(int id){
         Standort s = Standort.findByPk(id);
 
-        BoniturSafe.CURRENT_PARZELLE    = s.parzelle;
-        BoniturSafe.CURRENT_REIHE       = s.reihe;
-        BoniturSafe.CURRENT_PFLANZE     = s.pflanze;
-        BoniturSafe.CURRENT_STANDORT_ID = id;
+        if(s != null) {
+            BoniturSafe.CURRENT_PARZELLE = s.parzelle;
+            BoniturSafe.CURRENT_REIHE = s.reihe;
+            BoniturSafe.CURRENT_PFLANZE = s.pflanze;
+            BoniturSafe.CURRENT_STANDORT_ID = id;
+        }
 
         return s;
     }
 
     public static Akzession[] getAllAkzessionen(){
-        Akzession[] res = new Akzession[0];
+        try {
+            Akzession[] res = new Akzession[0];
 
-        Cursor c = BoniturSafe.db.query(
-                Akzession.TABLE_NAME,
-                new String[] {Akzession.COLUMN_ID},
-                Akzession.COLUMN_VERSUCH+"=?",
-                new String[] {""+BoniturSafe.VERSUCH_ID},
-                null,
-                null,
-                Akzession.COLUMN_NAME + " ASC"
-                );
+            Cursor c = BoniturSafe.db.query(
+                    Akzession.TABLE_NAME,
+                    new String[]{Akzession.COLUMN_ID},
+                    Akzession.COLUMN_VERSUCH + "=?",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID},
+                    null,
+                    null,
+                    Akzession.COLUMN_NAME + " ASC"
+            );
 
-        if(c.getCount() > 0) {
-            res = new Akzession[c.getCount()];
-            int p = 0;
-            c.moveToFirst();
-            do{
-                res[p] = Akzession.findByPk(c.getInt(c.getColumnIndex(Akzession.COLUMN_ID)));
-                p++;
-            }while (c.moveToNext());
+            if (c.getCount() > 0) {
+                res = new Akzession[c.getCount()];
+                int p = 0;
+                c.moveToFirst();
+                do {
+                    res[p] = Akzession.findByPk(c.getInt(c.getColumnIndex(Akzession.COLUMN_ID)));
+                    p++;
+                } while (c.moveToNext());
+            }
+
+            return res;
+        }catch (Exception e){
+            new ErrorLog(e,null);
+            return new Akzession[0];
         }
-
-        return res;
     }
 
     public static Passport[] getAllPassport(){
-        Passport[] res = new Passport[0];
+        try {
+            Passport[] res = new Passport[0];
 
-        Cursor c = BoniturSafe.db.query(
-                Passport.TABLE_NAME,
-                new String[] {Passport.COLUMN_ID},
-                Passport.COLUMN_VERSUCH+"=?",
-                new String[] {""+BoniturSafe.VERSUCH_ID},
-                null,
-                null,
-                Passport.COLUMN_LEITNAME + " ASC"
-        );
+            Cursor c = BoniturSafe.db.query(
+                    Passport.TABLE_NAME,
+                    new String[]{Passport.COLUMN_ID},
+                    Passport.COLUMN_VERSUCH + "=?",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID},
+                    null,
+                    null,
+                    Passport.COLUMN_LEITNAME + " ASC"
+            );
 
-        if(c.getCount() > 0) {
-            res = new Passport[c.getCount()];
-            int p = 0;
-            c.moveToFirst();
-            do{
-                res[p] = Passport.findByPk(c.getInt(c.getColumnIndex(Passport.COLUMN_ID)));
-                p++;
-            }while (c.moveToNext());
+            if (c.getCount() > 0) {
+                res = new Passport[c.getCount()];
+                int p = 0;
+                c.moveToFirst();
+                do {
+                    res[p] = Passport.findByPk(c.getInt(c.getColumnIndex(Passport.COLUMN_ID)));
+                    p++;
+                } while (c.moveToNext());
+            }
+
+            return res;
+        }catch (Exception e){
+            new ErrorLog(e,null);
+            return new Passport[0];
         }
-
-        return res;
     }
 
     public static Standort[] getAllStandorte(){
-        Standort[] res = new Standort[0];
+        try {
+            Standort[] res = new Standort[0];
 
-        Cursor c = BoniturSafe.db.query(
-                Standort.TABLE_NAME,
-                new String[] {Standort.COLUMN_ID},
-                Standort.COLUMN_VERSUCH+"=?",
-                new String[] {""+BoniturSafe.VERSUCH_ID},
-                null,
-                null,
-                Standort.COLUMN_PARZELLE + " ASC, CAST(" + Standort.COLUMN_REIHE + " AS INTEGER) ASC, CAST(" + Standort.COLUMN_PFLANZE + " AS INTEGER) ASC"
-        );
+            Cursor c = BoniturSafe.db.query(
+                    Standort.TABLE_NAME,
+                    new String[]{Standort.COLUMN_ID},
+                    Standort.COLUMN_VERSUCH + "=?",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID},
+                    null,
+                    null,
+                    Standort.COLUMN_PARZELLE + " ASC, CAST(" + Standort.COLUMN_REIHE + " AS INTEGER) ASC, CAST(" + Standort.COLUMN_PFLANZE + " AS INTEGER) ASC"
+            );
 
-        if(c.getCount() > 0) {
-            res = new Standort[c.getCount()];
-            int p = 0;
-            c.moveToFirst();
-            do{
-                res[p] = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
-                p++;
-            }while (c.moveToNext());
+            if (c.getCount() > 0) {
+                res = new Standort[c.getCount()];
+                int p = 0;
+                c.moveToFirst();
+                do {
+                    res[p] = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+                    p++;
+                } while (c.moveToNext());
+            }
+
+            return res;
+        } catch (Exception e){
+            new ErrorLog(e,null);
+            return new Standort[0];
         }
-
-        return res;
     }
 
     private static int getRealDirection(int art, int richtung){
@@ -258,35 +287,36 @@ public class StandortManager {
     }
 
     public static Object[] gotoFirstEmpty(){
-        Cursor c = BoniturSafe.db.rawQuery(
-                "SELECT standort._id FROM "+Standort.TABLE_NAME+"  LEFT JOIN versuchWert ON "+Standort.TABLE_NAME+"._id = versuchWert.standortId " + "\n" +
-                        "WHERE "+Standort.TABLE_NAME+".versuchId = ? " + "\n" +
-                        "GROUP By "+Standort.TABLE_NAME+"._id " + "\n" +
-                        "HAVING GROUP_CONCAT(versuchWert.markerId) <> (SELECT DISTINCT GROUP_CONCAT(_id) FROM marker WHERE versuchId=? GROUP BY versuchId ORDER BY _id) OR GROUP_CONCAT(versuchWert.markerId) is null " + "\n" +
-                        "ORDER BY "+Standort.TABLE_NAME+".parzelle ASC, "+Standort.TABLE_NAME+".reihe ASC, "+Standort.TABLE_NAME+".pflanze ASC, versuchWert.markerId ASC " + "\n" +
-                        "LIMIT 1",
-                new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.VERSUCH_ID}
-        );
+        try {
+            Cursor c = BoniturSafe.db.rawQuery(
+                    "SELECT standort._id FROM " + Standort.TABLE_NAME + "  LEFT JOIN versuchWert ON " + Standort.TABLE_NAME + "._id = versuchWert.standortId " + "\n" +
+                            "WHERE " + Standort.TABLE_NAME + ".versuchId = ? " + "\n" +
+                            "GROUP By " + Standort.TABLE_NAME + "._id " + "\n" +
+                            "HAVING GROUP_CONCAT(versuchWert.markerId) <> (SELECT DISTINCT GROUP_CONCAT(_id) FROM marker WHERE versuchId=? GROUP BY versuchId ORDER BY _id) OR GROUP_CONCAT(versuchWert.markerId) is null " + "\n" +
+                            "ORDER BY " + Standort.TABLE_NAME + ".parzelle ASC, " + Standort.TABLE_NAME + ".reihe ASC, " + Standort.TABLE_NAME + ".pflanze ASC, versuchWert.markerId ASC " + "\n" +
+                            "LIMIT 1",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.VERSUCH_ID}
+            );
 
-        if (c.getCount() == 1) {
-            c.moveToFirst();
-            Standort s = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
-            Marker m = MarkerManager.getFirstUnusedMarker(s.id);
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                Standort s = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+                Marker m = MarkerManager.getFirstUnusedMarker(s.id);
 
-            BoniturSafe.CURRENT_STANDORT_ID = s.id;
-            BoniturSafe.CURRENT_PARZELLE    = s.parzelle;
-            BoniturSafe.CURRENT_REIHE       = s.reihe;
-            BoniturSafe.CURRENT_PFLANZE     = s.pflanze;
+                BoniturSafe.CURRENT_STANDORT_ID = s.id;
+                BoniturSafe.CURRENT_PARZELLE = s.parzelle;
+                BoniturSafe.CURRENT_REIHE = s.reihe;
+                BoniturSafe.CURRENT_PFLANZE = s.pflanze;
 
-            BoniturSafe.CURRENT_MARKER      = m.id;
+                BoniturSafe.CURRENT_MARKER = m.id;
 
-            return new Object[]{s, m};
+                return new Object[]{s, m};
+            }
+        }catch (Exception e) {
+            new ErrorLog(e,null);
         }
 
-
         return new Object[]{null, null};
-
-
     }
 
 }
