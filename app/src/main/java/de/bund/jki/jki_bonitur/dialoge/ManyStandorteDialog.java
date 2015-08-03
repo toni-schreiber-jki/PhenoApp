@@ -33,9 +33,9 @@ public class ManyStandorteDialog {
 
     public ManyStandorteDialog(BoniturActivity ba, Standort[] standorte) {
         ManyStandortDialogFragment msd = new ManyStandortDialogFragment();
-        msd.mBa = mBa;
-        msd.mStandorte = mStandorte;
-        msd.show(mBa.getFragmentManager(),"");
+        msd.mBa = ba;
+        msd.mStandorte = standorte;
+        msd.show(ba.getFragmentManager(),"");
     }
 
     public static class ManyStandortDialogFragment extends DialogFragment {
@@ -68,7 +68,7 @@ public class ManyStandorteDialog {
             ((GridView) mView.findViewById(R.id.gvStandort)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //ToDo: Logik Standortwechsel implementieren
+                    mBa.bah.gotoStandort(mStandorte[position]);
                     ManyStandortDialogFragment.this.getDialog().cancel();
                 }
             });

@@ -38,6 +38,7 @@ import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
 import de.bund.jki.jki_bonitur.db.VersuchWert;
+import de.bund.jki.jki_bonitur.dialoge.ManyStandorteDialog;
 import de.bund.jki.jki_bonitur.tools.BoniturTextWatcher;
 import de.bund.jki.jki_bonitur.tools.DateTool;
 
@@ -143,6 +144,10 @@ public class BoniturActivityHelper {
         BoniturSafe.MARKER_FILTER_ACTIVE = false;
         mBa.fillView(StandortManager.sameStandort(MarkerManager.next()[0]));
         BoniturSafe.MARKER_FILTER_ACTIVE = true;
+    }
+
+    public void gotoStandort(Standort s){
+        mBa.fillView(StandortManager.gotoStandort(s.parzelle,s.reihe,s.pflanze,mBa.currentMarker));
     }
     //-----------Ende zurück / vor Buttons ---------------------------------------------------------
 
@@ -271,10 +276,23 @@ public class BoniturActivityHelper {
                     Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC"
             );
 
-            if (c.getCount() >= 1) {
+            if (c.getCount() == 1) {
                 c.moveToFirst();
                 Standort s = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
                 mBa.fillView(new Object[]{s, mBa.currentMarker});
+            }
+
+            else{
+                Standort[] standorte = new Standort[c.getCount()];
+                c.moveToFirst();
+                int s = 0;
+                do{
+                    standorte[s] = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+                    s++;
+                }while (c.moveToNext());
+
+                if(c.getCount() > 0)
+                    new ManyStandorteDialog(mBa,standorte);
             }
         }catch (Exception e){
             new ErrorLog(e,mBa.getApplicationContext());
@@ -321,8 +339,8 @@ public class BoniturActivityHelper {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    spAkzessionCheck++;
-                    if (position > 0 && spAkzessionCheck > 1) {
+                    spPassportCheck++;
+                    if (position > 0 && spPassportCheck > 1) {
                         Passport p = Passport.findByPk(passportIds[position]);
                         gotoPassport(p);
                     }
@@ -350,12 +368,24 @@ public class BoniturActivityHelper {
                     Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC"
             );
 
-            if (c.getCount() >= 1) {
+            if (c.getCount() == 1) {
                 c.moveToFirst();
                 Standort s = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
                 mBa.fillView(new Object[]{s, mBa.currentMarker});
             }
-            //Todo: Logik für Akzessionswechsel
+
+            else{
+                Standort[] standorte = new Standort[c.getCount()];
+                c.moveToFirst();
+                int s = 0;
+                do{
+                    standorte[s] = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+                    s++;
+                }while (c.moveToNext());
+
+                if(c.getCount() > 0)
+                    new ManyStandorteDialog(mBa,standorte);
+            }
         }catch (Exception e) {
             new ErrorLog(e,mBa.getApplicationContext());
         }
