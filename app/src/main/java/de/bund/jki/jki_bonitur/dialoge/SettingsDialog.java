@@ -114,6 +114,8 @@ public class SettingsDialog {
             ((TextView) mView.findViewById(R.id.tvZickZackIcon)).setTypeface(typeface);
             ((TextView) mView.findViewById(R.id.tvFirstEmptyIcon)).setTypeface(typeface);
             ((TextView) mView.findViewById(R.id.tvElternIcon)).setTypeface(typeface);
+            ((TextView) mView.findViewById(R.id.tvCalendar)).setTypeface(typeface);
+            //((TextView) mView.findViewById(R.id.tvExcel)).setTypeface(typeface);
 
 
             ((EditText) mView.findViewById(R.id.etSpeicherOrt)).setText(preferences.getString(Config.NAME_BASE_FOLDER, Config.BaseFolder));

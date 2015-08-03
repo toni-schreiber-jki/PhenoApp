@@ -3,6 +3,7 @@ package de.bund.jki.jki_bonitur;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Environment;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -103,10 +105,19 @@ public class VersuchListActivity extends Activity {
 
     public void onClick(final View v)
     {
-        if(v.getId() == R.id.btnSettings){
+        if(v.getId() == R.id.btnSettingList){
             new SettingsDialog(this);
         }
     }
 
+    public void init_typefaces() {
+        Typeface typeface = Typeface.createFromAsset(this.getAssets(),"fonts/fontawesome.ttf");
+        int[] buttonIds = new int[]{
+                R.id.btnSettingList,
+        };
 
+        for (int id: buttonIds) {
+            ((Button) this.findViewById(id)).setTypeface(typeface);
+        }
+    }
 }

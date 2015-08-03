@@ -240,8 +240,8 @@
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="\uf073"
-                    android:id="@+id/textView30" />
+                    android:text="\uf1c3\uf073"
+                    android:id="@+id/tvCalendar" />
 
                 <TextView
                     android:layout_width="225dp"
@@ -254,6 +254,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/cbExcelDatum" />
+
             </LinearLayout>
 
         </LinearLayout>

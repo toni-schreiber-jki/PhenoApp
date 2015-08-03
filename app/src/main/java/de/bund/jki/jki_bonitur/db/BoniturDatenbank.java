@@ -13,7 +13,7 @@ import de.bund.jki.jki_bonitur.ErrorLog;
 public class BoniturDatenbank extends SQLiteOpenHelper {
 
     public static final String DATENBANK_NAME = "bonitur.sqlite";
-    public static final int DATENBANK_VERSION = 2;
+    public static final int DATENBANK_VERSION = 3;
 
     public BoniturDatenbank(Context context) {
          super(
@@ -37,6 +37,9 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
             db.execSQL(Akzession.CREATE_TABLE);
             db.execSQL(Standort.ALTER_TABLE_1);
             db.execSQL(Standort.ALTER_TABLE_2);
+            for(int v=0; v <= this.DATENBANK_VERSION; v++){
+                this.onUpgrade(db,v,v+1);
+            }
         } catch (Exception e)
         {
             new ErrorLog(e,null);
@@ -50,7 +53,8 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
         {
             switch (newVersion)
             {
-                case 2: break;
+                case 2: db.execSQL(Standort.ALTER_TABLE_3); break;
+                case 3: db.execSQL(Standort.ALTER_TABLE_4); break;
             }
         }catch (Exception e)
         {

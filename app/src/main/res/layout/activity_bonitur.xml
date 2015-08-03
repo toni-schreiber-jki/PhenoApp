@@ -1,5 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -57,28 +59,36 @@
                 android:layout_height="75dp" >
 
                 <Spinner
-                    style="@android:style/Widget.Holo.Light.Spinner"
-                    android:layout_width="100dp"
+                    style="@style/JKI_Spinner"
+                    android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/spParzelle"
                     android:layout_marginLeft="20dp"
-                    android:layout_gravity="top" />
+                    android:layout_gravity="top"
+                    tools:listitem="@layout/jki_simple_list_item_1"
+                    tools:text="99"
+                    />
 
                 <Spinner
                     style="@android:style/Widget.Holo.Light.Spinner"
-                    android:layout_width="100dp"
+                    android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/spReihe"
                     android:layout_marginLeft="10dp"
-                    android:layout_gravity="top" />
+                    android:layout_gravity="top"
+                    tools:listitem="@layout/jki_simple_list_item_1"
+                    tools:text="99"/>
 
                 <Spinner
                     style="@android:style/Widget.Holo.Light.Spinner"
-                    android:layout_width="100dp"
+                    android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/spPflanze"
                     android:layout_marginLeft="10dp"
-                    android:layout_gravity="top" />
+                    android:layout_gravity="top"
+                    tools:listitem="@layout/jki_simple_list_item_1"
+                    tools:text="99"
+                    />
 
             </LinearLayout>
 
@@ -416,7 +426,7 @@
 
                     <Spinner
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="66dp"
                         android:id="@+id/spMarker"
                         android:layout_weight="1"
                         style="@android:style/Widget.Holo.Light.Spinner"/>

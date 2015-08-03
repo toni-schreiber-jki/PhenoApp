@@ -23,6 +23,7 @@ public class Standort extends DbModelInterface {
     public String vater;
     public String sortimentsnummer;
     public String freifeld;
+    public String info;
 
     public static String COLUMN_ID              = "_id";
     public static String COLUMN_VERSUCH         = "versuchId";
@@ -37,6 +38,7 @@ public class Standort extends DbModelInterface {
     public static String COLUMN_VATER           = "Vater";
     public static String COLUMN_SORTIMENTNR     = "Sortimentsnummer";
     public static String COLUMN_FREIFELD        = "freifeld";
+    public static String COLUMN_INFO            = "information";
 
     public static String TABLE_NAME = "standort";
 
@@ -61,6 +63,7 @@ public class Standort extends DbModelInterface {
     public static String ALTER_TABLE_1 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_AKZESSION+" INTEGER REFERENCES "+ Akzession.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n';
     public static String ALTER_TABLE_2 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_PASSPORT +" INTEGER REFERENCES "+ Passport.TABLE_NAME + "("+Versuch.COLUMN_ID+")"+ '\n';
     public static String ALTER_TABLE_3 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_FREIFELD +" TEXT" +'\n';
+    public static String ALTER_TABLE_4 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_INFO     +" TEXT" +'\n';
 
 
     public Standort()
@@ -90,6 +93,9 @@ public class Standort extends DbModelInterface {
         if(sortimentsnummer != null)
             values.put(COLUMN_SORTIMENTNR,  sortimentsnummer.isEmpty() ? null: sortimentsnummer);
 
+        if(info != null)
+            values.put(COLUMN_INFO,         info.isEmpty() ? null: info);
+
         id = saveRow(id,values);
         return id==-1;
     }
@@ -117,6 +123,7 @@ public class Standort extends DbModelInterface {
             res.akzessionId = c.getInt(c.getColumnIndex(Standort.COLUMN_AKZESSION));
             res.passportId = c.getInt(c.getColumnIndex(Standort.COLUMN_PASSPORT));
             res.freifeld = c.isNull(c.getColumnIndex(Standort.COLUMN_FREIFELD)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_FREIFELD));
+            res.info = c.isNull(c.getColumnIndex(Standort.COLUMN_INFO)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_INFO));
 
             return res;
         }

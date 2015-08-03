@@ -1,8 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- the theme applied to the application or activity -->
+    <!-- <style name="PositionSpinner" parent="@android:style/Widget.Holo.Light.Spinner"> -->
+    <style name="JKI_Spinner" parent="@android:style/Widget.Holo.Light.Spinner">
+
+    </style>
+
+    <style name="JKI.Spinner.Position.Top.TextAppearance" parent="@android:style/TextAppearance.Holo.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/darkred</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

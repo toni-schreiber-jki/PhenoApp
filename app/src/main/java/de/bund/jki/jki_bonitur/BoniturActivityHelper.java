@@ -560,7 +560,7 @@ public class BoniturActivityHelper {
                     parzellenList.add(parzellenNr[p]);
                     p++;
                 } while (c.moveToNext());
-                getSpParzelle().setAdapter(new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, parzellenList) {
+                getSpParzelle().setAdapter(new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, parzellenList) {
                 });
             }
         }catch (Exception e){
@@ -603,7 +603,7 @@ public class BoniturActivityHelper {
                     reihenList.add("" + reihenNr[p]);
                     p++;
                 } while (c.moveToNext());
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, reihenList) {};
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, reihenList) {};
                 getSpReihe().setAdapter(adapter);
                 if(setCurrentPosition){
                     spReiheCheck = 0;
@@ -679,7 +679,7 @@ public class BoniturActivityHelper {
                     pflanzenList.add("" + pflanzen[p]);
                     p++;
                 } while (c.moveToNext());
-                getSpPflanzen().setAdapter(new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, pflanzenList) {
+                getSpPflanzen().setAdapter(new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, pflanzenList) {
                 });
                 if(setCurrentPosition){
                     spPflanzenCheck = 0;
