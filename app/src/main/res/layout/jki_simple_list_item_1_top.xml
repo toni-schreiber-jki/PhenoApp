@@ -18,7 +18,7 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="@style/JKI.Spinner.TextAppearance"
+    android:textAppearance="@style/JKI.Spinner.Position.Top.TextAppearance"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeightSmall" />
     <!--android:paddingStart="?android:attr/listPreferredItemPaddingStart"

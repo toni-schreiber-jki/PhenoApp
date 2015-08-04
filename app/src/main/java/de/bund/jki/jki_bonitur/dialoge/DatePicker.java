@@ -4,12 +4,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.widget.EditText;
 
 import java.util.Calendar;
 
 import de.bund.jki.jki_bonitur.BoniturActivity;
-import de.bund.jki.jki_bonitur.R;
 
 /**
  * Created by toni.schreiber on 19.06.2015.

@@ -1,7 +1,5 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -65,29 +63,28 @@
                     android:id="@+id/spParzelle"
                     android:layout_marginLeft="20dp"
                     android:layout_gravity="top"
-                    tools:listitem="@layout/jki_simple_list_item_1"
+                    tools:listitem="@layout/jki_simple_list_item_1_top"
                     tools:text="99"
                     />
 
                 <Spinner
-                    style="@android:style/Widget.Holo.Light.Spinner"
+                    style="@style/JKI_Spinner"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/spReihe"
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="top"
-                    tools:listitem="@layout/jki_simple_list_item_1"
-                    tools:text="99"/>
+                    tools:listitem="@layout/jki_simple_list_item_1_top"/>
 
                 <Spinner
-                    style="@android:style/Widget.Holo.Light.Spinner"
+                    style="@style/JKI_Spinner"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:id="@+id/spPflanze"
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="top"
-                    tools:listitem="@layout/jki_simple_list_item_1"
-                    tools:text="99"
+                    tools:listitem="@layout/jki_simple_list_item_1_top"
+
                     />
 
             </LinearLayout>
@@ -237,253 +234,239 @@
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:layout_marginTop="5dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="30dp"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/llStandort"
+                    android:background="#ffffff">
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Standort:"
                         android:id="@+id/textView"
-                        android:layout_alignParentTop="true" />
+                        android:layout_alignParentTop="true"
+                        style="@style/JKI_Eigenschaft_Title" />
 
                     <TextView
+                        android:id="@+id/tvStandort"
+                        android:layout_above="@+id/tvCode"
+                        style="@style/JKI_Eigenschaft_Value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="XX-XXX-XXX"
-                        android:id="@+id/tvStandort"
-                        android:layout_above="@+id/tvCode" />
+                        tools:text="XX-XXX-XXX"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/llAkzession">
+                    android:layout_height="45dp"
+                    android:id="@+id/llAkzession"
+                    android:background="#ffdedede">
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Akzession"
                         android:id="@+id/textView99"
-                        android:layout_alignParentTop="true" />
+                        android:layout_alignParentTop="true"
+                        style="@style/JKI_Eigenschaft_Title" />
 
                     <Spinner
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spAkzession" />
+                        android:layout_height="45dp"
+                        android:id="@+id/spAkzession"
+                        style="@style/JKI_Spinner"
+                        tools:listitem="@layout/jki_simple_list_item_1"
+                        />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="45dp"
                     android:id="@+id/llPassport">
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Passport"
                         android:id="@+id/textView9"
-                        android:layout_alignParentTop="true" />
+                        android:layout_alignParentTop="true"
+                        style="@style/JKI_Eigenschaft_Title" />
 
                     <Spinner
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spPassport" />
+                        android:layout_height="45dp"
+                        android:id="@+id/spPassport"
+                        style="@style/JKI_Spinner"
+                        tools:listitem="@layout/jki_simple_list_item_1"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="30dp"
                     android:id="@+id/llSorte">
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Sorte/Z. Stamm"
                         android:id="@+id/textView12"
-                        android:layout_alignParentTop="true" />
+                        android:layout_alignParentTop="true"
+                        style="@style/JKI_Eigenschaft_Title" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Medium Text"
                         android:id="@+id/tvSorteZucht"
-                        android:textColor="#000" />
+                        style="@style/JKI_Eigenschaft_Value"
+                        tools:text="Sorte 1 / Zuchstamm 1"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="30dp"
                     android:id="@+id/llEltern">
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Eltern"
                         android:id="@+id/textView10"
-                        android:layout_alignParentTop="true" />
+                        android:layout_alignParentTop="true"
+                        style="@style/JKI_Eigenschaft_Title" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Medium Text"
                         android:id="@+id/tvEltern"
-                        android:textColor="#000" />
+                        style="@style/JKI_Eigenschaft_Value"
+                        tools:text="Mutter / Vater"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="30dp"
                     android:id="@+id/llSortiment">
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Sortimentsnr"
                         android:id="@+id/textView14"
-                        android:layout_alignParentTop="true" />
+                        android:layout_alignParentTop="true"
+                        style="@style/JKI_Eigenschaft_Title" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Medium Text"
                         android:id="@+id/tvSortiment"
-                        android:textColor="#000" />
+                        style="@style/JKI_Eigenschaft_Value"
+                        tools:text="0123455"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="30dp"
                     android:id="@+id/llFreifeld" >
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Information"
                         android:id="@+id/textView29"
-                        android:layout_alignParentTop="true" />
+                        style="@style/JKI_Eigenschaft_Title" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Medium Text"
                         android:id="@+id/tvFreifeld"
-                        android:textColor="#000" />
+                        style="@style/JKI_Eigenschaft_Value"
+                        tools:text="Freifeld"/>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:id="@+id/llEigenschaft">
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Eigenschaft:"
+                        android:text="Medium Text"
                         android:id="@+id/textView4"
-                        android:layout_alignTop="@+id/tvCode"/>
+                        style="@style/JKI_Eigenschaft_Title" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="OIV XXX"
+                        tools:text="OIV XXX"
                         android:id="@+id/tvCode"
                         android:layout_below="@+id/textView"
                         android:visibility="gone" />
 
                     <Spinner
                         android:layout_width="wrap_content"
-                        android:layout_height="66dp"
+                        android:layout_height="45dp"
                         android:id="@+id/spMarker"
                         android:layout_weight="1"
-                        style="@android:style/Widget.Holo.Light.Spinner"/>
+                        style="@style/JKI_Spinner"
+                        tools:listitem="@layout/jki_simple_list_item_1"/>
 
                     <CheckBox
-                        android:layout_width="66dp"
-                        android:layout_height="66dp"
+                        android:layout_width="35dp"
+                        android:layout_height="45dp"
                         android:scaleX="1.5"
                         android:scaleY="1.5"
                         android:id="@+id/cbMarker"
-                        android:gravity="center_vertical|center_horizontal" />
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_marginLeft="1dp" />
 
-                    <Button
-                        android:layout_width="66dp"
-                        android:layout_height="66dp"
-                        android:text="\uf060"
-                        android:id="@+id/btnPrevMarker"
-                        android:textSize="45dp"
-                        android:nestedScrollingEnabled="false"
-                        android:onClick="onClick"
-                        android:layout_below="@+id/btnUp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="100dp"
+                        android:layout_height="fill_parent">
 
-                    <Button
-                        android:layout_width="66dp"
-                        android:layout_height="66dp"
-                        android:text="\uf061"
-                        android:id="@+id/btnNextMarker"
-                        android:textSize="45dp"
-                        android:onClick="onClick"
-                        android:layout_below="@+id/btnUp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        <Button
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:text="\uf060"
+                            android:id="@+id/btnPrevMarker"
+                            android:textSize="25dp"
+                            android:nestedScrollingEnabled="false"
+                            android:onClick="onClick"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Button
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:text="\uf061"
+                            android:id="@+id/btnNextMarker"
+                            android:textSize="25dp"
+                            android:onClick="onClick"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="30dp"
+                    android:id="@+id/llBeschreibungKurz">
 
                     <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Merkmal:"
                         android:id="@+id/textView6"
-                        android:layout_alignTop="@+id/tvMerkmal" />
+                        style="@style/JKI_Eigenschaft_Title" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Junger Trieb: Verteilung der Anthocyanfärbung der Wollbehaarung an der Triebspitze"
+                        tools:text="Junger Trieb: Verteilung der Anthocyanfärbung der Wollbehaarung"
                         android:id="@+id/tvMerkmal"
-                        android:textColor="#000" />
+                        style="@style/JKI_Eigenschaft_Value" />
                 </LinearLayout>
 
                 <TextView
@@ -562,12 +545,24 @@
                 android:layout_toRightOf="@+id/relativeLayout2"
                 android:layout_toEndOf="@+id/relativeLayout2" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Standortinformationen"
+                android:id="@+id/btnStandortInfo"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:onClick="onClick" />
+
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:layout_marginLeft="5dp">
 
             <LinearLayout
                 android:orientation="horizontal"

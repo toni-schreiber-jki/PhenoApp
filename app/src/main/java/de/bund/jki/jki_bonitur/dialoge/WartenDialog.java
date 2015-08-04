@@ -3,20 +3,12 @@ package de.bund.jki.jki_bonitur.dialoge;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import de.bund.jki.jki_bonitur.BoniturActivity;
-import de.bund.jki.jki_bonitur.BoniturSafe;
 import de.bund.jki.jki_bonitur.R;
-import de.bund.jki.jki_bonitur.config.Config;
-import de.bund.jki.jki_bonitur.excel.Writer;
 
 /**
  * Created by toni.schreiber on 19.06.2015.

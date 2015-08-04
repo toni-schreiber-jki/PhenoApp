@@ -2,7 +2,6 @@ package de.bund.jki.jki_bonitur.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.SQLException;
 
 import de.bund.jki.jki_bonitur.BoniturSafe;
 

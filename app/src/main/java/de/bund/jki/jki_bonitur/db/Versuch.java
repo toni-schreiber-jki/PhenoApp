@@ -1,11 +1,6 @@
 package de.bund.jki.jki_bonitur.db;
 
 import android.content.ContentValues;
-import android.database.SQLException;
-
-import org.apache.poi.ss.formula.ptg.TblPtg;
-
-import de.bund.jki.jki_bonitur.BoniturSafe;
 
 /**
  * Created by Toni on 10.05.2015.

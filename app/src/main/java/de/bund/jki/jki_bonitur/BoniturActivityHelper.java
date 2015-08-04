@@ -114,6 +114,33 @@ public class BoniturActivityHelper {
         }
     }
 
+    public void init_TabFarbe(){
+        int[] buttonIds = new int[]{
+                R.id.llStandort,
+                R.id.llAkzession,
+                R.id.llPassport,
+                R.id.llSorte,
+                R.id.llEltern,
+                R.id.llSortiment,
+                R.id.llFreifeld,
+                R.id.llEigenschaft,
+                R.id.llBeschreibungKurz,
+                R.id.tvBeschreibung,
+        };
+
+        int count = 0;
+
+        for (int id: buttonIds) {
+            View v = mBa.findViewById(id);
+            if(v.getVisibility() == View.VISIBLE){
+                count++;
+                v.setBackgroundResource( count%2==0 ? R.color.row_n : R.color.row_n1);
+            }
+        }
+
+
+    }
+
     public void init_textListener() {
         getEtBbchWert().addTextChangedListener(new BoniturTextWatcher(mBa));
         getEtDatumEingabe().addTextChangedListener(new BoniturTextWatcher(mBa));
@@ -178,11 +205,11 @@ public class BoniturActivityHelper {
                 p++;
             }
             markerIds = markerIdList.toArray(new Integer[]{});
-            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, markerList) {
+            return new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, markerList) {
             };
         }catch (Exception e){
             new ErrorLog(e,mBa.getApplicationContext());
-            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, new ArrayList<String>());
+            return new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, new ArrayList<String>());
         }
     }
     private void markerSpinnerAddSelectListener() {
@@ -235,11 +262,11 @@ public class BoniturActivityHelper {
                 p++;
             }
             akzessionsIds = akzessionNrList.toArray(new Integer[]{});
-            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, akzessionList) {
+            return new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, akzessionList) {
             };
         }catch (Exception e){
             new ErrorLog(e,mBa.getApplicationContext());
-            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, new ArrayList<String>());
+            return new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, new ArrayList<String>());
         }
     }
     private void akzessionSpinnerAddSelectListener(){
@@ -326,11 +353,11 @@ public class BoniturActivityHelper {
                 p++;
             }
             passportIds = passportNrList.toArray(new Integer[]{});
-            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, passportList) {
+            return new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, passportList) {
             };
         }catch (Exception e) {
             new ErrorLog(e,mBa.getApplicationContext());
-            return new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, new ArrayList<String>());
+            return new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, new ArrayList<String>());
         }
     }
     private void passportSpinnerAddSelectListener(){
@@ -560,7 +587,7 @@ public class BoniturActivityHelper {
                     parzellenList.add(parzellenNr[p]);
                     p++;
                 } while (c.moveToNext());
-                getSpParzelle().setAdapter(new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, parzellenList) {
+                getSpParzelle().setAdapter(new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1_top, parzellenList) {
                 });
             }
         }catch (Exception e){
@@ -603,7 +630,7 @@ public class BoniturActivityHelper {
                     reihenList.add("" + reihenNr[p]);
                     p++;
                 } while (c.moveToNext());
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, reihenList) {};
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1_top, reihenList) {};
                 getSpReihe().setAdapter(adapter);
                 if(setCurrentPosition){
                     spReiheCheck = 0;
@@ -679,7 +706,7 @@ public class BoniturActivityHelper {
                     pflanzenList.add("" + pflanzen[p]);
                     p++;
                 } while (c.moveToNext());
-                getSpPflanzen().setAdapter(new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1, pflanzenList) {
+                getSpPflanzen().setAdapter(new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1_top, pflanzenList) {
                 });
                 if(setCurrentPosition){
                     spPflanzenCheck = 0;
@@ -1240,4 +1267,12 @@ public class BoniturActivityHelper {
             e.printStackTrace();
         }
     }
+
+    public void openStandortInformation(){
+        StandortInformationActivity.mStandort = mBa.currentStandort;
+        Intent i = new Intent(mBa, StandortInformationActivity.class);
+        mBa.startActivity(i);
+    }
+
+
 }

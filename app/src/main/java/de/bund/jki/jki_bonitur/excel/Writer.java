@@ -7,8 +7,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.util.Iterator;
-
 import de.bund.jki.jki_bonitur.BoniturSafe;
 import de.bund.jki.jki_bonitur.ErrorLog;
 import de.bund.jki.jki_bonitur.MarkerManager;

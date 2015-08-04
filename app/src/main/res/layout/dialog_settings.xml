@@ -18,7 +18,8 @@
             android:textColor="#46b8da"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            android:focusableInTouchMode="false" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -81,7 +82,9 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/cbZickTack" />
+                    android:id="@+id/cbZickTack"
+                    android:focusableInTouchMode="false"
+                    ><requestFocus></requestFocus></CheckBox>
 
             </LinearLayout>
 

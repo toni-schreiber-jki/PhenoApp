@@ -1,0 +1,308 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:background="@color/ripple_material_light">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/imageView2"
+
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/logo" />
+            <!--
+            android:src="@drawable/icon"
+            -->
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Obst-Bonitur"
+                    android:id="@+id/textView7"
+                    android:layout_marginRight="5dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Datei: xxxx.xls"
+                    android:id="@+id/tvDocument"
+                    android:layout_below="@+id/textView7"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="right">
+
+                    <Button
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:text="\uf030"
+                        android:id="@+id/btnFoto"
+                        android:textSize="45dp"
+                        android:onClick="onClick"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="top" />
+
+                    <Button
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:text="\uf013"
+                        android:id="@+id/btnSettings"
+                        android:textSize="45dp"
+                        android:onClick="onClick"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="top" />
+                </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lvWerte"
+            android:layout_weight="3"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/relativeLayout">
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="fill_parent"
+                android:text="zurück"
+                android:id="@+id/btnZurueck"
+                android:layout_alignParentLeft="true"
+                android:layout_alignBaseline="@+id/btnSpeichern"
+                android:textColor="@color/darkred" />
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="fill_parent"
+                android:text="speichern"
+                android:id="@+id/btnSpeichern"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/jki_gruen"
+                android:onClick="onClick" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/relativeLayout">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2"
+                    android:layout_marginLeft="5dp"
+                    style="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:weightSum="1"
+                        android:layout_marginTop="5dp">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="30dp"
+                            android:focusableInTouchMode="false"
+                            android:background="@color/row_n">
+
+                            <TextView
+                                android:text="Standort:"
+                                android:id="@+id/textView"
+                                android:layout_alignParentTop="true"
+                                style="@style/JKI_Eigenschaft_Title" />
+
+                            <TextView
+                                android:id="@+id/tvStandort"
+                                android:layout_above="@+id/tvCode"
+                                style="@style/JKI_Eigenschaft_Value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="XX-XXX-XXX"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="30dp"
+                            android:focusableInTouchMode="false"
+                            android:id="@+id/linearLayout2"
+                            android:background="@color/row_n1" >
+
+                            <TextView
+                                style="@style/JKI_Eigenschaft_Title"
+                                android:text="Akzession:" />
+
+                            <TextView
+                                style="@style/JKI_Eigenschaft_Value"
+                                tools:text="Akzessionname (AN123)"
+                                android:id="@+id/tvAkzesion"
+                                android:layout_above="@+id/tvCode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="30dp"
+                            android:focusableInTouchMode="false"
+                            android:id="@+id/linearLayout3"
+                            android:background="@color/row_n" >
+
+                            <TextView
+                                style="@style/JKI_Eigenschaft_Title"
+                                android:text="Passport:" />
+
+                            <TextView
+                                style="@style/JKI_Eigenschaft_Value"
+                                tools:text="Leitname ABC (KN123)"
+                                android:id="@+id/tvPassport"
+                                android:layout_above="@+id/tvCode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:weightSum="1"
+                        android:layout_marginTop="5dp" >
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="30dp"
+                            android:focusableInTouchMode="false"
+                            android:background="@color/row_n" >
+
+                            <TextView
+                                style="@style/JKI_Eigenschaft_Title"
+                                android:text="Standortinformationen:"
+                                android:id="@+id/textView30"
+                                android:layout_alignParentTop="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="150dp"
+                            android:focusableInTouchMode="false"
+                            android:id="@+id/linearLayout4"
+                            android:background="@color/row_n1" >
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textMultiLine"
+                                android:ems="10"
+                                android:id="@+id/etStandortInfo"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="30dp"
+                            android:focusableInTouchMode="false"
+                            android:id="@+id/linearLayout5"
+                            android:background="@color/row_n"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                style="@style/JKI_Eigenschaft_Title"
+                                android:text="Charakteristische Merkmale:"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="150dp"
+                            android:focusableInTouchMode="false"
+                            android:id="@+id/linearLayout6"
+                            android:background="@color/row_n1" >
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textMultiLine"
+                                android:ems="10"
+                                android:id="@+id/eTcharakterMermale"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

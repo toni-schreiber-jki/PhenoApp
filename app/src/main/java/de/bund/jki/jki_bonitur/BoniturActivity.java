@@ -70,6 +70,7 @@ public class BoniturActivity extends Activity {
                 bah.init_typefaces();
                 bah.init_textListener();
                 bah.init_checkBox();
+                bah.init_TabFarbe();
 
                 ((TextView) findViewById(R.id.tvDocument)).setText("Datei: " + BoniturSafe.VERSUCH_NAME);
 
@@ -226,6 +227,7 @@ public class BoniturActivity extends Activity {
                 case R.id.btnUp:            fillView(StandortManager.nextReihe(StandortManager.PREV,currentMarker)); break;
                 case R.id.btnDown:          fillView(StandortManager.nextReihe(StandortManager.NEXT,currentMarker)); break;
                 case R.id.btnFoto:          bah.createFoto(); break;
+                case R.id.btnStandortInfo:  bah.openStandortInformation();
             }
         }catch (Exception e){
             new ErrorLog(e,getApplicationContext());
@@ -249,6 +251,7 @@ public class BoniturActivity extends Activity {
             findViewById(R.id.llPassport).setVisibility(Config.SHOW_PASSPORT ? View.VISIBLE : View.GONE);
             findViewById(R.id.llSorte).setVisibility(Config.SHOW_SORTE ? View.VISIBLE : View.GONE);
             findViewById(R.id.llSortiment).setVisibility(Config.SHOW_SORTIMENT ? View.VISIBLE : View.GONE);
+            bah.init_TabFarbe();
         }catch (Exception e){
             new ErrorLog(e,getApplicationContext());
         }

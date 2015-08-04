@@ -27,6 +27,11 @@
             android:label="@string/title_activity_bonitur"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".StandortInformationActivity"
+            android:label="@string/title_activity_standort_info"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>

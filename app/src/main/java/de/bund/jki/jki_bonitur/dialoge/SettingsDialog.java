@@ -9,9 +9,9 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.test.ActivityTestCase;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -127,6 +127,10 @@ public class SettingsDialog {
             ((CheckBox) mView.findViewById(R.id.cbSorte)).setChecked(preferences.getBoolean(Config.NAME_SHOW_SORTE, Config.SHOW_SORTE));
             ((CheckBox) mView.findViewById(R.id.cbSortNr)).setChecked(preferences.getBoolean(Config.NAME_SHOW_SORTIMENT, Config.SHOW_SORTIMENT));
             ((CheckBox) mView.findViewById(R.id.cbExcelDatum)).setChecked(preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM));
+
+            ((EditText) mView.findViewById((R.id.etSpeicherOrt))).setSelected(false);
         }
+
+
     }
 }

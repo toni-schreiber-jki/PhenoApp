@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import de.bund.jki.jki_bonitur.db.Standort;
-
 /**
  * Created by Toni on 11.05.2015.
  */
