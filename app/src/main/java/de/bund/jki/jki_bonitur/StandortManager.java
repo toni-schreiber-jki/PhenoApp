@@ -7,6 +7,7 @@ import de.bund.jki.jki_bonitur.db.Akzession;
 import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
+import de.bund.jki.jki_bonitur.db.VersuchWert;
 
 /**
  * Created by toni.schreiber on 15.06.2015.
@@ -30,6 +31,7 @@ public class StandortManager {
     }
 
     private static Object[] prevNext(int direction){
+        BoniturSafe.FIRST_EMPTY_COUNT = 1;
         if(BoniturSafe.CURRENT_PFLANZE == -1)
             return first();
 
@@ -288,7 +290,7 @@ public class StandortManager {
 
     public static Object[] gotoFirstEmpty(){
         try {
-            Cursor c = BoniturSafe.db.rawQuery(
+            /*Cursor c = BoniturSafe.db.rawQuery(
                     "SELECT standort._id FROM " + Standort.TABLE_NAME + "  LEFT JOIN versuchWert ON " + Standort.TABLE_NAME + "._id = versuchWert.standortId " + "\n" +
                             "WHERE " + Standort.TABLE_NAME + ".versuchId = ? " + "\n" +
                             "GROUP By " + Standort.TABLE_NAME + "._id " + "\n" +
@@ -296,12 +298,30 @@ public class StandortManager {
                             "ORDER BY " + Standort.TABLE_NAME + ".parzelle ASC, " + Standort.TABLE_NAME + ".reihe ASC, " + Standort.TABLE_NAME + ".pflanze ASC, versuchWert.markerId ASC " + "\n" +
                             "LIMIT 1",
                     new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.VERSUCH_ID}
+            );*/
+
+            Cursor c = BoniturSafe.db.rawQuery("SELECT \n" +
+                            "DISTINCT \"standort\".\"_id\" AS standort, \"marker\"._id AS marker\n" +
+                            "FROM standort , \"marker\" \n" +
+                            "WHERE \n" +
+                            "\"standort\".versuchId=? AND \n" +
+                            "\"marker\".versuchId = ? AND\n" +
+                            " (SELECT count(*) FROM versuchwert WHERE versuchId=1 AND standortId = standort._id AND markerId= marker._id AND ((ifnull(wert_int,\"0\") <> \"0\" )  OR ifnull(wert_text,\"\") <> \"\" OR (ifnull(wert_id,\"0\") <> \"0\"))  ) = 0\n" +
+                            "ORDER BY \n" +
+                            "parzelle ASC, reihe ASC, pflanze ASC, marker._id ASC",
+                new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.VERSUCH_ID}
             );
 
-            if (c.getCount() == 1) {
-                c.moveToFirst();
-                Standort s = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
-                Marker m = MarkerManager.getFirstUnusedMarker(s.id);
+            if (c.getCount() >= 1) {
+                if(BoniturSafe.FIRST_EMPTY_COUNT < c.getCount()) {
+                    c.move(BoniturSafe.FIRST_EMPTY_COUNT);
+                }
+                else {
+                    c.moveToFirst();
+                    BoniturSafe.FIRST_EMPTY_COUNT = 1;
+                }
+                Standort s = Standort.findByPk(c.getInt(c.getColumnIndex("standort")));
+                Marker m = Marker.findByPk(c.getInt(c.getColumnIndex("marker")));
 
                 BoniturSafe.CURRENT_STANDORT_ID = s.id;
                 BoniturSafe.CURRENT_PARZELLE = s.parzelle;
@@ -310,7 +330,10 @@ public class StandortManager {
 
                 BoniturSafe.CURRENT_MARKER = m.id;
 
+                BoniturSafe.FIRST_EMPTY_COUNT++;
+
                 return new Object[]{s, m};
+
             }
         }catch (Exception e) {
             new ErrorLog(e,null);

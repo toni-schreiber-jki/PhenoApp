@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Obst-Bonitur"
+                    android:text="JKI-Bonitur"
                     android:id="@+id/textView7"
                     android:layout_marginRight="5dp"
                     android:layout_alignParentTop="true"
@@ -64,23 +64,27 @@
                     <Button
                         android:layout_width="75dp"
                         android:layout_height="75dp"
-                        android:text="\uf030"
-                        android:id="@+id/btnFoto"
+                        android:text="\uf00d"
+                        android:id="@+id/btnZurueckIcon"
                         android:textSize="45dp"
                         android:onClick="onClick"
                         android:layout_alignParentTop="true"
-                        android:layout_gravity="top" />
+                        android:layout_gravity="top"
+                        android:textColor="@color/darkred" />
 
                     <Button
                         android:layout_width="75dp"
                         android:layout_height="75dp"
-                        android:text="\uf013"
-                        android:id="@+id/btnSettings"
+                        android:text="\uf00c"
+                        android:id="@+id/btnSaveIcon"
                         android:textSize="45dp"
                         android:onClick="onClick"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_gravity="top" />
+                        android:layout_gravity="top"
+                        android:textColor="@color/jki_gruen"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="10dp" />
+
                 </LinearLayout>
             </RelativeLayout>
 
@@ -262,7 +266,10 @@
                                 android:inputType="textMultiLine"
                                 android:ems="10"
                                 android:id="@+id/etStandortInfo"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:nextFocusRight="@+id/eTcharakterMermale"
+                                android:nextFocusDown="@+id/eTcharakterMermale"
+                                android:gravity="left|top" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -296,7 +303,10 @@
                                 android:inputType="textMultiLine"
                                 android:ems="10"
                                 android:id="@+id/eTcharakterMermale"
-                                android:layout_weight="1" />
+                                android:nextFocusLeft="@+id/etStandortInfo"
+                                android:nextFocusUp="@+id/etStandortInfo"
+                                android:layout_weight="1"
+                                android:gravity="left|top" />
                         </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>

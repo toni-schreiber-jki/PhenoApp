@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Obst-Bonitur"
+                    android:text="JKI-Bonitur"
                     android:id="@+id/textView7"
                     android:layout_marginRight="5dp"
                     android:layout_alignParentTop="true"
@@ -391,7 +391,7 @@
                     android:id="@+id/llEigenschaft">
 
                     <TextView
-                        android:text="Medium Text"
+                        android:text="Merkmal (Code)"
                         android:id="@+id/textView4"
                         style="@style/JKI_Eigenschaft_Title" />
 

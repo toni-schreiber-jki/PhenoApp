@@ -102,7 +102,7 @@ public class Writer{
             row.createCell(4).setCellValue(akzession != null ? akzession.name : "");
             row.createCell(5).setCellValue(passport != null ? passport.kennNr : "");
             row.createCell(6).setCellValue(passport != null ? passport.leitname : "");
-            row.createCell(7).setCellValue(standort.freifeld != null ? standort.freifeld : "");
+            row.createCell(7).setCellValue(standort.info != null ? standort.info : "");
             row.createCell(8).setCellValue(akzession != null ? akzession.merkmale : "");
 
 

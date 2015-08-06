@@ -1,8 +1,10 @@
 package de.bund.jki.jki_bonitur;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -29,6 +31,21 @@ public class StandortInformationActivity extends Activity {
     protected void onResume() {
         super.onResume();
         loadValues();
+        init_typefaces();
+    }
+
+    public void init_typefaces() {
+        Typeface typeface = Typeface.createFromAsset(this.getAssets(),"fonts/fontawesome.ttf");
+        int[] buttonIds = new int[]{
+
+                R.id.btnSaveIcon,
+                R.id.btnZurueckIcon,
+
+        };
+
+        for (int id: buttonIds) {
+            ((Button) this.findViewById(id)).setTypeface(typeface);
+        }
     }
 
     private void loadValues(){
@@ -47,6 +64,8 @@ public class StandortInformationActivity extends Activity {
         if(akzession != null) {
             ((EditText) this.findViewById(R.id.eTcharakterMermale)).setText(akzession.merkmale);
         }
+
+        ((TextView) this.findViewById(R.id.tvDocument)).setText("Datei: "+BoniturSafe.VERSUCH_NAME);
     }
 
     private void save(){
@@ -62,7 +81,9 @@ public class StandortInformationActivity extends Activity {
 
     public void onClick(final View v){
         switch (v.getId()){
+            case R.id.btnZurueckIcon:
             case R.id.btnZurueck: onBackPressed(); break;
+            case R.id.btnSaveIcon:
             case R.id.btnSpeichern: save(); onBackPressed(); break;
         }
     }

@@ -49,7 +49,9 @@ public class BoniturActivity extends Activity {
     public void init() {
         try {
             bonDb = new BoniturDatenbank(this);
+            bonDb.copy_to_sd();
             BoniturSafe.db = bonDb.getWritableDatabase();
+
             BoniturSafe.APP_CONTEXT = getApplicationContext();
             BoniturSafe.BON_ACTIVITY = this;
 
@@ -221,7 +223,7 @@ public class BoniturActivity extends Activity {
                 case R.id.btnRichtungRechts:StandortManager.changeRichtung(StandortManager.PFLANZEN_RICHTUNG); fillView(new Object[] {currentStandort, currentMarker}); break;
                 case R.id.btnRichtungOben:
                 case R.id.btnRichtungUnten: StandortManager.changeRichtung(StandortManager.REIHEN_RICHTUNG); fillView(new Object[] {currentStandort, currentMarker}); break;
-                case R.id.btnFirstEmpty:    bah.gotoFirstEmpty();
+                case R.id.btnFirstEmpty:    bah.gotoFirstEmpty(); break;
                 case R.id.btnRight:         fillView(StandortManager.nextStandort(StandortManager.NEXT,currentMarker)); break;
                 case R.id.btnLeft:          fillView(StandortManager.nextStandort(StandortManager.PREV,currentMarker)); break;
                 case R.id.btnUp:            fillView(StandortManager.nextReihe(StandortManager.PREV,currentMarker)); break;

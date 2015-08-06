@@ -37,6 +37,7 @@ public class VersuchListActivity extends Activity {
     protected void onResume() {
         super.onResume();
         showFiles();
+        init_typefaces();
     }
 
     @Override

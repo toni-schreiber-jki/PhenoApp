@@ -30,7 +30,8 @@
         <activity
             android:name=".StandortInformationActivity"
             android:label="@string/title_activity_standort_info"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
     </application>
 

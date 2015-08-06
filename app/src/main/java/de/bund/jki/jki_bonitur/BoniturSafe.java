@@ -29,5 +29,7 @@ public class BoniturSafe {
     public static Context   APP_CONTEXT = null;
     public static BoniturActivity BON_ACTIVITY = null;
 
+    public static int       FIRST_EMPTY_COUNT = 1;
+
     public static SQLiteDatabase db;
 }

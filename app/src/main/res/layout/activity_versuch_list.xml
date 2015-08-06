@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Obst-Bonitur"
+                    android:text="JKI-Bonitur"
                     android:id="@+id/textView2"
                     android:layout_alignParentTop="true"/>
 
@@ -90,7 +90,8 @@
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/lvDateien" />
+                android:id="@+id/lvDateien"
+                android:layout_marginTop="30dp" />
                 <!-- android:layout_below="@+id/textView3" -->
         </RelativeLayout>
 
@@ -122,7 +123,8 @@
                 android:id="@+id/lvTmpDatei"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="30dp" />
             <!-- android:layout_below="@+id/textView5" -->
         </RelativeLayout>
 
