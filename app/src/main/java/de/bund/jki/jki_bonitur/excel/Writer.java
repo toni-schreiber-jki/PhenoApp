@@ -72,7 +72,7 @@ public class Writer{
     private HSSFWorkbook addReportFinal(HSSFWorkbook workbook)
     {
         try {
-            HSSFSheet sheet = workbook.createSheet("Report");
+            HSSFSheet sheet = workbook.createSheet("Daten");
             sheet.createFreezePane(9, 0);
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(BoniturSafe.APP_CONTEXT);

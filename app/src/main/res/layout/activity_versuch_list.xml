@@ -120,10 +120,10 @@
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/lvTmpDatei"
+                android:id="@+id/lvDateiBegonnen"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentStart="false"
                 android:layout_marginTop="30dp" />
             <!-- android:layout_below="@+id/textView5" -->
         </RelativeLayout>
