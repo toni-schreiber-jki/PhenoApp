@@ -81,6 +81,9 @@ public class SettingsDialog {
                             Config.SHOW_EXCEL_DATUM = ((CheckBox) mView.findViewById(R.id.cbExcelDatum)).isChecked();
                             editor.putBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM);
 
+                            Config.SHOW_BBCH_FRAGE = ((CheckBox) mView.findViewById(R.id.cbBbch)).isChecked();
+                            editor.putBoolean(Config.NAME_BBCH_FRAGE, Config.SHOW_BBCH_FRAGE);
+
                             editor.apply();
 
                             SettingsDialogFragment.this.getDialog().cancel();
@@ -127,6 +130,7 @@ public class SettingsDialog {
             ((CheckBox) mView.findViewById(R.id.cbSorte)).setChecked(preferences.getBoolean(Config.NAME_SHOW_SORTE, Config.SHOW_SORTE));
             ((CheckBox) mView.findViewById(R.id.cbSortNr)).setChecked(preferences.getBoolean(Config.NAME_SHOW_SORTIMENT, Config.SHOW_SORTIMENT));
             ((CheckBox) mView.findViewById(R.id.cbExcelDatum)).setChecked(preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM));
+            ((CheckBox) mView.findViewById(R.id.cbBbch)).setChecked(preferences.getBoolean(Config.NAME_BBCH_FRAGE, Config.SHOW_BBCH_FRAGE));
 
             ((EditText) mView.findViewById((R.id.etSpeicherOrt))).setSelected(false);
         }

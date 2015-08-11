@@ -40,6 +40,7 @@ import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
 import de.bund.jki.jki_bonitur.db.VersuchWert;
+import de.bund.jki.jki_bonitur.dialoge.BbchDialog;
 import de.bund.jki.jki_bonitur.dialoge.ManyStandorteDialog;
 import de.bund.jki.jki_bonitur.tools.BoniturTextWatcher;
 import de.bund.jki.jki_bonitur.tools.DateTool;
@@ -194,7 +195,7 @@ public class BoniturActivityHelper {
         spMarker = (Spinner) mBa.findViewById(R.id.spMarker);
         return  spMarker;
     }
-    private ArrayAdapter getMarkerSpinnerAdpter(){
+    public ArrayAdapter getMarkerSpinnerAdpter(){
         try {
             List<String> markerList = new ArrayList<>();
             ArrayList<Integer> markerIdList = new ArrayList<>();
@@ -1320,6 +1321,18 @@ public class BoniturActivityHelper {
     public void closeShowBildGross(){
         mBa.findViewById(R.id.ivBildGross).setVisibility(View.GONE);
         setVisibilityBildHintergrund(View.VISIBLE);
+    }
+
+    public void askNewBbch()
+    {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("ddMMyy");
+        Marker[] marker = MarkerManager.getAllMarker();
+        for(int m = 0; m < marker.length; m++){
+            if(marker[m].code.equals("BBCH "+df.format(c.getTime())))
+                return;
+        }
+        new BbchDialog(mBa, "BBCH "+df.format(c.getTime()));
     }
 
 

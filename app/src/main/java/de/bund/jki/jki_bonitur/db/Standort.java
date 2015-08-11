@@ -92,6 +92,8 @@ public class Standort extends DbModelInterface {
             values.put(COLUMN_VATER,        vater.isEmpty() ? null: vater);
         if(sortimentsnummer != null)
             values.put(COLUMN_SORTIMENTNR,  sortimentsnummer.isEmpty() ? null: sortimentsnummer);
+        if(freifeld != null)
+            values.put(COLUMN_FREIFELD,     freifeld.isEmpty() ? null : freifeld);
 
         if(info != null)
             values.put(COLUMN_INFO,         info.isEmpty() ? null: info);

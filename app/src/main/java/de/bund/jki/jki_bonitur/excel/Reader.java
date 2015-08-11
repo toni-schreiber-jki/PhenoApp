@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.widget.Toast;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -35,11 +36,17 @@ public class Reader {
             mFile = file;
             mWorkbook = ExcelLib.openExcelFile( Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/in/"+ mFile);
         }catch (Exception e) {
+            Toast.makeText(BoniturSafe.BON_ACTIVITY, e.getMessage(), Toast.LENGTH_LONG).show();
+            new ErrorLog(e, BoniturSafe.BON_ACTIVITY);
+            BoniturSafe.BON_ACTIVITY.onBackPressed();
             e.printStackTrace();
         }
     }
 
     public boolean read(){
+        if(mWorkbook== null)
+            return false;
+
         Cursor dbCursor = BoniturSafe.db.query(Versuch.TABLE_NAME,new String[]{Versuch.COLUMN_ID},Versuch.COLUMN_NAME+"=?", new String[] {mFile},null,null,null);
         if(dbCursor.getCount()>0){
             dbCursor.moveToFirst();
@@ -84,7 +91,17 @@ public class Reader {
 
     private void readMarker() {
         try{
+            if(mWorkbook==null){
+                Intent i = new Intent();
+                i.putExtra("TEXT", "Beim Import der Standorte kam es zu einem Fehler");
+                BoniturSafe.APP_CONTEXT.sendBroadcast(i);
+                return;
+            }
             HSSFSheet sheet = mWorkbook.getSheet("Marker");
+            if(sheet == null){
+                Toast.makeText(BoniturSafe.BON_ACTIVITY, "Beim Import der Merkmale kam es zu einem Fehler: kein Tabellenblatt Marker gefunden", Toast.LENGTH_LONG).show();
+                return;
+            }
             int lastRow = sheet.getLastRowNum();
             for (int r = 1; r <= lastRow; r++) {
                 HSSFRow row = sheet.getRow(r);
@@ -104,6 +121,7 @@ public class Reader {
             }
         }catch (Exception e)
         {
+            new ErrorLog(e,BoniturSafe.BON_ACTIVITY);
             e.printStackTrace();
         }
     }
@@ -127,43 +145,62 @@ public class Reader {
     }
 
     private void readStandort(){
-        HSSFSheet sheet = mWorkbook.getSheet("Standorte");
-        int lastRow = sheet.getLastRowNum();
-        for(int r=1; r <= lastRow ; r++) {
-            HSSFRow row = sheet.getRow(r);
-            Standort standort = new Standort();
-
-            if(ExcelLib.isCellEmpty(row,1)){
-                String[] standortDaten = row.getCell(3).getStringCellValue().split("-");
-                for(int p = 0; p < 3; p++ ){
-                    if(standortDaten.length > p){
-                        row.createCell(p).setCellValue(Integer.parseInt(standortDaten[p].trim()));
-            }}}
-
-            standort.versuchId  = BoniturSafe.VERSUCH_ID;
-
-            standort.parzelle         = ExcelLib.getCellValueString(row,0,true);
-            standort.reihe            = (int) row.getCell(1).getNumericCellValue();//Integer.parseInt(tmp[1].replaceAll(" ",""));
-            standort.pflanze          = (int) row.getCell(2).getNumericCellValue();
-            standort.sorte            = ExcelLib.isCellEmpty(row, 8) ? null : ExcelLib.getCellValueString(row, 8,true);
-            standort.zuchtstamm       = ExcelLib.isCellEmpty(row, 9) ? null : ExcelLib.getCellValueString(row, 9,true);
-            standort.mutter           = ExcelLib.isCellEmpty(row,10) ? null : ExcelLib.getCellValueString(row,10,true);
-            standort.vater            = ExcelLib.isCellEmpty(row,11) ? null : ExcelLib.getCellValueString(row,11,true);
-            standort.sortimentsnummer = ExcelLib.isCellEmpty(row,12) ? null : ExcelLib.getCellValueString(row,12,true);
-            standort.freifeld         = ExcelLib.isCellEmpty(row,13) ? null : ExcelLib.getCellValueString(row,13,true);
-
-            if(!ExcelLib.isCellEmpty(row,5)){
-                standort.akzessionId = readAkzession(row);
-            } else {
-                standort.akzessionId = -1;
+        try{
+            if(mWorkbook==null){
+                Intent i = new Intent();
+                i.putExtra("TEXT","Beim Import der Standorte kam es zu einem Fehler");
+                BoniturSafe.APP_CONTEXT.sendBroadcast(i);
+                return;
             }
-            if(!ExcelLib.isCellEmpty(row,7)){
-                standort.passportId = readPassport(row);
-            } else {
-                standort.passportId = -1;
+            HSSFSheet sheet = mWorkbook.getSheet("Standorte");
+            if(sheet == null){
+                Intent i = new Intent();
+                i.putExtra("TEXT","Beim Import der Standorte kam es zu einem Fehler: kein Tabellenblatt Standorte gefunden");
+                BoniturSafe.APP_CONTEXT.sendBroadcast(i);
+                return;
             }
 
-            standort.save();
+            int lastRow = sheet.getLastRowNum();
+            for(int r=1; r <= lastRow ; r++) {
+                HSSFRow row = sheet.getRow(r);
+                Standort standort = new Standort();
+
+                if(ExcelLib.isCellEmpty(row,1)){
+                    String[] standortDaten = row.getCell(3).getStringCellValue().split("-");
+                    for(int p = 0; p < 3; p++ ){
+                        if(standortDaten.length > p){
+                            row.createCell(p).setCellValue(Integer.parseInt(standortDaten[p].trim()));
+                }}}
+
+                standort.versuchId  = BoniturSafe.VERSUCH_ID;
+
+                standort.parzelle         = ExcelLib.getCellValueString(row,0,true);
+                standort.reihe            = (int) row.getCell(1).getNumericCellValue();//Integer.parseInt(tmp[1].replaceAll(" ",""));
+                standort.pflanze          = (int) row.getCell(2).getNumericCellValue();
+                standort.sorte            = ExcelLib.isCellEmpty(row, 8) ? null : ExcelLib.getCellValueString(row, 8,true);
+                standort.zuchtstamm       = ExcelLib.isCellEmpty(row, 9) ? null : ExcelLib.getCellValueString(row, 9,true);
+                standort.mutter           = ExcelLib.isCellEmpty(row,10) ? null : ExcelLib.getCellValueString(row,10,true);
+                standort.vater            = ExcelLib.isCellEmpty(row,11) ? null : ExcelLib.getCellValueString(row,11,true);
+                standort.sortimentsnummer = ExcelLib.isCellEmpty(row,12) ? null : ExcelLib.getCellValueString(row,12,true);
+                standort.freifeld         = ExcelLib.isCellEmpty(row,13) ? null : ExcelLib.getCellValueString(row,13,true);
+
+                if(!ExcelLib.isCellEmpty(row,5)){
+                    standort.akzessionId = readAkzession(row);
+                } else {
+                    standort.akzessionId = -1;
+                }
+                if(!ExcelLib.isCellEmpty(row,7)){
+                    standort.passportId = readPassport(row);
+                } else {
+                    standort.passportId = -1;
+                }
+
+                standort.save();
+            }
+        }catch (Exception e)
+        {
+            new ErrorLog(e,BoniturSafe.BON_ACTIVITY);
+            e.printStackTrace();
         }
     }
 
@@ -208,6 +245,12 @@ public class Reader {
 
     private void readValues(){
         try {
+            if(mWorkbook==null){
+                Intent i = new Intent();
+                i.putExtra("TEXT","Beim Import der Daten kam es zu einem Fehler");
+                BoniturSafe.APP_CONTEXT.sendBroadcast(i);
+                return;
+            }
             HSSFSheet sheet = mWorkbook.getSheet("Daten");
             if (sheet != null) {
                 HSSFRow headerRow = sheet.getRow(0);

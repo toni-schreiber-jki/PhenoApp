@@ -63,7 +63,11 @@ public class WartenDialog {
         }
 
         public void close(){
-            WartenDialogFragment.this.getDialog().cancel();
+            try {
+                WartenDialogFragment.this.getDialog().cancel();
+            }catch (Exception e){
+
+            }
         }
     }
 }

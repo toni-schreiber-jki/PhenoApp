@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,8 @@ import de.bund.jki.jki_bonitur.excel.Reader;
 
 public class BoniturActivity extends Activity {
 
-    public static String RELOAD_VIEW = "de.bund.jki.bonitur.reload";
+    public static String RELOAD_VIEW    = "de.bund.jki.bonitur.reload";
+    public static String ERROR_INTENT   = "de.bund.jki.bunitur.error";
 
     private BoniturDatenbank bonDb;
     public BoniturActivityHelper bah;
@@ -42,12 +44,25 @@ public class BoniturActivity extends Activity {
         setContentView(R.layout.activity_bonitur);
         bir = new BoniturIntentReceiver();
         IntentFilter filter = new IntentFilter(RELOAD_VIEW);
-        this.registerReceiver(bir,filter);
+        filter.addAction(ERROR_INTENT);
+        try {
+            this.registerReceiver(bir, filter);
+        }catch (Exception e){
+            new ErrorLog(e,this);
+        }
         init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(bir);
     }
 
     public void init() {
         try {
+            //ToDo: Neuer BBCH WERT
+            //ToDo: option BBCH_WERT abfragen + Button
             bonDb = new BoniturDatenbank(this);
             bonDb.copy_to_sd();
             BoniturSafe.db = bonDb.getWritableDatabase();
@@ -73,6 +88,11 @@ public class BoniturActivity extends Activity {
                 bah.init_textListener();
                 bah.init_checkBox();
                 bah.init_TabFarbe();
+
+                Config.load(this);
+                if(Config.SHOW_BBCH_FRAGE) {
+                    bah.askNewBbch();
+                }
 
                 ((TextView) findViewById(R.id.tvDocument)).setText("Datei: " + BoniturSafe.VERSUCH_NAME);
 
@@ -270,7 +290,13 @@ public class BoniturActivity extends Activity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            init();
+            if(intent.getAction().compareTo(RELOAD_VIEW)==0) {
+                init();
+            }
+
+            if(intent.getAction().compareTo(ERROR_INTENT)==0){
+                Toast.makeText(context,intent.getStringExtra("TEXT"),Toast.LENGTH_LONG);
+            }
         }
     }
 

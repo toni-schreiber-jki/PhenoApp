@@ -18,6 +18,7 @@ public class Config {
     public static String NAME_SHOW_SORTE        = "sorte";
     public static String NAME_SHOW_SORTIMENT    = "sorte";
     public static String NAME_EXCEL_DATUM       = "excelDatum";
+    public static String NAME_BBCH_FRAGE        = "bbchFrage";
 
     public static String BaseFolder             = "/obstBonitur";
     public static boolean ZICK_ZACK_MODUS       = true;
@@ -28,10 +29,19 @@ public class Config {
     public static boolean SHOW_SORTE            = true;
     public static boolean SHOW_SORTIMENT        = true;
     public static boolean SHOW_EXCEL_DATUM      = true;
+    public static boolean SHOW_BBCH_FRAGE       = true;
 
     public static void load(Context c){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(c);
         ZICK_ZACK_MODUS = preferences.getBoolean(NAME_ZICK_ZACK_MODUS,ZICK_ZACK_MODUS);
-        BaseFolder = preferences.getString(NAME_BASE_FOLDER,BaseFolder);
+        BaseFolder = preferences.getString(NAME_BASE_FOLDER, BaseFolder);
+        FIRST_EMPTY = preferences.getBoolean(NAME_FIRST_EMPTY, FIRST_EMPTY);
+        SHOW_ELTERN = preferences.getBoolean(NAME_SHOW_ELTERN, SHOW_ELTERN);
+        SHOW_AKZESSION = preferences.getBoolean(NAME_SHOW_AKZESSION, SHOW_AKZESSION);
+        SHOW_PASSPORT = preferences.getBoolean(NAME_SHOW_PASSPORT, SHOW_PASSPORT);
+        SHOW_SORTE = preferences.getBoolean(NAME_SHOW_SORTE, SHOW_SORTE);
+        SHOW_SORTIMENT = preferences.getBoolean(NAME_SHOW_SORTIMENT, SHOW_SORTIMENT);
+        SHOW_EXCEL_DATUM = preferences.getBoolean(NAME_EXCEL_DATUM, SHOW_EXCEL_DATUM);
+        SHOW_BBCH_FRAGE = preferences.getBoolean(NAME_BBCH_FRAGE, SHOW_BBCH_FRAGE);
     }
 }

@@ -69,7 +69,7 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
                 Toast.makeText(c, "Beim kopieren der DB ist ein Fehler aufgetreten..!", Toast.LENGTH_LONG).show();
             }
 
-            Toast.makeText(c, "Die DB wurde erfolgreich kopiert..!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(c, "Die DB wurde erfolgreich kopiert..!", Toast.LENGTH_LONG).show();
         }
     }
 

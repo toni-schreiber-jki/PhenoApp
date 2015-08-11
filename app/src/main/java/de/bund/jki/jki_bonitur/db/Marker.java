@@ -101,7 +101,7 @@ public class Marker extends DbModelInterface {
 
 
     @Override
-    boolean save() {
+    public boolean save() {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_VERSUCH, versuchId);
@@ -109,6 +109,7 @@ public class Marker extends DbModelInterface {
         values.put(COLUMN_BESCHREIBUNG, beschreibung);
         values.put(COLUMN_FOTO, foto);
         values.put(COLUMN_TYPE, type == -1 ? null: type);
+        values.put(COLUMN_NAME, name);
 
         id = saveRow(id,values);
         return id==-1;
