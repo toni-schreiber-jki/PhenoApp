@@ -72,6 +72,12 @@ public class VersuchListActivity extends Activity {
 
             File[] files = folder.listFiles();
             ArrayList<String> list = new ArrayList<String>();
+
+            if(list == null) {
+                return;
+                //ToDo: Fehlermeldung keine Dateien gefunden
+            }
+
             for (int i = 0; i < files.length; ++i) {
                 list.add(files[i].getName());
             }

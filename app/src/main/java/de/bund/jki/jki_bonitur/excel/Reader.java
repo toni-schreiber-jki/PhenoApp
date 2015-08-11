@@ -12,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import de.bund.jki.jki_bonitur.BoniturActivity;
 import de.bund.jki.jki_bonitur.BoniturSafe;
+import de.bund.jki.jki_bonitur.ErrorLog;
 import de.bund.jki.jki_bonitur.config.Config;
 import de.bund.jki.jki_bonitur.db.Akzession;
 import de.bund.jki.jki_bonitur.db.Marker;
@@ -19,6 +20,7 @@ import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
 import de.bund.jki.jki_bonitur.db.Versuch;
+import de.bund.jki.jki_bonitur.db.VersuchWert;
 import de.bund.jki.jki_bonitur.dialoge.WartenDialog;
 
 /**
@@ -205,9 +207,100 @@ public class Reader {
     }
 
     private void readValues(){
-        HSSFSheet sheet = mWorkbook.getSheet("Report");
-        if(sheet != null){
+        try {
+            HSSFSheet sheet = mWorkbook.getSheet("Daten");
+            if (sheet != null) {
+                HSSFRow headerRow = sheet.getRow(0);
+                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 
+                    Standort standort = null;
+                    Marker marker = null;
+
+                    HSSFRow row = sheet.getRow(i);
+                    String parzelle = ExcelLib.getCellValueString(row, 0, true);
+                    String reihe = ExcelLib.getCellValueString(row, 1, true);
+                    String pflanze = ExcelLib.getCellValueString(row, 2, true);
+
+                    Cursor c = BoniturSafe.db.query(Standort.TABLE_NAME, new String[]{Standort.COLUMN_ID},
+                            Standort.COLUMN_PARZELLE + " = ? AND " + Standort.COLUMN_REIHE + " = ? AND " + Standort.COLUMN_PFLANZE + " = ? AND " + Standort.COLUMN_VERSUCH + " = ?",
+                            new String[]{parzelle, reihe, pflanze, BoniturSafe.VERSUCH_ID + ""},
+                            null, null, null);
+
+                    if (c.getCount() == 1) {
+                        c.moveToFirst();
+                        standort = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+                    }
+
+                    int step = 1;
+                    for (int col = 9; col <= row.getLastCellNum(); col+=step) {
+                        step = 1;
+                        String value = ExcelLib.getCellValueString(row, col, true);
+                        if (!(value == null || value == "")) {
+                            String code = ExcelLib.getCellValueString(headerRow, col);
+                            String code2= ExcelLib.getCellValueString(headerRow, col+1);
+                            String datum = null;
+                            if(code2 == null){
+                                datum = ExcelLib.getCellValueString(row, col+1, true);
+                                if(!datum.contains("."))
+                                    datum = null;
+
+                            }
+                            if (!(code == null || value == "")) {
+                                c = BoniturSafe.db.query(
+                                        Marker.TABLE_NAME,
+                                        new String[]{Marker.COLUMN_ID},
+                                        Marker.COLUMN_CODE + " = ? AND " + Marker.COLUMN_VERSUCH + " = ?",
+                                        new String[]{code, BoniturSafe.VERSUCH_ID + ""},
+                                        null, null, null
+                                );
+
+                                if (c.getCount() == 1) {
+                                    c.moveToFirst();
+                                    marker = Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
+                                }
+
+                                if (marker != null && standort != null) {
+                                    VersuchWert vw = new VersuchWert();
+                                    vw.versuchId = BoniturSafe.VERSUCH_ID;
+                                    vw.standortId = standort.id;
+                                    vw.markerId = marker.id;
+
+                                    if (marker.type != Marker.MARKER_TYPE_BONITUR) {
+                                        switch (marker.type) {
+                                            case Marker.MARKER_TYPE_MESSEN:
+                                                vw.wert_int = Integer.parseInt(value);
+                                                break;
+                                            case Marker.MARKER_TYPE_BBCH:
+                                            case Marker.MARKER_TYPE_DATUM:
+                                            case Marker.MARKER_TYPE_BEMERKUNG:
+                                                vw.wert_text = value;
+                                                break;
+                                        }
+                                        if(datum!=null)
+                                            vw.wert_datum = datum;
+                                        vw.save();
+                                    } else {
+                                        String[] werte = value.split("|");
+                                        for (String wert : werte) {
+                                            for (MarkerWert mw : marker.werte) {
+                                                if (mw.value.compareTo(wert) == 0) {
+                                                    vw.wert_id = mw.id;
+                                                    if(datum != null)
+                                                        vw.wert_datum = datum;
+                                                    vw.save();
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            new ErrorLog(e, BoniturSafe.APP_CONTEXT);
         }
     }
 

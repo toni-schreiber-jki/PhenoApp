@@ -159,18 +159,22 @@ public class BoniturActivity extends Activity {
                         case Marker.MARKER_TYPE_BONITUR:
                             bah.getGvWerte().setVisibility(View.VISIBLE);
                             bah.fillGridView(marker.werte);
+                            bah.showBild();
                             break;
                         case Marker.MARKER_TYPE_DATUM:
                             bah.getRlDatum().setVisibility(View.VISIBLE);
                             bah.getEtDatumEingabe().setText(s.getValue(marker.id));
+                            bah.showBild();
                             break;
                         case Marker.MARKER_TYPE_MESSEN:
                             bah.getRlMessen().setVisibility(View.VISIBLE);
                             bah.getEtMessenEingabe().setText(s.getValue(marker.id));
+                            bah.showBild();
                             break;
                         case Marker.MARKER_TYPE_BEMERKUNG:
                             bah.getRlBemerkung().setVisibility(View.VISIBLE);
                             bah.getEtBemerkungEingabe().setText(s.getValue(marker.id));
+                            bah.showBild();
                             break;
                         case Marker.MARKER_TYPE_BBCH:
                             bah.getRlBBCH().setVisibility(View.VISIBLE);
@@ -224,12 +228,15 @@ public class BoniturActivity extends Activity {
                 case R.id.btnRichtungOben:
                 case R.id.btnRichtungUnten: StandortManager.changeRichtung(StandortManager.REIHEN_RICHTUNG); fillView(new Object[] {currentStandort, currentMarker}); break;
                 case R.id.btnFirstEmpty:    bah.gotoFirstEmpty(); break;
-                case R.id.btnRight:         fillView(StandortManager.nextStandort(StandortManager.NEXT,currentMarker)); break;
+                case R.id.btnRight:         fillView(StandortManager.nextStandort(StandortManager.NEXT, currentMarker)); break;
                 case R.id.btnLeft:          fillView(StandortManager.nextStandort(StandortManager.PREV,currentMarker)); break;
-                case R.id.btnUp:            fillView(StandortManager.nextReihe(StandortManager.PREV,currentMarker)); break;
+                case R.id.btnUp:            fillView(StandortManager.nextReihe(StandortManager.PREV, currentMarker)); break;
                 case R.id.btnDown:          fillView(StandortManager.nextReihe(StandortManager.NEXT,currentMarker)); break;
                 case R.id.btnFoto:          bah.createFoto(); break;
-                case R.id.btnStandortInfo:  bah.openStandortInformation();
+                case R.id.btnStandortInfo:  bah.openStandortInformation();break;
+                case R.id.ivBild:           bah.showBildGross(); break;
+                case R.id.ivBildGross:      bah.closeShowBildGross(); break;
+
             }
         }catch (Exception e){
             new ErrorLog(e,getApplicationContext());
@@ -266,4 +273,5 @@ public class BoniturActivity extends Activity {
             init();
         }
     }
+
 }

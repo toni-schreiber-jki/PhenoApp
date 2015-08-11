@@ -67,21 +67,31 @@ import java.io.IOException;
 
         public static String getCellValueString(Row row, int rowNumb)
         {
-            return getCellValueString(row,rowNumb,false);
+            return getCellValueString(row, rowNumb, false);
         }
 
         public static String getCellValueString(Row row, int rowNumb,boolean asInt)
         {
-            switch (row.getCell(rowNumb).getCellType())
-            {
-                case 0:
-                    if(asInt)
-                        return ""+(int) row.getCell(rowNumb).getNumericCellValue();
-                    else
-                        return ""+row.getCell(rowNumb).getNumericCellValue();
-                case 1: return ""+row.getCell(rowNumb).getStringCellValue();
-                case 3: return "";
-                default: return "";
+            if (row.getLastCellNum() < rowNumb) return null;
+
+            if(row.getCell(rowNumb) == null) return null;
+
+            try {
+                switch (row.getCell(rowNumb).getCellType()) {
+                    case 0:
+                        if (asInt)
+                            return "" + (int) row.getCell(rowNumb).getNumericCellValue();
+                        else
+                            return "" + row.getCell(rowNumb).getNumericCellValue();
+                    case 1:
+                        return "" + row.getCell(rowNumb).getStringCellValue();
+                    case 3:
+                        return "";
+                    default:
+                        return "";
+                }
+            }catch (Exception e){
+                return null;
             }
         }
 

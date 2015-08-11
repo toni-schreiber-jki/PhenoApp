@@ -235,7 +235,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:weightSum="1"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:id="@+id/llInfos">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -479,12 +480,28 @@
                     android:textColor="#000"
                     android:textIsSelectable="true" />
 
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivBild"
+                    android:layout_alignParentBottom="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toRightOf="@+id/rlPfadenkreuz"
+                    android:layout_toEndOf="@+id/rlPfadenkreuz"
+                    tools:src="@drawable/bbch_1"
+                    android:layout_alignTop="@+id/rlPfadenkreuz"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="210dp"
+                    android:onClick="onClick" />
+
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:id="@+id/relativeLayout2"
+                android:id="@+id/rlPfadenkreuz"
                 android:layout_alignParentBottom="true">
 
                 <Button
@@ -534,17 +551,6 @@
 
             </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ivBild"
-                android:layout_alignParentBottom="true"
-                android:focusableInTouchMode="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/relativeLayout2"
-                android:layout_toEndOf="@+id/relativeLayout2" />
-
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -554,6 +560,15 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
+                android:onClick="onClick" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/ivBildGross"
+                android:layout_alignBottom="@+id/llInfos"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
                 android:onClick="onClick" />
 
         </RelativeLayout>

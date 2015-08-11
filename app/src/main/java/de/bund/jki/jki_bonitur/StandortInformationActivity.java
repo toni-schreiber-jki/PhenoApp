@@ -52,11 +52,15 @@ public class StandortInformationActivity extends Activity {
         ((TextView) this.findViewById(R.id.tvStandort)).setText(mStandort.getName());
         if(mStandort.akzessionId != -1) {
             akzession = Akzession.findByPk(mStandort.akzessionId);
-            ((TextView) this.findViewById(R.id.tvAkzesion)).setText(akzession.name + " ("+akzession.nummer+")");
+            if(akzession != null) {
+                ((TextView) this.findViewById(R.id.tvAkzesion)).setText(akzession.name + " (" + akzession.nummer + ")");
+            }
         }
         if(mStandort.passportId != -1) {
             passport = Passport.findByPk(mStandort.passportId);
-            ((TextView) this.findViewById(R.id.tvPassport)).setText(passport.leitname + " ("+passport.kennNr+")");
+            if(passport != null) {
+                ((TextView) this.findViewById(R.id.tvPassport)).setText(passport.leitname + " (" + passport.kennNr + ")");
+            }
         }
 
         ((EditText) this.findViewById(R.id.etStandortInfo)).setText(mStandort.info);

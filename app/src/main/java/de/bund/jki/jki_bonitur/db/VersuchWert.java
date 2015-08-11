@@ -60,8 +60,13 @@ public class VersuchWert extends DbModelInterface {
             "ON DELETE CASCADE " + '\n' +
     ")";
 
+    public VersuchWert(){
+        super.TABLE_NAME = TABLE_NAME;
+        super.COLUMN_ID = COLUMN_ID;
+    }
+
     @Override
-    boolean save() {
+    public boolean save() {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_VERSUCH,      versuchId);

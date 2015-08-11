@@ -3,8 +3,10 @@ package de.bund.jki.jki_bonitur;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -468,8 +470,9 @@ public class BoniturActivityHelper {
                                 imageRes = R.drawable.bbch_9;
                                 break;
                         }
-
+                        getIvBild().setVisibility(View.GONE);
                         if (res == 0) return;
+                        getIvBild().setVisibility(View.VISIBLE);
                         getIvBild().setImageResource(imageRes);
                         updateSpinner(getSpBbchDetail(), res);
                         if (setBbchDetail != -1 && setBbchDetail != getSpBbchDetail().getSelectedItemPosition()) {
@@ -1272,6 +1275,51 @@ public class BoniturActivityHelper {
         StandortInformationActivity.mStandort = mBa.currentStandort;
         Intent i = new Intent(mBa, StandortInformationActivity.class);
         mBa.startActivity(i);
+    }
+
+    public void showBild(){
+        String code = mBa.currentMarker.code;
+        ImageView iv = getIvBild();
+        if(new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder  +"/boniturBilder/"+code+".JPG").exists())
+        {
+            iv.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/boniturBilder/" + code + ".JPG"));
+            iv.setVisibility(View.VISIBLE);
+        }
+        else {
+            iv.setVisibility(View.GONE);
+        }
+    }
+
+    private void setVisibilityBildHintergrund(int visible){
+        int[] ids = new int[]{
+            R.id.llInfos,
+            R.id.rlPfadenkreuz,
+            R.id.btnStandortInfo
+        };
+
+        for (int id: ids) {
+            mBa.findViewById(id).setVisibility(visible);
+        }
+    }
+
+    public void showBildGross(){
+        String code = mBa.currentMarker.code;
+        ImageView iv = (ImageView) mBa.findViewById(R.id.ivBildGross);
+        if(new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder  +"/boniturBilder/"+code+".JPG").exists())
+        {
+            iv.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/boniturBilder/" + code + ".JPG"));
+            iv.setVisibility(View.VISIBLE);
+            setVisibilityBildHintergrund(View.GONE);
+        }
+        else {
+            iv.setVisibility(View.GONE);
+            setVisibilityBildHintergrund(View.VISIBLE);
+        }
+    }
+
+    public void closeShowBildGross(){
+        mBa.findViewById(R.id.ivBildGross).setVisibility(View.GONE);
+        setVisibilityBildHintergrund(View.VISIBLE);
     }
 
 
