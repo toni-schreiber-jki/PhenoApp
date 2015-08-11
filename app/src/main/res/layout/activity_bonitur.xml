@@ -473,12 +473,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Feststellung während der Blüte. Triebspitze: Bereich oberhalb des ersten freistehenden Blattes. Die Blätter geschlossener oder halb offener Triebspitzen (OIV 001) sind zu entfalten, um Erfassungen am entsprechenden Teil der Triebspitze zu ermöglichen. Beurteilung von 10 Triebspitzen."
+                    tools:text="Feststellung während der Blüte. Triebspitze: Bereich oberhalb des ersten freistehenden Blattes. Die Blätter geschlossener oder halb offener Triebspitzen (OIV 001) sind zu entfalten, um Erfassungen am entsprechenden Teil der Triebspitze zu ermöglichen. Beurteilung von 10 Triebspitzen."
                     android:id="@+id/tvBeschreibung"
                     android:layout_below="@+id/tvMerkmal"
                     android:layout_marginTop="10dp"
-                    android:textColor="#000"
-                    android:textIsSelectable="true" />
+                    android:textIsSelectable="false"
+                    style="@style/JKI_Eigenschaft_Value" />
 
                 <ImageView
                     android:layout_width="fill_parent"
