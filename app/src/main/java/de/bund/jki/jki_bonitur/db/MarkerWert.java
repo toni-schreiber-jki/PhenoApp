@@ -60,6 +60,8 @@ public class MarkerWert extends DbModelInterface {
             res.value = c.getString(c.getColumnIndex(MarkerWert.COLUMN_VALUE));
         }
 
+        c.close();
+
         return res;
     }
 }

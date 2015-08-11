@@ -96,6 +96,8 @@ public class Marker extends DbModelInterface {
             }
         }
 
+        c.close();
+
         return res;
     }
 

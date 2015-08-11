@@ -62,9 +62,12 @@ public class MarkerManager {
             if (c.getCount() == 1) {
                 c.moveToFirst();
                 BoniturSafe.CURRENT_MARKER = c.getInt(c.getColumnIndex(Marker.COLUMN_ID));
-                return new Object[]{Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID))), MARKER_OK};
+                Marker marker = Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
+                c.close();
+                return new Object[]{marker, MARKER_OK};
             }
 
+            c.close();
             return new Object[]{null, MARKER_NEXT_STANDORT};
         }
         catch (Exception e){
@@ -104,6 +107,7 @@ public class MarkerManager {
             return new Object[] {Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID))),flag};
         }
 
+        c.close();
         if(flag == MARKER_NEXT_STANDORT)
             return new Object[]{null, MARKER_NICHT_VORHANDEN};
         return new Object[]{null, MARKER_NEXT_STANDORT};
@@ -129,7 +133,7 @@ public class MarkerManager {
                 p++;
             }while (c.moveToNext());
         }
-
+        c.close();
         return result;
     }
 
@@ -176,7 +180,9 @@ public class MarkerManager {
 
         if(c.getCount()==1){
             c.moveToFirst();
-            return Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
+            Marker marker = Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
+            c.close();
+            return marker;
         }
 
         return null;

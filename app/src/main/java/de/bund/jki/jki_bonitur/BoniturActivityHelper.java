@@ -324,6 +324,8 @@ public class BoniturActivityHelper {
                 if(c.getCount() > 0)
                     new ManyStandorteDialog(mBa,standorte);
             }
+
+            c.close();
         }catch (Exception e){
             new ErrorLog(e,mBa.getApplicationContext());
         }
@@ -415,6 +417,8 @@ public class BoniturActivityHelper {
                 if(c.getCount() > 0)
                     new ManyStandorteDialog(mBa,standorte);
             }
+
+            c.close();
         }catch (Exception e) {
             new ErrorLog(e,mBa.getApplicationContext());
         }
@@ -594,6 +598,8 @@ public class BoniturActivityHelper {
                 getSpParzelle().setAdapter(new ArrayAdapter<String>(mBa, R.layout.jki_simple_list_item_1_top, parzellenList) {
                 });
             }
+
+            c.close();
         }catch (Exception e){
             new ErrorLog(e,mBa.getApplicationContext());
         }
@@ -646,6 +652,8 @@ public class BoniturActivityHelper {
                     updateSpPflanzenValues(reihenNr[0]);
                 }
             }
+
+            c.close();
         }catch (Exception e)
         {
             new ErrorLog(e,mBa.getApplication());
@@ -718,6 +726,8 @@ public class BoniturActivityHelper {
                     setCurrentPosition = false;
                 }
             }
+
+            c.close();
         }catch (Exception e) {
             new ErrorLog(e,mBa.getApplication());
             e.printStackTrace();
@@ -903,6 +913,8 @@ public class BoniturActivityHelper {
                             view.setBackgroundColor(gvSelected);
                         else
                             view.setBackgroundColor(gvUnSelected);
+
+                        c.close();
 
                         return view;
                     } catch (Exception e) {
@@ -1165,6 +1177,8 @@ public class BoniturActivityHelper {
                         BoniturSafe.db.delete(
                                 VersuchWert.TABLE_NAME, where, whereArg);
                     }
+
+                    c.close();
                 }catch (Exception e){
                     new ErrorLog(e,mBa.getApplicationContext());
                 }

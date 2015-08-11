@@ -52,9 +52,11 @@ public class Reader {
             dbCursor.moveToFirst();
             BoniturSafe.VERSUCH_NAME = mFile;
             BoniturSafe.VERSUCH_ID = dbCursor.getInt(dbCursor.getColumnIndex(Versuch.COLUMN_ID));
+            dbCursor.close();
             return true;
         }
         else{
+            dbCursor.close();
             AsyncTask execute = new AsyncTask() {
                 @Override
                 protected Object doInBackground(Object[] params) {
@@ -209,7 +211,9 @@ public class Reader {
         if(cursor.getCount()==1)
         {
             cursor.moveToFirst();
-            return cursor.getInt(cursor.getColumnIndex(Akzession.COLUMN_ID));
+            int res = cursor.getInt(cursor.getColumnIndex(Akzession.COLUMN_ID));
+            cursor.close();
+            return res;
         }
         else
         {
@@ -220,6 +224,8 @@ public class Reader {
 
             akzession.save();
 
+            cursor.close();
+
             return akzession.id;
         }
 
@@ -229,7 +235,9 @@ public class Reader {
         Cursor cursor = BoniturSafe.db.query(Passport.TABLE_NAME, new String[]{Passport.COLUMN_ID}, Passport.COLUMN_VERSUCH + "=? AND " + Passport.COLUMN_KENN_NR + "=?", new String[]{"" + BoniturSafe.VERSUCH_ID, ExcelLib.getCellValueString(row, 7, true)}, null, null, null);
         if(cursor.getCount()==1){
             cursor.moveToFirst();
-            return cursor.getInt(cursor.getColumnIndex(Passport.COLUMN_ID));
+            int res = cursor.getInt(cursor.getColumnIndex(Passport.COLUMN_ID));
+            cursor.close();
+            return res;
         }
         else{
             Passport passport = new Passport();
@@ -238,6 +246,8 @@ public class Reader {
             passport.leitname  = row.getCell(6).getStringCellValue();
 
             passport.save();
+
+            cursor.close();
 
             return passport.id;
         }
@@ -273,6 +283,8 @@ public class Reader {
                         c.moveToFirst();
                         standort = Standort.findByPk(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
                     }
+
+                    c.close();
 
                     int step = 1;
                     for (int col = 9; col <= row.getLastCellNum(); col+=step) {
@@ -337,6 +349,7 @@ public class Reader {
                                     }
 
                                 }
+                                c.close();
                             }
                         }
                     }

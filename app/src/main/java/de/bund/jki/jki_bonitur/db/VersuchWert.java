@@ -101,8 +101,12 @@ public class VersuchWert extends DbModelInterface {
             res.wert_int    = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_WERT_INT));
             res.wert_text   = c.getString(c.getColumnIndex(VersuchWert.COLUMN_WERT_TEXT));
 
+            c.close();
+
             return res;
         }
+
+        c.close();
 
         return null;
     }

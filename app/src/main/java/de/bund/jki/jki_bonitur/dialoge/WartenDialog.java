@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import de.bund.jki.jki_bonitur.BoniturActivity;
 import de.bund.jki.jki_bonitur.R;
@@ -16,12 +17,25 @@ import de.bund.jki.jki_bonitur.R;
 public class WartenDialog {
 
     WartenDialogFragment wdf;
+    public static int MELDUNG_LADEN = 1;
+    public static int MELDUNG_SPEICHERN = 2;
+
 
 
     public WartenDialog(BoniturActivity ba)
     {
         wdf = new WartenDialogFragment();
         wdf.ba          = ba;
+        wdf.showMeldung = MELDUNG_LADEN;
+        wdf.setCancelable(false);
+        wdf.show(ba.getFragmentManager(), "");
+    }
+
+    public WartenDialog(BoniturActivity ba, int meldung)
+    {
+        wdf = new WartenDialogFragment();
+        wdf.ba          = ba;
+        wdf.showMeldung = meldung;
         wdf.setCancelable(false);
         wdf.show(ba.getFragmentManager(), "");
     }
@@ -33,6 +47,13 @@ public class WartenDialog {
 
     public static class WartenDialogFragment extends DialogFragment
     {
+        private String[] meldungen = new String[]{
+                "Daten werden geladen",
+                "Daten werden gespeichert"
+        };
+
+        public int showMeldung = 1;
+
         public BoniturActivity ba;
         private View mView;
 
@@ -54,6 +75,8 @@ public class WartenDialog {
         @Override
         public void onResume() {
             super.onResume();
+
+            ((TextView) mView.findViewById(R.id.tvMeldung)).setText(meldungen[showMeldung-1]);
             /*
             Typeface typeface = Typeface.createFromAsset(ba.getAssets(),"fonts/fontawesome.ttf");
             ((TextView) mView.findViewById(R.id.tvFragezeichen)).setTypeface(typeface);

@@ -60,9 +60,12 @@ public class StandortManager {
                     null,
                     "CAST(" + Standort.COLUMN_PFLANZE + " AS INTEGER) " + (getRealDirection(PFLANZEN_RICHTUNG,direction) == NEXT ? "ASC" : "DESC"),
                     "" + 1);
-            if (c.getCount() == 1)
-                return new Object[]{getValuesFromStandort(c), marker};
-
+            if (c.getCount() == 1) {
+                Object s = getValuesFromStandort(c);
+                c.close();
+                return new Object[]{s, marker};
+            }
+            c.close();
             return nextReihe(direction, marker);
         }catch (Exception e){
             new ErrorLog(e,null);
@@ -72,7 +75,7 @@ public class StandortManager {
     }
 
     public static Object[] nextReihe(Object marker){
-        return nextReihe(NEXT,marker);
+        return nextReihe(NEXT, marker);
     }
 
     public static Object[] nextReihe(int direction, Object marker) {
@@ -87,7 +90,9 @@ public class StandortManager {
                     null,
                     "CAST(" + Standort.COLUMN_REIHE + " AS INTEGER) " + (getRealDirection(REIHEN_RICHTUNG, direction) == NEXT ? "ASC" : "DESC") + ", CAST(" + Standort.COLUMN_PFLANZE + " AS INTEGER) " + (getRealDirection(PFLANZEN_RICHTUNG, direction) == NEXT ? "ASC" : "DESC"),
                     "" + 1);
-            return new Object[]{getValuesFromStandort(c), marker};
+            Object s = getValuesFromStandort(c);
+            c.close();
+            return new Object[]{s, marker};
         }catch (Exception e){
             new ErrorLog(e,null);
             return new Object[] {null,null};
@@ -133,8 +138,10 @@ public class StandortManager {
 
             if (c.getCount() == 1) {
                 c.moveToFirst();
+                Object s = getStandortFromId(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+                c.close();
                 return new Object[]{
-                        getStandortFromId(c.getInt(c.getColumnIndex(Standort.COLUMN_ID))),
+                        s,
                         marker
                 };
             }
@@ -147,9 +154,11 @@ public class StandortManager {
     private static Object getValuesFromStandort(Cursor c){
         if(c.getCount() == 1) {
             c.moveToFirst();
-            return getStandortFromId(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+            Object o =getStandortFromId(c.getInt(c.getColumnIndex(Standort.COLUMN_ID)));
+            c.close();
+            return o;
         }
-
+        c.close();
         return null;
     }
 
@@ -190,6 +199,8 @@ public class StandortManager {
                 } while (c.moveToNext());
             }
 
+            c.close();
+
             return res;
         }catch (Exception e){
             new ErrorLog(e,null);
@@ -221,6 +232,8 @@ public class StandortManager {
                 } while (c.moveToNext());
             }
 
+            c.close();
+
             return res;
         }catch (Exception e){
             new ErrorLog(e,null);
@@ -251,6 +264,8 @@ public class StandortManager {
                     p++;
                 } while (c.moveToNext());
             }
+
+            c.close();
 
             return res;
         } catch (Exception e){
@@ -332,13 +347,15 @@ public class StandortManager {
 
                 BoniturSafe.FIRST_EMPTY_COUNT++;
 
+                c.close();
+
                 return new Object[]{s, m};
 
             }
+            c.close();
         }catch (Exception e) {
             new ErrorLog(e,null);
         }
-
         return new Object[]{null, null};
     }
 

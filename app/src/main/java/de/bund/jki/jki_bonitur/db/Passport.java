@@ -61,8 +61,12 @@ public class Passport extends DbModelInterface {
             res.leitname =      c.getString(c.getColumnIndex(Passport.COLUMN_LEITNAME));
             res.merkmale =  c.getString(c.getColumnIndex(Passport.COLUMN_MERKMALE));
 
+            c.close();
+
             return res;
         }
+
+        c.close();
 
         return null;
     }

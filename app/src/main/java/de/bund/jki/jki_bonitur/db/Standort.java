@@ -127,8 +127,12 @@ public class Standort extends DbModelInterface {
             res.freifeld = c.isNull(c.getColumnIndex(Standort.COLUMN_FREIFELD)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_FREIFELD));
             res.info = c.isNull(c.getColumnIndex(Standort.COLUMN_INFO)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_INFO));
 
+            c.close();
+
             return res;
         }
+
+        c.close();
 
         return null;
     }
@@ -154,8 +158,12 @@ public class Standort extends DbModelInterface {
         c.moveToFirst();
 
         if(c.getCount() >= 1){
-            return c.getString(c.getColumnIndex(VersuchWert.COLUMN_WERT_DATUM));
+            String result = c.getString(c.getColumnIndex(VersuchWert.COLUMN_WERT_DATUM));
+            c.close();
+            return result;
         }
+
+        c.close();
 
         return "";
 
@@ -172,17 +180,24 @@ public class Standort extends DbModelInterface {
                 null,
                 null);
 
-        if(c.getCount() == 0)
+        if(c.getCount() == 0) {
+            c.close();
             return "";
+        }
 
         c.moveToFirst();
 
         if(c.getCount() == 1){
             VersuchWert vw = VersuchWert.findByPk(c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID)));
-            if(vw.wert_id > 0)
-                return ""+MarkerWert.findByPk(vw.wert_id).value;
-            if(vw.wert_text != null)
-                return  vw.wert_text;
+            if(vw.wert_id > 0) {
+                c.close();
+                return "" + MarkerWert.findByPk(vw.wert_id).value;
+            }
+            if(vw.wert_text != null) {
+                c.close();
+                return vw.wert_text;
+            }
+            c.close();
             return ""+vw.wert_int;
         }
 
@@ -192,6 +207,8 @@ public class Standort extends DbModelInterface {
             VersuchWert vw = VersuchWert.findByPk(c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID)));
             res = res + MarkerWert.findByPk(vw.wert_id).value + "|";
         }while (c.moveToNext());
+
+        c.close();
 
         return res.substring(0,res.length()-1);
     }

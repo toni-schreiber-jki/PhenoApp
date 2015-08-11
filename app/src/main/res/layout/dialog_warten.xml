@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Daten werden geladen"
-                android:id="@+id/textView23"
+                android:id="@+id/tvMeldung"
                 android:maxLines="2"
                 android:layout_marginTop="5dp" />
 

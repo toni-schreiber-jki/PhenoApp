@@ -85,9 +85,11 @@ public class Akzession extends DbModelInterface {
             res.name =      c.getString(c.getColumnIndex(Akzession.COLUMN_NAME));
             res.merkmale =  c.getString(c.getColumnIndex(Akzession.COLUMN_MERKMALE));
 
+            c.close();
+
             return res;
         }
-
+        c.close();
         return null;
     }
 

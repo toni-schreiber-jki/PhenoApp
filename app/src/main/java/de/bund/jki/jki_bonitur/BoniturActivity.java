@@ -57,6 +57,11 @@ public class BoniturActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(bir);
+        try {
+            System.gc();
+        } catch (Exception e) {
+            new ErrorLog(e, BoniturSafe.APP_CONTEXT);
+        }
     }
 
     public void init() {
@@ -295,7 +300,7 @@ public class BoniturActivity extends Activity {
             }
 
             if(intent.getAction().compareTo(ERROR_INTENT)==0){
-                Toast.makeText(context,intent.getStringExtra("TEXT"),Toast.LENGTH_LONG);
+                Toast.makeText(context, intent.getStringExtra("TEXT"), Toast.LENGTH_LONG);
             }
         }
     }
