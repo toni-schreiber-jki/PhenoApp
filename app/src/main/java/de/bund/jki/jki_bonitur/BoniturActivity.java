@@ -99,7 +99,7 @@ public class BoniturActivity extends Activity {
                     bah.askNewBbch();
                 }
 
-                ((TextView) findViewById(R.id.tvDocument)).setText("Datei: " + BoniturSafe.VERSUCH_NAME);
+                ((TextView) findViewById(R.id.tvDocument)).setText("" + BoniturSafe.VERSUCH_NAME);
 
                 loadSettings();
 

@@ -4,219 +4,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="75dp"
-        android:background="@color/ripple_material_light">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:id="@+id/imageView2"
-
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/logo" />
-            <!--
-            android:src="@drawable/icon"
-            -->
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="JKI-Bonitur"
-                    android:id="@+id/textView7"
-                    android:layout_marginRight="5dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Datei: xxxx.xls"
-                    android:id="@+id/tvDocument"
-                    android:layout_below="@+id/textView7"
-                    android:layout_marginTop="5dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="75dp" >
-
-                <Spinner
-                    style="@style/JKI_Spinner"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:id="@+id/spParzelle"
-                    android:layout_marginLeft="20dp"
-                    android:layout_gravity="top"
-                    tools:listitem="@layout/jki_simple_list_item_1_top"
-                    tools:text="99"
-                    />
-
-                <Spinner
-                    style="@style/JKI_Spinner"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:id="@+id/spReihe"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="top"
-                    tools:listitem="@layout/jki_simple_list_item_1_top"/>
-
-                <Spinner
-                    style="@style/JKI_Spinner"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:id="@+id/spPflanze"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="top"
-                    tools:listitem="@layout/jki_simple_list_item_1_top"
-
-                    />
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="right">
-
-                    <Button
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:text="\uf120"
-                        android:id="@+id/btnFirstEmpty"
-                        android:textSize="45dp"
-                        android:onClick="onClick"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="10dp"
-                        android:visibility="visible"
-                        android:layout_gravity="top" />
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/llZickZackRichtung"
-                        android:layout_gravity="top">
-
-                        <Button
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:text="\uf063"
-                            android:id="@+id/btnRichtungUnten"
-                            android:textSize="45dp"
-                            android:layout_alignParentTop="true"
-                            android:onClick="onClick"
-                            android:layout_marginRight="10dp"
-                            android:visibility="visible"
-                            android:layout_gravity="top" />
-
-                        <Button
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:text="\uf062"
-                            android:id="@+id/btnRichtungOben"
-                            android:textSize="45dp"
-                            android:layout_alignParentTop="true"
-
-                            android:onClick="onClick"
-                            android:layout_marginRight="10dp"
-                            android:visibility="visible"
-                            android:layout_gravity="top" />
-
-                        <Button
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:text="\uf060"
-                            android:id="@+id/btnRichtungLinks"
-                            android:textSize="45dp"
-                            android:nestedScrollingEnabled="true"
-                            android:layout_alignParentTop="true"
-
-                            android:onClick="onClick"
-                            android:layout_marginRight="10dp"
-                            android:visibility="visible"
-                            android:layout_gravity="top" />
-
-                        <Button
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:text="\uf061"
-                            android:id="@+id/btnRichtungRechts"
-                            android:textSize="45dp"
-                            android:layout_alignParentTop="true"
-
-                            android:onClick="onClick"
-                            android:layout_marginRight="10dp"
-                            android:visibility="visible"
-                            android:layout_gravity="top" />
-                    </LinearLayout>
-
-                    <Button
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:text="\uf0c7"
-                        android:id="@+id/btnSpeichenClose"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginRight="10dp"
-                        android:onClick="onClick"
-                        android:textSize="45dp"
-                        android:layout_alignParentTop="true"
-                        android:nestedScrollingEnabled="false"
-                        android:layout_gravity="top" />
-
-                    <Button
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:text="\uf030"
-                        android:id="@+id/btnFoto"
-                        android:textSize="45dp"
-                        android:onClick="onClick"
-                        android:layout_alignParentTop="true"
-                        android:layout_gravity="top" />
-
-                    <Button
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:text="\uf013"
-                        android:id="@+id/btnSettings"
-                        android:textSize="45dp"
-                        android:onClick="onClick"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_gravity="top" />
-                </LinearLayout>
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lvWerte"
-            android:layout_weight="3"
-            android:visibility="gone"/>
-
-    </RelativeLayout>
+    <include layout="@layout/activity_bonitur_top" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -241,10 +29,10 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="30dp"
                     android:focusableInTouchMode="false"
                     android:id="@+id/llStandort"
-                    android:background="#ffffff">
+                    android:background="#ffffff"
+                    style="@style/JKI_KeyValueRow">
 
                     <TextView
                         android:text="Standort:"
@@ -264,9 +52,9 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="45dp"
                     android:id="@+id/llAkzession"
-                    android:background="#ffdedede">
+                    android:background="#ffdedede"
+                    style="@style/JKI_KeyValueRow_Gross">
 
                     <TextView
                         android:text="Akzession"
@@ -276,7 +64,6 @@
 
                     <Spinner
                         android:layout_width="wrap_content"
-                        android:layout_height="45dp"
                         android:id="@+id/spAkzession"
                         style="@style/JKI_Spinner"
                         tools:listitem="@layout/jki_simple_list_item_1"
@@ -287,8 +74,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:id="@+id/llPassport">
+                    android:id="@+id/llPassport"
+                    style="@style/JKI_KeyValueRow_Gross">
 
                     <TextView
                         android:text="Passport"
@@ -298,7 +85,6 @@
 
                     <Spinner
                         android:layout_width="wrap_content"
-                        android:layout_height="45dp"
                         android:id="@+id/spPassport"
                         style="@style/JKI_Spinner"
                         tools:listitem="@layout/jki_simple_list_item_1"/>
@@ -307,8 +93,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:id="@+id/llSorte">
+                    android:id="@+id/llSorte"
+                    style="@style/JKI_KeyValueRow">
 
                     <TextView
                         android:text="Sorte/Z. Stamm"
@@ -327,8 +113,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:id="@+id/llEltern">
+                    android:id="@+id/llEltern"
+                    style="@style/JKI_KeyValueRow">
 
                     <TextView
                         android:text="Eltern"
@@ -348,8 +134,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:id="@+id/llSortiment">
+                    android:id="@+id/llSortiment"
+                    style="@style/JKI_KeyValueRow">
 
                     <TextView
                         android:text="Sortimentsnr"
@@ -368,8 +154,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:id="@+id/llFreifeld" >
+                    android:id="@+id/llFreifeld"
+                    style="@style/JKI_KeyValueRow">
 
                     <TextView
                         android:text="Information"
@@ -388,8 +174,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/llEigenschaft">
+                    android:id="@+id/llEigenschaft"
+                    style="@style/JKI_KeyValueRow_Gross">
 
                     <TextView
                         android:text="Merkmal (Code)"
@@ -407,20 +193,18 @@
 
                     <Spinner
                         android:layout_width="wrap_content"
-                        android:layout_height="45dp"
                         android:id="@+id/spMarker"
                         android:layout_weight="1"
                         style="@style/JKI_Spinner"
                         tools:listitem="@layout/jki_simple_list_item_1"/>
 
                     <CheckBox
-                        android:layout_width="35dp"
-                        android:layout_height="45dp"
                         android:scaleX="1.5"
                         android:scaleY="1.5"
                         android:id="@+id/cbMarker"
                         android:gravity="center_vertical|center_horizontal"
-                        android:layout_marginLeft="1dp" />
+                        android:layout_marginLeft="1dp"
+                        style="@style/JKI_KeyValueRow_Gross_elements" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -428,25 +212,21 @@
                         android:layout_height="fill_parent">
 
                         <Button
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
                             android:text="\uf060"
                             android:id="@+id/btnPrevMarker"
-                            android:textSize="25dp"
                             android:nestedScrollingEnabled="false"
                             android:onClick="onClick"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            style="@style/JKI_KeyValueRow_Gross_elements" />
 
                         <Button
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
                             android:text="\uf061"
                             android:id="@+id/btnNextMarker"
-                            android:textSize="25dp"
                             android:onClick="onClick"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignParentEnd="true"
+                            style="@style/JKI_KeyValueRow_Gross_elements" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -454,8 +234,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:id="@+id/llBeschreibungKurz">
+                    android:id="@+id/llBeschreibungKurz"
+                    style="@style/JKI_KeyValueRow">
 
                     <TextView
                         android:text="Merkmal:"
@@ -498,58 +278,7 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:id="@+id/rlPfadenkreuz"
-                android:layout_alignParentBottom="true">
-
-                <Button
-                    android:layout_width="66dp"
-                    android:layout_height="66dp"
-                    android:text="\uf062"
-                    android:id="@+id/btnUp"
-
-                    android:textSize="45dp"
-                    android:onClick="onClick"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="66dp" />
-
-                <Button
-                    android:layout_width="66dp"
-                    android:layout_height="66dp"
-                    android:text="\uf061"
-                    android:id="@+id/btnRight"
-                    android:textSize="45dp"
-                    android:onClick="onClick"
-                    android:layout_below="@+id/btnUp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-
-                <Button
-                    android:layout_width="66dp"
-                    android:layout_height="66dp"
-                    android:text="\uf063"
-                    android:id="@+id/btnDown"
-                    android:textSize="45dp"
-                    android:onClick="onClick"
-                    android:layout_below="@+id/btnRight"
-                    android:layout_centerHorizontal="true" />
-
-                <Button
-                    android:layout_width="66dp"
-                    android:layout_height="66dp"
-                    android:text="\uf060"
-                    android:id="@+id/btnLeft"
-                    android:textSize="45dp"
-                    android:nestedScrollingEnabled="true"
-                    android:onClick="onClick"
-                    android:layout_below="@+id/btnUp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
-
-            </RelativeLayout>
+            <include layout="@layout/jki_bonitur_pfadenkreuz" />
 
             <Button
                 android:layout_width="wrap_content"

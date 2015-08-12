@@ -10,6 +10,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -1257,6 +1258,23 @@ public class BoniturActivityHelper {
             // Create an image file name
             String timeStamp = new SimpleDateFormat("yyMMdd_HHmmss").format(new Date());
             String imageFileName = mBa.currentStandort.getName() + "_" + timeStamp;
+
+            String preName = "";
+            if(mBa.currentStandort.zuchtstamm != null)
+            {
+                if(mBa.currentStandort.zuchtstamm.compareTo("") != 0 && mBa.currentStandort.zuchtstamm.compareTo("null") != 0){
+                    preName += mBa.currentStandort.zuchtstamm + "_";
+                }
+            }
+
+            if(mBa.currentStandort.sorte != null){
+                if(mBa.currentStandort.sorte.compareTo("") != 0 && mBa.currentStandort.sorte.compareTo("null") != 0){
+                    preName += mBa.currentStandort.sorte + "_";
+                }
+            }
+
+            imageFileName = preName + imageFileName;
+
             File storageDir = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/fotos/");
 
             if(!storageDir.exists()){
@@ -1264,7 +1282,7 @@ public class BoniturActivityHelper {
             }
 
             File image = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/fotos/"+imageFileName+".jpg");
-            image.createNewFile();
+            //image.createNewFile();
 
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(mBa.getPackageManager()) != null) {
@@ -1280,7 +1298,7 @@ public class BoniturActivityHelper {
 
 
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             new ErrorLog(e,mBa.getApplication());
             e.printStackTrace();
         }
