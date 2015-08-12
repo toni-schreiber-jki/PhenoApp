@@ -165,6 +165,10 @@ public class Reader {
             int lastRow = sheet.getLastRowNum();
             for(int r=1; r <= lastRow ; r++) {
                 HSSFRow row = sheet.getRow(r);
+
+                if(ExcelLib.isCellEmpty(row, 0) && ExcelLib.isCellEmpty(row, 1) && ExcelLib.isCellEmpty(row, 2) && ExcelLib.isCellEmpty(row, 4))
+                    break;
+
                 Standort standort = new Standort();
 
                 if(ExcelLib.isCellEmpty(row,1)){
@@ -219,8 +223,8 @@ public class Reader {
         {
             Akzession akzession = new Akzession();
             akzession.versuchId = BoniturSafe.VERSUCH_ID;
-            akzession.nummer    = row.getCell(5).getStringCellValue();
-            akzession.name      = row.getCell(4).getStringCellValue();
+            akzession.nummer    = ExcelLib.isCellEmpty(row, 5) ? "" :row.getCell(5).getStringCellValue();
+            akzession.name      = ExcelLib.isCellEmpty(row, 4) ? "" : row.getCell(4).getStringCellValue();
 
             akzession.save();
 
@@ -242,8 +246,8 @@ public class Reader {
         else{
             Passport passport = new Passport();
             passport.versuchId = BoniturSafe.VERSUCH_ID;
-            passport.kennNr    = ExcelLib.getCellValueString(row,7,true);
-            passport.leitname  = row.getCell(6).getStringCellValue();
+            passport.kennNr    = ExcelLib.isCellEmpty(row, 7) ? "" :ExcelLib.getCellValueString(row,7,true);
+            passport.leitname  = ExcelLib.isCellEmpty(row, 6) ? "" :row.getCell(6).getStringCellValue();
 
             passport.save();
 
