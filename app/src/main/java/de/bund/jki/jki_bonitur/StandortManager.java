@@ -321,10 +321,10 @@ public class StandortManager {
                             "WHERE \n" +
                             "\"standort\".versuchId=? AND \n" +
                             "\"marker\".versuchId = ? AND\n" +
-                            " (SELECT count(*) FROM versuchwert WHERE versuchId=1 AND standortId = standort._id AND markerId= marker._id AND ((ifnull(wert_int,\"0\") <> \"0\" )  OR ifnull(wert_text,\"\") <> \"\" OR (ifnull(wert_id,\"0\") <> \"0\"))  ) = 0\n" +
+                            " (SELECT count(*) FROM versuchwert WHERE versuchId=? AND standortId = standort._id AND markerId= marker._id AND ((ifnull(wert_int,\"0\") <> \"0\" )  OR ifnull(wert_text,\"\") <> \"\" OR (ifnull(wert_id,\"0\") <> \"0\"))  ) = 0\n" +
                             "ORDER BY \n" +
                             "parzelle ASC, reihe ASC, pflanze ASC, marker._id ASC",
-                new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.VERSUCH_ID}
+                new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.VERSUCH_ID}
             );
 
             if (c.getCount() >= 1) {

@@ -226,7 +226,7 @@ public class VersuchListActivity extends Activity {
                     }
                 })
                 .setTitle("Versuche \"" + delVersuch.name + "\" löschen ?")
-                .setMessage("Sind die sicher? Aller bereits erhobenen Werte gehen verloren!")
+                .setMessage("Sind die sicher? Alle bereits erhobenen Werte gehen verloren!")
                 .create();
 
         dialog.show();
