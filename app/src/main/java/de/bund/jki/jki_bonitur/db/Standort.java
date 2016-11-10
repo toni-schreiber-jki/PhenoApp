@@ -152,8 +152,11 @@ public class Standort extends DbModelInterface {
                 null,
                 VersuchWert.COLUMN_ID + " DESC");
 
-        if(c.getCount() == 0)
+        if(c.getCount() == 0) {
+            c.close();
+
             return "";
+        }
 
         c.moveToFirst();
 

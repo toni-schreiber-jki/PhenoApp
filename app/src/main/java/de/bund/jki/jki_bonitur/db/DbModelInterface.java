@@ -9,7 +9,7 @@ import de.bund.jki.jki_bonitur.ErrorLog;
 /**
  * Created by Toni on 10.05.2015.
  */
-public abstract class DbModelInterface {
+public abstract class DbModelInterface{
 
     public String TABLE_NAME;
     public String COLUMN_ID;

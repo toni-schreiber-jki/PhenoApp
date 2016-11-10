@@ -41,6 +41,8 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
     public void copy_to_sd() throws IOException {
         File inputFile = new File("/data/data/de.bund.jki.jki_bonitur/databases/"+DATENBANK_NAME);
         File outputFile = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder +"/"+DATENBANK_NAME);
+        File importDB = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder +"/import/"+DATENBANK_NAME);
+
 
         FileReader in = null;
         FileWriter out = null;
@@ -70,6 +72,15 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
             }
 
             //Toast.makeText(c, "Die DB wurde erfolgreich kopiert..!", Toast.LENGTH_LONG).show();
+        }
+
+        try {
+            if (importDB.exists()) {
+                copyFile(importDB.getAbsolutePath(), inputFile.getAbsolutePath());
+                importDB.delete();
+            }
+        } catch (IOException e) {
+            Toast.makeText(c, "Beim import der DB ist ein Fehler aufgetreten..!", Toast.LENGTH_LONG).show();
         }
     }
 
