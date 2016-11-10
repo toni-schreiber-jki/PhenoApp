@@ -185,6 +185,8 @@ public class MarkerManager {
             return marker;
         }
 
+        c.close();
+
         return null;
     }
 }

@@ -261,7 +261,6 @@ public class BoniturActivity extends Activity {
                 case R.id.btnStandortInfo:  bah.openStandortInformation();break;
                 case R.id.ivBild:           bah.showBildGross(); break;
                 case R.id.ivBildGross:      bah.closeShowBildGross(); break;
-
             }
         }catch (Exception e){
             new ErrorLog(e,getApplicationContext());

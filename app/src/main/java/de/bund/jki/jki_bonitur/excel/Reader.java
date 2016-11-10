@@ -166,7 +166,7 @@ public class Reader {
             for(int r=1; r <= lastRow ; r++) {
                 HSSFRow row = sheet.getRow(r);
 
-                if(ExcelLib.isCellEmpty(row, 0) && ExcelLib.isCellEmpty(row, 1) && ExcelLib.isCellEmpty(row, 2) && ExcelLib.isCellEmpty(row, 4))
+                if(ExcelLib.isCellEmpty(row, 0) && ExcelLib.isCellEmpty(row, 1) && ExcelLib.isCellEmpty(row, 2) && ExcelLib.isCellEmpty(row,3))
                     break;
 
                 Standort standort = new Standort();

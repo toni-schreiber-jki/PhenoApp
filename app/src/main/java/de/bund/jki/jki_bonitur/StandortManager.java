@@ -117,8 +117,12 @@ public class StandortManager {
                     null,
                     Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC",
                     "" + 1);
+            Object[] result = new Object[]{getValuesFromStandort(c), MarkerManager.next()[0]};
 
-            return new Object[]{getValuesFromStandort(c), MarkerManager.next()[0]};
+            if(!c.isClosed())
+                c.close();
+
+            return result;
         }catch (Exception e) {
             new ErrorLog(e,null);
             return new Object[]{null,null};
@@ -145,6 +149,7 @@ public class StandortManager {
                         marker
                 };
             }
+            c.close();
         }catch (Exception e){
             new ErrorLog(e,null);
         }

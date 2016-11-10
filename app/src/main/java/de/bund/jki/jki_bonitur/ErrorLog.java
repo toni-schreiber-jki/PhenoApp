@@ -30,7 +30,7 @@ public class ErrorLog {
                 c = BoniturSafe.APP_CONTEXT;
             }
             if(c != null){
-                Toast.makeText(c,"Es ist ein interner Fehler aufgetretten, ggf toni.schreiber@jki.bund.de kontaktieren. Ein Fehlerbericht wurde aufgezeichnet.",Toast.LENGTH_LONG).show();
+                Toast.makeText(c,"Es ist ein interner Fehler aufgetretten, ggf toni.schreiber@julius-kuehn.de kontaktieren. Ein Fehlerbericht wurde aufgezeichnet.",Toast.LENGTH_LONG).show();
             }
 
         }catch (Exception ee){
