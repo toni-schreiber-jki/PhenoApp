@@ -8,6 +8,9 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import de.bund.jki.jki_bonitur.BoniturSafe;
 import de.bund.jki.jki_bonitur.ErrorLog;
 import de.bund.jki.jki_bonitur.MarkerManager;
@@ -24,11 +27,13 @@ import de.bund.jki.jki_bonitur.dialoge.WartenDialog;
  */
 public class Writer{
 
+    private HashMap<Integer,Akzession> akzessionHashMap;
+    private HashMap<Integer, Passport> passportHashMapt;
+
     public Writer(String s)
     {
         writeResult(s);
     }
-
 
     public void writeResult(String filePath)
     {
@@ -71,6 +76,8 @@ public class Writer{
 
     private HSSFWorkbook addReportFinal(HSSFWorkbook workbook)
     {
+        this.akzessionHashMap = new HashMap<Integer, Akzession>();
+        this.passportHashMapt = new HashMap<Integer, Passport>();
         try {
             HSSFSheet sheet = workbook.createSheet("Daten");
             sheet.createFreezePane(9, 0);
@@ -114,9 +121,9 @@ public class Writer{
                 Passport passport = null;
 
                 if (standort.akzessionId != -1 && standort.akzessionId != 0)
-                    akzession = Akzession.findByPk(standort.akzessionId);
+                    akzession = standort.akzession;//getAkzession(standort.akzessionId); //Akzession.findByPk(standort.akzessionId);
                 if (standort.passportId != -1 && standort.passportId != 0)
-                    passport = Passport.findByPk(standort.passportId);
+                    passport = standort.passport; //getPassport(standort.passportId); //Passport.findByPk(standort.passportId);
 
                 row = sheet.createRow(r);
                 row.createCell(0).setCellValue(standort.parzelle);
@@ -133,8 +140,11 @@ public class Writer{
                 int mp = 0;
                 for (Marker m : marker) {
                     if (show_datum) {
-                        row.createCell(2 * mp + 9).setCellValue(standort.getValue(m.id));
-                        row.createCell(2 * mp + 1 + 9).setCellValue(standort.getDate(m.id));
+                        //Änderung 02.05.2017 Datum nur abfragen, wenn Wert gesetzt
+                        String value = standort.getValue(m.id);
+                        row.createCell(2 * mp + 9).setCellValue(value);
+                        if(!value.equals(""))
+                            row.createCell(2 * mp + 1 + 9).setCellValue(standort.getDate(m.id));
                     } else {
                         row.createCell(mp + 9).setCellValue(standort.getValue(m.id));
                     }
@@ -143,7 +153,7 @@ public class Writer{
                 r++;
                 if(r%25 == 0) {
                     try {
-                        System.gc();
+                        //System.gc();
                     } catch (Exception e) {
                         new ErrorLog(e, BoniturSafe.APP_CONTEXT);
                     }
@@ -153,6 +163,31 @@ public class Writer{
             new ErrorLog(e, BoniturSafe.APP_CONTEXT);
         }
 
+        this.akzessionHashMap.clear();
+        this.passportHashMapt.clear();
+
         return workbook;
+    }
+
+    private Akzession getAkzession(int id){
+        Akzession res = null;
+        if(this.akzessionHashMap.containsKey(id)){
+            res = Akzession.findByPk(id);
+            this.akzessionHashMap.put(id,res);
+        } else {
+            res = this.akzessionHashMap.get(id);
+        }
+        return res;
+    }
+
+    private Passport getPassport(int id){
+        Passport res = null;
+        if(this.passportHashMapt.containsKey(id)){
+            res = Passport.findByPk(id);
+            this.passportHashMapt.put(id, res);
+        } else{
+            res = this.passportHashMapt.get(id);
+        }
+        return res;
     }
 }

@@ -67,30 +67,38 @@ public class Akzession extends DbModelInterface {
     public static Akzession findByPk(int id){
         Akzession res = new Akzession();
 
-        Cursor c = BoniturSafe.db.query(
-                Akzession.TABLE_NAME,
-                new String[]{Akzession.COLUMN_ID, Akzession.COLUMN_VERSUCH, Akzession.COLUMN_PASSPORT, Akzession.COLUMN_NUMMER, Akzession.COLUMN_NAME, Akzession.COLUMN_MERKMALE},
-                Akzession.COLUMN_ID+"=?",
-                new String [] {""+id},
-                null,
-                null,
-                null);
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.query(
+                    Akzession.TABLE_NAME,
+                    new String[]{Akzession.COLUMN_ID, Akzession.COLUMN_VERSUCH, Akzession.COLUMN_PASSPORT, Akzession.COLUMN_NUMMER, Akzession.COLUMN_NAME, Akzession.COLUMN_MERKMALE},
+                    Akzession.COLUMN_ID + "=?",
+                    new String[]{"" + id},
+                    null,
+                    null,
+                    null);
 
-        if(c.getCount() == 1){
-            c.moveToFirst();
-            res.id =        c.getInt(c.getColumnIndex(Akzession.COLUMN_ID));
-            res.versuchId = c.getInt(c.getColumnIndex(Akzession.COLUMN_VERSUCH));
-            res.passportId= c.getInt(c.getColumnIndex(Akzession.COLUMN_PASSPORT));
-            res.nummer =    c.getString(c.getColumnIndex(Akzession.COLUMN_NUMMER));
-            res.name =      c.getString(c.getColumnIndex(Akzession.COLUMN_NAME));
-            res.merkmale =  c.getString(c.getColumnIndex(Akzession.COLUMN_MERKMALE));
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                res.id = c.getInt(c.getColumnIndex(Akzession.COLUMN_ID));
+                res.versuchId = c.getInt(c.getColumnIndex(Akzession.COLUMN_VERSUCH));
+                res.passportId = c.getInt(c.getColumnIndex(Akzession.COLUMN_PASSPORT));
+                res.nummer = c.getString(c.getColumnIndex(Akzession.COLUMN_NUMMER));
+                res.name = c.getString(c.getColumnIndex(Akzession.COLUMN_NAME));
+                res.merkmale = c.getString(c.getColumnIndex(Akzession.COLUMN_MERKMALE));
 
-            c.close();
+                //c.close();
 
-            return res;
+                return res;
+            }
+            //c.close();
+            return null;
         }
-        c.close();
-        return null;
+        finally {
+            if ( c != null )
+                c.close();
+
+        }
     }
 
 

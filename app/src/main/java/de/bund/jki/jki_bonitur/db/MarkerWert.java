@@ -47,21 +47,27 @@ public class MarkerWert extends DbModelInterface {
     public static MarkerWert findByPk(int id) {
         MarkerWert res = new MarkerWert();
 
-        Cursor c = BoniturSafe.db.rawQuery(
-                "SELECT * FROM " + TABLE_NAME + " WHERE " + MarkerWert.COLUMN_ID + " = ?",
-                new String[]{"" + id}
-        );
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.rawQuery(
+                    "SELECT * FROM " + TABLE_NAME + " WHERE " + MarkerWert.COLUMN_ID + " = ?",
+                    new String[]{"" + id}
+            );
 
-        if (c.getCount() == 1) {
-            c.moveToFirst();
-            res.id = id;
-            res.markerId = c.getInt(c.getColumnIndex(MarkerWert.COLUMN_MARKER));
-            res.label = c.getString(c.getColumnIndex(MarkerWert.COLUMN_LABEL));
-            res.value = c.getString(c.getColumnIndex(MarkerWert.COLUMN_VALUE));
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                res.id = id;
+                res.markerId = c.getInt(c.getColumnIndex(MarkerWert.COLUMN_MARKER));
+                res.label = c.getString(c.getColumnIndex(MarkerWert.COLUMN_LABEL));
+                res.value = c.getString(c.getColumnIndex(MarkerWert.COLUMN_VALUE));
+            }
+
+            //c.close();
+
+            return res;
         }
-
-        c.close();
-
-        return res;
+        finally {
+            c.close();
+        }
     }
 }

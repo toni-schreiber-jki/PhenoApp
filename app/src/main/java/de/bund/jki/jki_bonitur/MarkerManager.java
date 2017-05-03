@@ -48,8 +48,9 @@ public class MarkerManager {
     }
 
     private static Object[] nextMarker(int direction){
+        Cursor c = null;
         try {
-            Cursor c = BoniturSafe.db.query(
+            c = BoniturSafe.db.query(
                     Marker.TABLE_NAME,
                     new String[]{Marker.COLUMN_ID},
                     Marker.COLUMN_VERSUCH + "=? AND " + Marker.COLUMN_ID + " "+ (direction == NEXT ? ">" : "<") +" ?" + (isMarkerFilterActive() ? " AND "+Marker.COLUMN_ID+" IN ("+getMarkerFilter()+")" :""),
@@ -63,17 +64,20 @@ public class MarkerManager {
                 c.moveToFirst();
                 BoniturSafe.CURRENT_MARKER = c.getInt(c.getColumnIndex(Marker.COLUMN_ID));
                 Marker marker = Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
-                c.close();
+                //c.close();
                 return new Object[]{marker, MARKER_OK};
             }
 
-            c.close();
+            //c.close();
             return new Object[]{null, MARKER_NEXT_STANDORT};
         }
         catch (Exception e){
             new ErrorLog(e,null);
             e.printStackTrace();
             return null;
+        } finally {
+            if ( c != null )
+                c.close();
         }
     }
 
@@ -82,7 +86,7 @@ public class MarkerManager {
     }
 
     private static Object[] first(int flag){
-        return getFirstLast(flag , "ASC");
+        return getFirstLast(flag, "ASC");
     }
 
     private static Object[] last(int flag){
@@ -90,51 +94,63 @@ public class MarkerManager {
     }
 
     private static Object[] getFirstLast(int flag , String direction ){
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.query(
+                    Marker.TABLE_NAME,
+                    new String[]{Marker.COLUMN_ID},
+                    Marker.COLUMN_VERSUCH + "=?" + (isMarkerFilterActive() ? " AND " + Marker.COLUMN_ID + " IN (" + getMarkerFilter() + ")" : ""),
+                    getMarkerFilerValues(new String[]{"" + BoniturSafe.VERSUCH_ID}),
+                    null,
+                    null,
+                    "CAST (" + Marker.COLUMN_ID + " AS INTEGER) " + direction,
+                    "" + 1);
 
-        Cursor c = BoniturSafe.db.query(
-                Marker.TABLE_NAME,
-                new String[]{Marker.COLUMN_ID},
-                Marker.COLUMN_VERSUCH+"=?" + (isMarkerFilterActive() ? " AND "+Marker.COLUMN_ID+" IN ("+getMarkerFilter()+")" :""),
-                getMarkerFilerValues(new String[]{"" + BoniturSafe.VERSUCH_ID}),
-                null,
-                null,
-                "CAST ("+Marker.COLUMN_ID + " AS INTEGER) " +direction,
-                ""+1);
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                BoniturSafe.CURRENT_MARKER = c.getInt(c.getColumnIndex(Marker.COLUMN_ID));
+                return new Object[]{Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID))), flag};
+            }
 
-        if(c.getCount() == 1) {
-            c.moveToFirst();
-            BoniturSafe.CURRENT_MARKER = c.getInt(c.getColumnIndex(Marker.COLUMN_ID));
-            return new Object[] {Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID))),flag};
+            // c.close();
+            if (flag == MARKER_NEXT_STANDORT)
+                return new Object[]{null, MARKER_NICHT_VORHANDEN};
+            return new Object[]{null, MARKER_NEXT_STANDORT};
         }
-
-        c.close();
-        if(flag == MARKER_NEXT_STANDORT)
-            return new Object[]{null, MARKER_NICHT_VORHANDEN};
-        return new Object[]{null, MARKER_NEXT_STANDORT};
+        finally {
+            if ( c != null )
+                c.close();
+        }
     }
 
     public static Marker[] getAllMarker(){
-        Cursor c = BoniturSafe.db.query(
-                Marker.TABLE_NAME,
-                new String[]{Marker.COLUMN_ID},
-                Marker.COLUMN_VERSUCH+"=?",
-                new String[] {""+BoniturSafe.VERSUCH_ID},
-                null,
-                null,
-                "CAST (" + Marker.COLUMN_ID + " AS INTEGER) ASC");
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.query(
+                    Marker.TABLE_NAME,
+                    new String[]{Marker.COLUMN_ID},
+                    Marker.COLUMN_VERSUCH + "=?",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID},
+                    null,
+                    null,
+                    "CAST (" + Marker.COLUMN_ID + " AS INTEGER) ASC");
 
-        Marker[] result = new Marker[c.getCount()];
+            Marker[] result = new Marker[c.getCount()];
 
-        if(c.getCount() >= 1) {
-            c.moveToFirst();
-            int p = 0;
-            do {
-                result[p] = Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
-                p++;
-            }while (c.moveToNext());
+            if (c.getCount() >= 1) {
+                c.moveToFirst();
+                int p = 0;
+                do {
+                    result[p] = Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
+                    p++;
+                } while (c.moveToNext());
+            }
+            //c.close();
+            return result;
+        } finally {
+            if ( c != null )
+                c.close();
         }
-        c.close();
-        return result;
     }
 
     private static boolean isMarkerFilterActive(){
@@ -171,22 +187,28 @@ public class MarkerManager {
     }
 
     public static Marker getFirstUnusedMarker(int standortId){
-        Cursor c = BoniturSafe.db.rawQuery(
-                "SELECT _id FROM marker " +
-                "WHERE versuchId = ? AND _id not in (" +
-                        "SELECT markerId FROM versuchWert WHERE standortId = ?" +
-                ") ORDER BY _id ASC LIMIT 1",
-                new String[]{""+BoniturSafe.VERSUCH_ID, ""+standortId});
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.rawQuery(
+                    "SELECT _id FROM marker " +
+                            "WHERE versuchId = ? AND _id not in (" +
+                            "SELECT markerId FROM versuchWert WHERE standortId = ?" +
+                            ") ORDER BY _id ASC LIMIT 1",
+                    new String[]{"" + BoniturSafe.VERSUCH_ID, "" + standortId});
 
-        if(c.getCount()==1){
-            c.moveToFirst();
-            Marker marker = Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
-            c.close();
-            return marker;
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                Marker marker = Marker.findByPk(c.getInt(c.getColumnIndex(Marker.COLUMN_ID)));
+                //c.close();
+                return marker;
+            }
+
+            //c.close();
+
+            return null;
+        } finally {
+            if ( c != null )
+                c.close();
         }
-
-        c.close();
-
-        return null;
     }
 }

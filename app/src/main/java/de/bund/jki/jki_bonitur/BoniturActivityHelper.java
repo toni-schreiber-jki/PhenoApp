@@ -296,8 +296,9 @@ public class BoniturActivityHelper {
     }
 
     private void gotoAkzession(Akzession akzession){
+        Cursor c = null;
         try {
-            Cursor c = BoniturSafe.db.query(
+            c = BoniturSafe.db.query(
                     Standort.TABLE_NAME,
                     new String[]{Standort.COLUMN_ID},
                     Standort.COLUMN_AKZESSION + "=?",
@@ -326,9 +327,12 @@ public class BoniturActivityHelper {
                     new ManyStandorteDialog(mBa,standorte);
             }
 
-            c.close();
+            //c.close();
         }catch (Exception e){
             new ErrorLog(e,mBa.getApplicationContext());
+        } finally {
+            if ( c != null )
+                c.close();
         }
     }
     //-----------Ende Akzession Spinner-------------------------------------------------------------
@@ -389,8 +393,9 @@ public class BoniturActivityHelper {
     }
 
     private void gotoPassport(Passport passport){
+        Cursor c = null;
         try {
-            Cursor c = BoniturSafe.db.query(
+            c = BoniturSafe.db.query(
                     Standort.TABLE_NAME,
                     new String[]{Standort.COLUMN_ID},
                     Standort.COLUMN_PASSPORT + "=?",
@@ -419,9 +424,12 @@ public class BoniturActivityHelper {
                     new ManyStandorteDialog(mBa,standorte);
             }
 
-            c.close();
+            //c.close();
         }catch (Exception e) {
             new ErrorLog(e,mBa.getApplicationContext());
+        } finally {
+            if ( c != null )
+                c.close();
         }
     }
     //-----------Ende Passport Spinner--------------------------------------------------------------
@@ -574,9 +582,10 @@ public class BoniturActivityHelper {
         });
     }
     private void init_spParzelleValues() {
+        Cursor c = null;
         try {
             List<String> parzellenList = new ArrayList<>();
-            Cursor c = BoniturSafe.db.query(true,
+            c = BoniturSafe.db.query(true,
                     Standort.TABLE_NAME,
                     new String[]{Standort.COLUMN_PARZELLE},
                     Standort.COLUMN_VERSUCH + "=?",
@@ -600,9 +609,12 @@ public class BoniturActivityHelper {
                 });
             }
 
-            c.close();
+            //c.close();
         }catch (Exception e){
             new ErrorLog(e,mBa.getApplicationContext());
+        } finally {
+            if ( c != null )
+                c.close();
         }
     }
     //------------Ende Parzellen Spinner------------------------------------------------------------
@@ -619,9 +631,10 @@ public class BoniturActivityHelper {
         return spReihe;
     }
     private void updateSpReihenValues(String parzelle) {
+        Cursor c = null;
         try {
             List<String> reihenList = new ArrayList<>();
-            Cursor c = BoniturSafe.db.query(true,
+            c = BoniturSafe.db.query(true,
                     Standort.TABLE_NAME,
                     new String[]{Standort.COLUMN_REIHE},
                     Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + " = ?",
@@ -653,12 +666,13 @@ public class BoniturActivityHelper {
                     updateSpPflanzenValues(reihenNr[0]);
                 }
             }
-
-            c.close();
         }catch (Exception e)
         {
             new ErrorLog(e,mBa.getApplication());
             e.printStackTrace();
+        } finally {
+            if ( c != null )
+                c.close();
         }
     }
     private void spReiheAddSelectListener(){
@@ -697,9 +711,10 @@ public class BoniturActivityHelper {
         return spPflanzen;
     }
     private void updateSpPflanzenValues(int reihe){
+        Cursor c = null;
         try {
             List<String> pflanzenList = new ArrayList<>();
-            Cursor c = BoniturSafe.db.query(true,
+            c = BoniturSafe.db.query(true,
                     Standort.TABLE_NAME,
                     new String[]{Standort.COLUMN_PFLANZE},
                     Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + " = ? AND " + Standort.COLUMN_REIHE + "=?",
@@ -728,10 +743,13 @@ public class BoniturActivityHelper {
                 }
             }
 
-            c.close();
+            //c.close();
         }catch (Exception e) {
             new ErrorLog(e,mBa.getApplication());
             e.printStackTrace();
+        } finally {
+            if ( c != null )
+                c.close();
         }
     }
     private void spPflanzenAddSelectListener(){
@@ -897,6 +915,7 @@ public class BoniturActivityHelper {
             ArrayAdapter arrayAdapter = new ArrayAdapter(mBa, android.R.layout.simple_list_item_2, android.R.id.text1, werte) {
                 @Override
                 public View getView(int position, View convertView, ViewGroup parent) {
+                    Cursor c = null;
                     try {
                         View view = super.getView(position, convertView, parent);
 
@@ -906,7 +925,7 @@ public class BoniturActivityHelper {
                         String where = VersuchWert.COLUMN_VERSUCH + "=? AND " + VersuchWert.COLUMN_STANDORT + "=? AND " + VersuchWert.COLUMN_MARKER + "=? AND " + VersuchWert.COLUMN_WERT_ID + "=?";
                         String[] whereArg = new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_STANDORT_ID, "" + mBa.currentMarker.id, "" + werte[position].id};
 
-                        Cursor c = BoniturSafe.db.query(
+                        c = BoniturSafe.db.query(
                                 VersuchWert.TABLE_NAME, new String[]{VersuchWert.COLUMN_ID},
                                 where, whereArg, null, null, null);
 
@@ -915,11 +934,15 @@ public class BoniturActivityHelper {
                         else
                             view.setBackgroundColor(gvUnSelected);
 
-                        c.close();
+                        //c.close();
 
                         return view;
                     } catch (Exception e) {
                         new ErrorLog(e, mBa.getApplication());
+                    }
+                    finally {
+                        if ( c != null )
+                            c.close();
                     }
                     return null;
                 }
@@ -1155,12 +1178,13 @@ public class BoniturActivityHelper {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor c = null;
                 try {
 
                     String where = VersuchWert.COLUMN_VERSUCH + "=? AND " + VersuchWert.COLUMN_STANDORT + "=? AND " + VersuchWert.COLUMN_MARKER + "=? AND " + VersuchWert.COLUMN_WERT_ID + "=?";
                     String[] whereArg = new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_STANDORT_ID, "" + mBa.currentMarker.id, "" + werte[position].id};
 
-                    Cursor c = BoniturSafe.db.query(
+                    c = BoniturSafe.db.query(
                             VersuchWert.TABLE_NAME, new String[]{VersuchWert.COLUMN_ID},
                             where, whereArg, null, null, null);
 
@@ -1179,9 +1203,13 @@ public class BoniturActivityHelper {
                                 VersuchWert.TABLE_NAME, where, whereArg);
                     }
 
-                    c.close();
+                    //c.close();
                 }catch (Exception e){
                     new ErrorLog(e,mBa.getApplicationContext());
+                }
+                finally {
+                    if ( c != null )
+                        c.close();
                 }
 
             }

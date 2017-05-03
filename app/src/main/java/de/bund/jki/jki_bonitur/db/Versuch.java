@@ -41,22 +41,29 @@ public class Versuch extends DbModelInterface {
     public static Versuch findByPk(int id){
         Versuch res = new Versuch();
 
-        Cursor c = BoniturSafe.db.rawQuery(
-                "SELECT * FROM "+ Versuch.TABLE_NAME + " WHERE " + Versuch.COLUMN_ID + " = ?",
-                new String[] {""+id}
-        );
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.rawQuery(
+                    "SELECT * FROM " + Versuch.TABLE_NAME + " WHERE " + Versuch.COLUMN_ID + " = ?",
+                    new String[]{"" + id}
+            );
 
-        if(c.getCount() == 1){
-            c.moveToFirst();
-            res.id =        c.getInt(c.getColumnIndex(Versuch.COLUMN_ID));
-            res.name =      c.getString(c.getColumnIndex(Versuch.COLUMN_NAME));
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                res.id = c.getInt(c.getColumnIndex(Versuch.COLUMN_ID));
+                res.name = c.getString(c.getColumnIndex(Versuch.COLUMN_NAME));
 
-            c.close();
+                //c.close();
 
-            return res;
+                return res;
+            }
+            //c.close();
+
+            return null;
         }
-        c.close();
-
-        return null;
+        finally {
+            if( c != null )
+                c.close();
+        }
     }
 }

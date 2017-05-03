@@ -124,18 +124,26 @@ public class VersuchListActivity extends Activity {
             SQLiteDatabase db = boniturDatenbank.getReadableDatabase();
             BoniturSafe.db = db;
 
-            Cursor c = db.query(Versuch.TABLE_NAME, new String[]{Versuch.COLUMN_ID}, null, null, null, null, null);
+            Cursor c = null;
+            try {
+                c = db.query(Versuch.TABLE_NAME, new String[]{Versuch.COLUMN_ID}, null, null, null, null, null);
 
-            versuche = new Versuch[c.getCount()];
-            int v = 0;
-            if(c.getCount() > 0) {
-                c.moveToFirst();
-                do{
-                    versuche[v] = Versuch.findByPk(c.getInt(c.getColumnIndex(Versuch.COLUMN_ID)));
-                    v++;
-                }while (c.moveToNext());
+                versuche = new Versuch[c.getCount()];
+                int v = 0;
+                if (c.getCount() > 0) {
+                    c.moveToFirst();
+                    do {
+                        versuche[v] = Versuch.findByPk(c.getInt(c.getColumnIndex(Versuch.COLUMN_ID)));
+                        v++;
+                    } while (c.moveToNext());
+                }
+            }catch (Exception e){
+                new ErrorLog(e,getApplication());
+            }finally {
+                if ( c != null )
+                    c.close();
             }
-            c.close();
+
 
             ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.jki_bonitur_file_list, android.R.id.text1, versuche) {
                 @Override

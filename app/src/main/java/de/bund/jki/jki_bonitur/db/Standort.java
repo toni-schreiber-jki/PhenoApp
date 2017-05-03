@@ -3,6 +3,8 @@ package de.bund.jki.jki_bonitur.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.HashMap;
+
 import de.bund.jki.jki_bonitur.BoniturSafe;
 
 /**
@@ -24,6 +26,9 @@ public class Standort extends DbModelInterface {
     public String sortimentsnummer;
     public String freifeld;
     public String info;
+
+    public Akzession akzession;
+    public Passport passport;
 
     public static String COLUMN_ID              = "_id";
     public static String COLUMN_VERSUCH         = "versuchId";
@@ -104,37 +109,29 @@ public class Standort extends DbModelInterface {
 
     public static Standort findByPk(int id){
         Standort res = new Standort();
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.rawQuery(
+                    "SELECT * FROM " + Standort.TABLE_NAME + " WHERE " + Standort.COLUMN_ID + " = ?",
+                    new String[]{"" + id}
+            );
 
-        Cursor c = BoniturSafe.db.rawQuery(
-                "SELECT * FROM "+ Standort.TABLE_NAME + " WHERE " + Standort.COLUMN_ID + " = ?",
-                new String[] {""+id}
-        );
+            if (c.getCount() == 1) {
+                c.moveToFirst();
 
-        if(c.getCount() == 1){
-            c.moveToFirst();
-            res.id =        c.getInt(c.getColumnIndex(Standort.COLUMN_ID));
-            res.versuchId = c.getInt(c.getColumnIndex(Standort.COLUMN_VERSUCH));
-            res.parzelle = c.getString(c.getColumnIndex(Standort.COLUMN_PARZELLE));
-            res.reihe = c.getInt(c.getColumnIndex(Standort.COLUMN_REIHE));
-            res.pflanze = c.getInt(c.getColumnIndex(Standort.COLUMN_PFLANZE));
-            res.sorte = c.getString(c.getColumnIndex(Standort.COLUMN_SORTE));
-            res.zuchtstamm = c.getString(c.getColumnIndex(Standort.COLUMN_ZUCHTSTAMM));
-            res.mutter = c.getString(c.getColumnIndex(Standort.COLUMN_MUTTER));
-            res.vater = c.getString(c.getColumnIndex(Standort.COLUMN_VATER));
-            res.sortimentsnummer = c.getString(c.getColumnIndex(Standort.COLUMN_SORTIMENTNR));
-            res.akzessionId = c.getInt(c.getColumnIndex(Standort.COLUMN_AKZESSION));
-            res.passportId = c.getInt(c.getColumnIndex(Standort.COLUMN_PASSPORT));
-            res.freifeld = c.isNull(c.getColumnIndex(Standort.COLUMN_FREIFELD)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_FREIFELD));
-            res.info = c.isNull(c.getColumnIndex(Standort.COLUMN_INFO)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_INFO));
+                res.fillElementWithCurcor(c);
+                //c.close();
 
-            c.close();
+                return res;
+            }
 
-            return res;
+            //c.close();
+
+            return null;
+        }finally {
+            if( c != null)
+                c.close();
         }
-
-        c.close();
-
-        return null;
     }
 
     public String getName(){
@@ -143,77 +140,142 @@ public class Standort extends DbModelInterface {
 
 
     public String getDate(int markerId){
-        Cursor c = BoniturSafe.db.query(
-                VersuchWert.TABLE_NAME,
-                new String[]{ VersuchWert.COLUMN_WERT_DATUM },
-                VersuchWert.COLUMN_STANDORT+"=? AND "+VersuchWert.COLUMN_MARKER+"=?",
-                new String[] {""+this.id, ""+markerId},
-                null,
-                null,
-                VersuchWert.COLUMN_ID + " DESC");
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.query(
+                    VersuchWert.TABLE_NAME,
+                    new String[]{VersuchWert.COLUMN_WERT_DATUM},
+                    VersuchWert.COLUMN_STANDORT + "=? AND " + VersuchWert.COLUMN_MARKER + "=?",
+                    new String[]{"" + this.id, "" + markerId},
+                    null,
+                    null,
+                    VersuchWert.COLUMN_ID + " DESC");
 
-        if(c.getCount() == 0) {
-            c.close();
+            if (c.getCount() == 0) {
+                //c.close();
+
+                return "";
+            }
+
+            c.moveToFirst();
+
+            if (c.getCount() >= 1) {
+                String result = c.getString(c.getColumnIndex(VersuchWert.COLUMN_WERT_DATUM));
+                //c.close();
+                return result;
+            }
+
+            //c.close();
 
             return "";
         }
-
-        c.moveToFirst();
-
-        if(c.getCount() >= 1){
-            String result = c.getString(c.getColumnIndex(VersuchWert.COLUMN_WERT_DATUM));
-            c.close();
-            return result;
+        finally {
+            if( c != null)
+                c.close();
         }
-
-        c.close();
-
-        return "";
 
     }
 
     public String getValue(int markerId)
     {
-        Cursor c = BoniturSafe.db.query(
-                VersuchWert.TABLE_NAME,
-                new String[]{ VersuchWert.COLUMN_ID },
-                VersuchWert.COLUMN_STANDORT+"=? AND "+VersuchWert.COLUMN_MARKER+"=?",
-                new String[] {""+this.id, ""+markerId},
-                null,
-                null,
-                null);
+        Cursor c = null;
+        try
+        {
+            c = BoniturSafe.db.query(
+                    VersuchWert.TABLE_NAME,
+                    null,//new String[]{ VersuchWert.COLUMN_ID },
+                    VersuchWert.COLUMN_STANDORT+"=? AND "+VersuchWert.COLUMN_MARKER+"=?",
+                    new String[] {""+this.id, ""+markerId},
+                    null,
+                    null,
+                    null);
 
-        if(c.getCount() == 0) {
-            c.close();
-            return "";
-        }
-
-        c.moveToFirst();
-
-        if(c.getCount() == 1){
-            VersuchWert vw = VersuchWert.findByPk(c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID)));
-            if(vw.wert_id > 0) {
-                c.close();
-                return "" + MarkerWert.findByPk(vw.wert_id).value;
+            if(c.getCount() == 0) {
+                //c.close();
+                return "";
             }
-            if(vw.wert_text != null) {
-                c.close();
-                return vw.wert_text;
+
+            c.moveToFirst();
+
+            if(c.getCount() == 1){
+                VersuchWert vw = new VersuchWert(); //.findByPk(c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID)));
+                vw.fillWithCursor(c);
+                if(vw.wert_id > 0) {
+                    //c.close();
+                    return "" + this.getMarkerWert(vw.wert_id).value;
+                }
+                if(vw.wert_text != null) {
+                    //c.close();
+                    return vw.wert_text;
+                }
+                //c.close();
+                return ""+vw.wert_int;
             }
-            c.close();
-            return ""+vw.wert_int;
+
+            String res = "";
+
+            do{
+                VersuchWert vw = new VersuchWert();//.findByPk(c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID)));
+                vw.fillWithCursor(c);
+                res = res + this.getMarkerWert(vw.wert_id).value + "|";
+            }while (c.moveToNext());
+
+            //c.close();
+
+            return res.substring(0,res.length()-1);
+        } finally {
+            if ( c != null)
+                c.close();
         }
-
-        String res = "";
-
-        do{
-            VersuchWert vw = VersuchWert.findByPk(c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID)));
-            res = res + MarkerWert.findByPk(vw.wert_id).value + "|";
-        }while (c.moveToNext());
-
-        c.close();
-
-        return res.substring(0,res.length()-1);
     }
 
+    public void fillElementWithCurcor(Cursor c){
+        this.id = c.getInt(c.getColumnIndex(Standort.COLUMN_ID));
+        this.versuchId = c.getInt(c.getColumnIndex(Standort.COLUMN_VERSUCH));
+        this.parzelle = c.getString(c.getColumnIndex(Standort.COLUMN_PARZELLE));
+        this.reihe = c.getInt(c.getColumnIndex(Standort.COLUMN_REIHE));
+        this.pflanze = c.getInt(c.getColumnIndex(Standort.COLUMN_PFLANZE));
+        this.sorte = c.getString(c.getColumnIndex(Standort.COLUMN_SORTE));
+        this.zuchtstamm = c.getString(c.getColumnIndex(Standort.COLUMN_ZUCHTSTAMM));
+        this.mutter = c.getString(c.getColumnIndex(Standort.COLUMN_MUTTER));
+        this.vater = c.getString(c.getColumnIndex(Standort.COLUMN_VATER));
+        this.sortimentsnummer = c.getString(c.getColumnIndex(Standort.COLUMN_SORTIMENTNR));
+        this.akzessionId = c.getInt(c.getColumnIndex(Standort.COLUMN_AKZESSION));
+        this.passportId = c.getInt(c.getColumnIndex(Standort.COLUMN_PASSPORT));
+        this.freifeld = c.isNull(c.getColumnIndex(Standort.COLUMN_FREIFELD)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_FREIFELD));
+        this.info = c.isNull(c.getColumnIndex(Standort.COLUMN_INFO)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_INFO));
+    }
+
+    public void fillAkzession(Cursor c){
+        if(this.akzessionId >= 1) {
+            this.akzession          = new Akzession();
+            this.akzession.id       = this.akzessionId;
+            this.akzession.nummer   = c.getString(c.getColumnIndex(Akzession.COLUMN_NUMMER));
+            this.akzession.name     = c.getString(c.getColumnIndex(Akzession.COLUMN_NAME));
+            this.akzession.merkmale = c.getString(c.getColumnIndex("aMerkmale"));
+        }
+    }
+
+    public void fillPassport(Cursor c){
+        if(this.passportId >= 1){
+            this.passport           = new Passport();
+            this.passport.kennNr    = c.getString(c.getColumnIndex(Passport.COLUMN_KENN_NR));
+            this.passport.leitname  = c.getString(c.getColumnIndex(Passport.COLUMN_LEITNAME));
+            this.passport.merkmale  = c.getString(c.getColumnIndex("pMerkmale"));
+        }
+    }
+
+    private MarkerWert getMarkerWert(int id){
+        MarkerWert res = null;
+        if(BoniturSafe.markerWertHashMap == null){
+            BoniturSafe.markerWertHashMap = new HashMap<Integer, MarkerWert>();
+        }
+        if(BoniturSafe.markerWertHashMap.containsKey(id)){
+            res = BoniturSafe.markerWertHashMap.get(id);
+        } else {
+            res = MarkerWert.findByPk(id);
+            BoniturSafe.markerWertHashMap.put(id,res);
+        }
+        return  res;
+    }
 }

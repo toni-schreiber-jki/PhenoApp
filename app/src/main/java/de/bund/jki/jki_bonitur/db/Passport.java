@@ -44,31 +44,38 @@ public class Passport extends DbModelInterface {
     public static Passport findByPk(int id){
         Passport res = new Passport();
 
-        Cursor c = BoniturSafe.db.query(
-                Passport.TABLE_NAME,
-                new String[]{Passport.COLUMN_ID, Passport.COLUMN_VERSUCH, Passport.COLUMN_LEITNAME, Passport.COLUMN_KENN_NR, Passport.COLUMN_MERKMALE},
-                Passport.COLUMN_ID+"=?",
-                new String [] {""+id},
-                null,
-                null,
-                null);
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.query(
+                    Passport.TABLE_NAME,
+                    new String[]{Passport.COLUMN_ID, Passport.COLUMN_VERSUCH, Passport.COLUMN_LEITNAME, Passport.COLUMN_KENN_NR, Passport.COLUMN_MERKMALE},
+                    Passport.COLUMN_ID + "=?",
+                    new String[]{"" + id},
+                    null,
+                    null,
+                    null);
 
-        if(c.getCount() == 1){
-            c.moveToFirst();
-            res.id =        c.getInt(c.getColumnIndex(Passport.COLUMN_ID));
-            res.versuchId = c.getInt(c.getColumnIndex(Passport.COLUMN_VERSUCH));
-            res.kennNr =    c.getString(c.getColumnIndex(Passport.COLUMN_KENN_NR));
-            res.leitname =  c.getString(c.getColumnIndex(Passport.COLUMN_LEITNAME));
-            res.merkmale =  c.getString(c.getColumnIndex(Passport.COLUMN_MERKMALE));
+            if (c.getCount() == 1) {
+                c.moveToFirst();
+                res.id = c.getInt(c.getColumnIndex(Passport.COLUMN_ID));
+                res.versuchId = c.getInt(c.getColumnIndex(Passport.COLUMN_VERSUCH));
+                res.kennNr = c.getString(c.getColumnIndex(Passport.COLUMN_KENN_NR));
+                res.leitname = c.getString(c.getColumnIndex(Passport.COLUMN_LEITNAME));
+                res.merkmale = c.getString(c.getColumnIndex(Passport.COLUMN_MERKMALE));
 
-            c.close();
+                //c.close();
 
-            return res;
+                return res;
+            }
+
+            //c.close();
+
+            return null;
         }
-
-        c.close();
-
-        return null;
+        finally {
+            if ( c != null)
+                c.close();
+        }
     }
 
     @Override

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import de.bund.jki.jki_bonitur.db.MarkerWert;
 
 /**
  * Created by Toni on 11.05.2015.
@@ -32,4 +35,6 @@ public class BoniturSafe {
     public static int       FIRST_EMPTY_COUNT = 1;
 
     public static SQLiteDatabase db;
+
+    public static HashMap<Integer,MarkerWert> markerWertHashMap = null;
 }

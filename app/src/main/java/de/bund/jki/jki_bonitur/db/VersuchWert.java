@@ -84,30 +84,37 @@ public class VersuchWert extends DbModelInterface {
     public static VersuchWert findByPk(int id){
         VersuchWert res = new VersuchWert();
 
-        Cursor c = BoniturSafe.db.query(
-                VersuchWert.TABLE_NAME,
-                new String[]{VersuchWert.COLUMN_ID, VersuchWert.COLUMN_VERSUCH, VersuchWert.COLUMN_WERT_INT, VersuchWert.COLUMN_WERT_TEXT, VersuchWert.COLUMN_WERT_ID},
-                VersuchWert.COLUMN_ID+"=?",
-                new String [] {""+id},
-                null,
-                null,
-                null);
+        Cursor c = null;
+        try {
+            c = BoniturSafe.db.query(
+                    VersuchWert.TABLE_NAME,
+                    new String[]{VersuchWert.COLUMN_ID, VersuchWert.COLUMN_VERSUCH, VersuchWert.COLUMN_WERT_INT, VersuchWert.COLUMN_WERT_TEXT, VersuchWert.COLUMN_WERT_ID},
+                    VersuchWert.COLUMN_ID + "=?",
+                    new String[]{"" + id},
+                    null,
+                    null,
+                    null);
 
-        if(c.getCount() == 1){
-            c.moveToFirst();
-            res.id =        c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID));
-            res.versuchId   = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_VERSUCH));
-            res.wert_id     = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_WERT_ID));
-            res.wert_int    = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_WERT_INT));
-            res.wert_text   = c.getString(c.getColumnIndex(VersuchWert.COLUMN_WERT_TEXT));
+            if (c.getCount() == 1) {
+                c.moveToFirst();
 
-            c.close();
+                res.fillWithCursor(c);
 
-            return res;
+                return res;
+            }
+
+            return null;
+        }finally {
+            if (c != null)
+                c.close();
         }
+    }
 
-        c.close();
-
-        return null;
+    public void fillWithCursor(Cursor c){
+        this.id = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID));
+        this.versuchId = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_VERSUCH));
+        this.wert_id = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_WERT_ID));
+        this.wert_int = c.getInt(c.getColumnIndex(VersuchWert.COLUMN_WERT_INT));
+        this.wert_text = c.getString(c.getColumnIndex(VersuchWert.COLUMN_WERT_TEXT));
     }
 }
