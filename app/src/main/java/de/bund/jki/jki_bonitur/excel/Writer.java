@@ -158,7 +158,7 @@ public class Writer{
 
 
                 int mp = 0;
-                if(standort.id == werteAll.getInt(0)) {
+                if(!werteAll.isClosed() && standort.id == werteAll.getInt(0)) {
                     for (Marker m : marker) {
                         if(standort.id != werteAll.getInt(0))
                         {
@@ -169,7 +169,10 @@ public class Writer{
                             if (show_datum) {
                                 row.createCell(2 * mp + 9 + 1).setCellValue(werteAll.getString(3));
                             }
-                            if (!werteAll.moveToNext()) werteAll.close();
+                            if (!werteAll.moveToNext()) {
+                                werteAll.close();
+                                break;
+                            }
                         } else {
                             row.createCell(2 * mp + 9).setCellValue("");
                             if (show_datum) {
