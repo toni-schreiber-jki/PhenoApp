@@ -1,6 +1,7 @@
 package de.bund.jki.jki_bonitur.excel;
 
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
@@ -80,7 +81,7 @@ public class Writer{
         this.passportHashMapt = new HashMap<Integer, Passport>();
         try {
             HSSFSheet sheet = workbook.createSheet("Daten");
-            sheet.createFreezePane(9, 0);
+            sheet.createFreezePane(9, 1);
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(BoniturSafe.APP_CONTEXT);
             boolean show_datum = preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM);
@@ -114,6 +115,25 @@ public class Writer{
             //Werte einfügen
             int r = 1;
 
+            String sql = "SELECT\n" +
+                    "\tstandort._id standortId,\n" +
+                    "\tmarker._id markerId,\n" +
+                    "\tversuchWert.wert_int,\n" +
+                    "\tversuchWert.wert_datum,\n" +
+                    "\tversuchWert.wert_text,\n" +
+                    "\tgroup_concat(markerWert.value) markerValues\n" +
+                    "FROM standort \n" +
+                    "LEFT JOIN versuchWert ON standort.\"_id\" = versuchWert.standortId\n" +
+                    "LEFT JOIN marker ON marker.\"_id\" = versuchWert.markerId\n" +
+                    "LEFT JOIN markerWert on versuchWert.wert_id = markerWert.\"_id\"\n" +
+                    "WHERE standort.versuchId = ?\n" +
+                    "\tAND marker.\"_id\" is not null\n"+
+                    "GROUP BY standort._id, marker._id\n" +
+                    "ORDER BY standort.parzelle ASC, CAST(standort.reihe AS INTEGER) ASC, CAST(standort.pflanze AS INTEGER) ASC, marker._id";
+
+            Cursor werteAll = BoniturSafe.db.rawQuery(sql, new String[]{""+ BoniturSafe.VERSUCH_ID});
+            werteAll.moveToFirst();
+
 
             for (Standort standort : standorte) {
 
@@ -138,17 +158,26 @@ public class Writer{
 
 
                 int mp = 0;
-                for (Marker m : marker) {
-                    if (show_datum) {
-                        //Änderung 02.05.2017 Datum nur abfragen, wenn Wert gesetzt
-                        String value = standort.getValue(m.id);
-                        row.createCell(2 * mp + 9).setCellValue(value);
-                        if(!value.equals(""))
-                            row.createCell(2 * mp + 1 + 9).setCellValue(standort.getDate(m.id));
-                    } else {
-                        row.createCell(mp + 9).setCellValue(standort.getValue(m.id));
+                if(standort.id == werteAll.getInt(0)) {
+                    for (Marker m : marker) {
+                        if(standort.id != werteAll.getInt(0))
+                        {
+                            break;
+                        }
+                        if (m.id == werteAll.getInt(1)) {
+                            row.createCell(2 * mp + 9).setCellValue(getValueFromWerteAll(werteAll, m));
+                            if (show_datum) {
+                                row.createCell(2 * mp + 9 + 1).setCellValue(werteAll.getString(3));
+                            }
+                            if (!werteAll.moveToNext()) werteAll.close();
+                        } else {
+                            row.createCell(2 * mp + 9).setCellValue("");
+                            if (show_datum) {
+                                row.createCell(2 * mp + 9 + 1).setCellValue("");
+                            }
+                        }
+                        mp++;
                     }
-                    mp++;
                 }
                 r++;
                 if(r%25 == 0) {
@@ -167,6 +196,23 @@ public class Writer{
         this.passportHashMapt.clear();
 
         return workbook;
+    }
+
+    private String getValueFromWerteAll(Cursor werteAll, Marker m) {
+        String value = "";
+        switch (m.type){
+            case Marker.MARKER_TYPE_BONITUR:
+                value = werteAll.getString(5);
+            break;
+            case Marker.MARKER_TYPE_MESSEN:
+                value = ""+werteAll.getInt(2);
+            break;
+            case Marker.MARKER_TYPE_DATUM:
+            case Marker.MARKER_TYPE_BEMERKUNG:
+            case Marker.MARKER_TYPE_BBCH:
+                value = werteAll.getString(4);
+        }
+        return value;
     }
 
     private Akzession getAkzession(int id){
