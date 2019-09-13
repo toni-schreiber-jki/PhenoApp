@@ -7,11 +7,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,9 +91,23 @@ public class VersuchListActivity extends Activity {
 
             // <editor-fold desc="In-Ordner">
             Config.load(this);
-            String path = Environment.getExternalStorageDirectory().toString() + Config.BaseFolder +  "/in";
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder +  File.separator + "in" + File.separator;
+            String appPath = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
+            File appFolder = new File(appPath);
+            File sd = Environment.getExternalStorageDirectory();
             File folder = new File(path);
-            //folder.mkdirs();
+
+
+            if(!appFolder.exists()){
+                Log.v("Files","Create AppFolder: " + appFolder.mkdir() + "(" + appPath + ")");
+            }
+            if(!folder.exists()){
+                Log.v("Files","Create InFolder: " + folder.mkdir() + " ("+path+")");
+            }
+
+            Log.v("Files",folder.exists()+"");
+            Log.v("Files",folder.isDirectory()+"");
+            Log.v("Files",folder.listFiles()+"");
 
             File[] files = folder.listFiles();
             ArrayList<String> list = new ArrayList<String>();

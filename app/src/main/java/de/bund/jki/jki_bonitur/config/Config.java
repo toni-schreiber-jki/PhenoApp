@@ -3,6 +3,9 @@ package de.bund.jki.jki_bonitur.config;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
+
+import java.io.File;
 
 /**
  * Created by Toni on 10.05.2015.
@@ -20,7 +23,7 @@ public class Config {
     public static String NAME_EXCEL_DATUM       = "excelDatum";
     public static String NAME_BBCH_FRAGE        = "bbchFrage";
 
-    public static String BaseFolder             = "/obstBonitur";
+    public static String BaseFolder             = File.separator + "obstBonitur";
     public static boolean ZICK_ZACK_MODUS       = true;
     public static boolean FIRST_EMPTY           = true;
     public static boolean SHOW_ELTERN           = true;

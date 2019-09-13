@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.File;
+
 import de.bund.jki.jki_bonitur.BoniturActivity;
 import de.bund.jki.jki_bonitur.BoniturSafe;
 import de.bund.jki.jki_bonitur.R;
@@ -58,6 +60,11 @@ public class SpeichernDialog{
                     .setPositiveButton("Speichern",new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            File outFolder = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/out/");
+                            if(!outFolder.exists())
+                            {
+                                outFolder.mkdir();
+                            }
                             new Writer(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/out/"+ (((EditText) mView.findViewById(R.id.etFilename)).getText().toString()));
                             SpeichernDialogFragment.this.getDialog().cancel();
                         }
