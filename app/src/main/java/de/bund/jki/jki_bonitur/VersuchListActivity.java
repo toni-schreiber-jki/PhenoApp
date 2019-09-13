@@ -1,5 +1,6 @@
 package de.bund.jki.jki_bonitur;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -86,7 +87,7 @@ public class VersuchListActivity extends Activity {
 
             // <editor-fold desc="In-Ordner">
             Config.load(this);
-            String path = Environment.getExternalStorageDirectory().toString() + Config.BaseFolder +  "/in/";
+            String path = Environment.getExternalStorageDirectory().toString() + Config.BaseFolder +  "/in";
             File folder = new File(path);
             //folder.mkdirs();
 

@@ -63,11 +63,10 @@
                         style="@style/JKI_Eigenschaft_Title" />
 
                     <Spinner
-                        android:layout_width="wrap_content"
                         android:id="@+id/spAkzession"
                         style="@style/JKI_Spinner"
-                        tools:listitem="@layout/jki_simple_list_item_1"
-                        />
+                        android:layout_width="wrap_content"
+                        tools:listitem="@layout/jki_simple_list_item_1" />
 
                 </LinearLayout>
 
@@ -178,7 +177,7 @@
                     style="@style/JKI_KeyValueRow_Gross">
 
                     <TextView
-                        android:text="Merkmal (Code)"
+                        android:text="Deskriptor"
                         android:id="@+id/textView4"
                         style="@style/JKI_Eigenschaft_Title" />
 
