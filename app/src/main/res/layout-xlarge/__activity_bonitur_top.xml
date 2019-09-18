@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="65dp"
+    android:layout_height="@dimen/top_line_element_size"
     android:background="@color/ripple_material_light"
     tools:showIn="@layout/activity_bonitur">
 
@@ -12,9 +12,9 @@
         android:layout_height="fill_parent">
 
         <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
             android:id="@+id/imageView2"
+            android:layout_width="@dimen/top_line_element_size"
+            android:layout_height="@dimen/top_line_element_size"
 
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
@@ -24,20 +24,19 @@
             -->
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="JKI-Bonitur"
-                android:id="@+id/textView7"
-                android:layout_marginRight="5dp"
                 android:layout_alignParentTop="true"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:textSize="20dp" />
+                android:text="JKI-Bonitur"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/tvDocument"
@@ -45,21 +44,19 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView7"
                 android:layout_marginTop="5dp"
-                android:maxWidth="250dp"
                 android:text="Datei: xxxx.xls"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20dp" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="75dp">
+            android:layout_height="@dimen/top_line_element_size">
 
             <Spinner
                 style="@style/JKI_Spinner"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
+                android:layout_width="@dimen/top_line_element_size"
+                android:layout_height="@dimen/top_line_element_size"
                 android:id="@+id/spParzelle"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="top"
@@ -68,8 +65,8 @@
 
             <Spinner
                 style="@style/JKI_Spinner"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
+                android:layout_width="@dimen/top_line_element_size"
+                android:layout_height="@dimen/top_line_element_size"
                 android:id="@+id/spReihe"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="top"
@@ -77,8 +74,8 @@
 
             <Spinner
                 style="@style/JKI_Spinner"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
+                android:layout_width="@dimen/top_line_element_size"
+                android:layout_height="@dimen/top_line_element_size"
                 android:id="@+id/spPflanze"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="top"
@@ -99,16 +96,16 @@
                 android:gravity="right">
 
                 <Button
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
-                    android:text="\uf120"
                     android:id="@+id/btnFirstEmpty"
-                    android:textSize="45dp"
-                    android:onClick="onClick"
+                    android:layout_width="@dimen/top_line_element_size"
+                    android:layout_height="@dimen/top_line_element_size"
                     android:layout_alignParentTop="true"
+                    android:layout_gravity="top"
                     android:layout_marginRight="10dp"
-                    android:visibility="visible"
-                    android:layout_gravity="top" />
+                    android:onClick="onClick"
+                    android:text="\uf120"
+                    android:textSize="45dp"
+                    android:visibility="visible" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -118,90 +115,90 @@
                     android:layout_gravity="top">
 
                     <Button
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:text="\uf063"
                         android:id="@+id/btnRichtungUnten"
-                        android:textSize="40dp"
+                        android:layout_width="@dimen/top_line_element_size"
+                        android:layout_height="@dimen/top_line_element_size"
                         android:layout_alignParentTop="true"
+                        android:layout_gravity="top"
+                        android:layout_marginRight="10dp"
                         android:onClick="onClick"
-                        android:layout_marginRight="5dp"
-                        android:visibility="visible"
-                        android:layout_gravity="top" />
+                        android:text="\uf063"
+                        android:textSize="45dp"
+                        android:visibility="visible" />
 
                     <Button
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
+                        android:layout_width="@dimen/top_line_element_size"
+                        android:layout_height="@dimen/top_line_element_size"
                         android:text="\uf062"
                         android:id="@+id/btnRichtungOben"
-                        android:textSize="40dp"
+                        android:textSize="45dp"
                         android:layout_alignParentTop="true"
 
                         android:onClick="onClick"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="10dp"
                         android:visibility="visible"
                         android:layout_gravity="top" />
 
                     <Button
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
+                        android:layout_width="@dimen/top_line_element_size"
+                        android:layout_height="@dimen/top_line_element_size"
                         android:text="\uf060"
                         android:id="@+id/btnRichtungLinks"
-                        android:textSize="40dp"
+                        android:textSize="45dp"
                         android:nestedScrollingEnabled="true"
                         android:layout_alignParentTop="true"
 
                         android:onClick="onClick"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="10dp"
                         android:visibility="visible"
                         android:layout_gravity="top" />
 
                     <Button
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
+                        android:layout_width="@dimen/top_line_element_size"
+                        android:layout_height="@dimen/top_line_element_size"
                         android:text="\uf061"
                         android:id="@+id/btnRichtungRechts"
-                        android:textSize="40dp"
+                        android:textSize="45dp"
                         android:layout_alignParentTop="true"
 
                         android:onClick="onClick"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="10dp"
                         android:visibility="visible"
                         android:layout_gravity="top" />
                 </LinearLayout>
 
                 <Button
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="@dimen/top_line_element_size"
+                    android:layout_height="@dimen/top_line_element_size"
                     android:text="\uf0c7"
                     android:id="@+id/btnSpeichenClose"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="10dp"
                     android:onClick="onClick"
-                    android:textSize="40dp"
+                    android:textSize="45dp"
                     android:layout_alignParentTop="true"
                     android:nestedScrollingEnabled="false"
                     android:layout_gravity="top" />
 
                 <Button
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="@dimen/top_line_element_size"
+                    android:layout_height="@dimen/top_line_element_size"
                     android:text="\uf030"
                     android:id="@+id/btnFoto"
-                    android:textSize="40dp"
+                    android:textSize="45dp"
                     android:onClick="onClick"
                     android:layout_alignParentTop="true"
                     android:layout_gravity="top" />
 
                 <Button
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="@dimen/top_line_element_size"
+                    android:layout_height="@dimen/top_line_element_size"
                     android:text="\uf013"
                     android:id="@+id/btnSettings"
-                    android:textSize="40dp"
+                    android:textSize="45dp"
                     android:onClick="onClick"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_gravity="top" />
             </LinearLayout>
         </RelativeLayout>

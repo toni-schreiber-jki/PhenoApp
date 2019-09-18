@@ -8,20 +8,20 @@
     <!-- the theme applied to the application or activity -->
     <!-- <style name="PositionSpinner" parent="@android:style/Widget.Holo.Light.Spinner"> -->
     <style name="JKI_Spinner" parent="@android:style/Widget.Holo.Light.Spinner">
-        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_height">@dimen/top_line_element_size</item>
     </style>
 
     <style name="JKI.Spinner.Position.Top.TextAppearance" parent="@android:style/TextAppearance.Holo.Widget.TextView.SpinnerItem">
         <item name="android:textColor">@color/darkred</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">@dimen/top_line_text_font_size</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="JKI.Spinner.TextAppearance" parent="@android:style/TextAppearance.Holo.Widget.TextView.SpinnerItem" >
         <item name="android:textColor">@color/jki_braun</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
-        <item name="android:textSize">19sp</item>
+        <item name="android:textSize">@dimen/top_line_text_font_size</item>
         <item name="android:textStyle">bold</item>
     </style>
 
