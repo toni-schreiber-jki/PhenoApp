@@ -4,4 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="top_line_element_size">65dp</dimen>
+    <dimen name="top_line_element_font_size">35sp</dimen>
+    <dimen name="top_line_text_font_size">18sp</dimen>
+    <dimen name="top_small_margin">5dp</dimen>
+    <dimen name="top_medium_margin">10dp</dimen>
+    <dimen name="top_large_margin">20dp</dimen>
 </resources>
