@@ -23,26 +23,23 @@ import de.bund.jki.jki_bonitur.excel.Writer;
 /**
  * Created by toni.schreiber on 19.06.2015.
  */
-public class SpeichernDialog{
+public class SpeichernDialog {
 
-    public SpeichernDialog(BoniturActivity ba)
-    {
+    public SpeichernDialog(BoniturActivity ba) {
         SpeichernDialogFragment sdf = new SpeichernDialogFragment();
-        sdf.ba          = ba;
-        sdf.filename    = BoniturSafe.VERSUCH_NAME;
+        sdf.ba = ba;
+        sdf.filename = BoniturSafe.VERSUCH_NAME;
         sdf.setCancelable(false);
         sdf.show(ba.getFragmentManager(), "");
     }
 
-    public void speichern(String fileName)
-    {
+    public void speichern(String fileName) {
 
     }
 
-    public static class SpeichernDialogFragment extends DialogFragment
-    {
+    public static class SpeichernDialogFragment extends DialogFragment {
         public BoniturActivity ba;
-        public String filename;
+        public String          filename;
 
         private View mView;
 
@@ -54,23 +51,22 @@ public class SpeichernDialog{
 
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
-            mView = inflater.inflate(R.layout.dialog_speicherort,null);
+            mView = inflater.inflate(R.layout.dialog_speicherort, null);
 
             builder.setView(mView)
-                    .setPositiveButton("Speichern",new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Speichern", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             File outFolder = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/out/");
-                            if(!outFolder.exists())
-                            {
+                            if (! outFolder.exists()) {
                                 outFolder.mkdir();
                             }
-                            new Writer(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/out/"+ (((EditText) mView.findViewById(R.id.etFilename)).getText().toString()));
+                            new Writer(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/out/" + (((EditText) mView.findViewById(R.id.etFilename)).getText().toString()));
                             SpeichernDialogFragment.this.getDialog().cancel();
                         }
                     })
 
-                    .setNegativeButton("Nicht Speichern", new DialogInterface.OnClickListener(){
+                    .setNegativeButton("Nicht Speichern", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -85,7 +81,7 @@ public class SpeichernDialog{
         @Override
         public void onResume() {
             super.onResume();
-            Typeface typeface = Typeface.createFromAsset(ba.getAssets(),"fonts/fontawesome.ttf");
+            Typeface typeface = Typeface.createFromAsset(ba.getAssets(), "fonts/fontawesome.ttf");
             ((TextView) mView.findViewById(R.id.tvFragezeichen)).setTypeface(typeface);
             ((EditText) mView.findViewById(R.id.etFilename)).setText(filename);
 

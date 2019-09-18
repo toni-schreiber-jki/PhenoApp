@@ -9,7 +9,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bund.jki.jki_bonitur.BoniturSafe;
@@ -26,18 +25,16 @@ import de.bund.jki.jki_bonitur.dialoge.WartenDialog;
 /**
  * Created by toni.schreiber on 19.06.2015.
  */
-public class Writer{
+public class Writer {
 
-    private HashMap<Integer,Akzession> akzessionHashMap;
-    private HashMap<Integer, Passport> passportHashMapt;
+    private HashMap<Integer, Akzession> akzessionHashMap;
+    private HashMap<Integer, Passport>  passportHashMapt;
 
-    public Writer(String s)
-    {
+    public Writer(String s) {
         writeResult(s);
     }
 
-    public void writeResult(String filePath)
-    {
+    public void writeResult(String filePath) {
         try {
             //String filePath = mFile.replaceFirst("/in/", "/" + folder + "/");
 
@@ -67,16 +64,15 @@ public class Writer{
                 }
             };
 
-            execute.execute(this,filePath);
+            execute.execute(this, filePath);
 
-        } catch (Exception e){
-            new ErrorLog(e,null);
+        } catch (Exception e) {
+            new ErrorLog(e, null);
             e.printStackTrace();
         }
     }
 
-    private HSSFWorkbook addReportFinal(HSSFWorkbook workbook)
-    {
+    private HSSFWorkbook addReportFinal(HSSFWorkbook workbook) {
         this.akzessionHashMap = new HashMap<Integer, Akzession>();
         this.passportHashMapt = new HashMap<Integer, Passport>();
         try {
@@ -84,7 +80,7 @@ public class Writer{
             sheet.createFreezePane(9, 1);
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(BoniturSafe.APP_CONTEXT);
-            boolean show_datum = preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM);
+            boolean           show_datum  = preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM);
 
             //Überschriften erstellen
             Row row = sheet.createRow(0);
@@ -98,7 +94,7 @@ public class Writer{
             row.createCell(7).setCellValue("StandortInfo");
             row.createCell(8).setCellValue("Charkteristische Merkmale");
 
-            Marker[] marker = MarkerManager.getAllMarker();
+            Marker[]   marker    = MarkerManager.getAllMarker();
             Standort[] standorte = StandortManager.getAllStandorte();
 
             int p = 0;
@@ -127,22 +123,22 @@ public class Writer{
                     "LEFT JOIN marker ON marker.\"_id\" = versuchWert.markerId\n" +
                     "LEFT JOIN markerWert on versuchWert.wert_id = markerWert.\"_id\"\n" +
                     "WHERE standort.versuchId = ?\n" +
-                    "\tAND marker.\"_id\" is not null\n"+
+                    "\tAND marker.\"_id\" is not null\n" +
                     "GROUP BY standort._id, marker._id\n" +
                     "ORDER BY standort.parzelle ASC, CAST(standort.reihe AS INTEGER) ASC, CAST(standort.pflanze AS INTEGER) ASC, marker._id";
 
-            Cursor werteAll = BoniturSafe.db.rawQuery(sql, new String[]{""+ BoniturSafe.VERSUCH_ID});
+            Cursor werteAll = BoniturSafe.db.rawQuery(sql, new String[]{"" + BoniturSafe.VERSUCH_ID});
             werteAll.moveToFirst();
 
 
             for (Standort standort : standorte) {
 
                 Akzession akzession = null;
-                Passport passport = null;
+                Passport  passport  = null;
 
-                if (standort.akzessionId != -1 && standort.akzessionId != 0)
+                if (standort.akzessionId != - 1 && standort.akzessionId != 0)
                     akzession = standort.akzession;//getAkzession(standort.akzessionId); //Akzession.findByPk(standort.akzessionId);
-                if (standort.passportId != -1 && standort.passportId != 0)
+                if (standort.passportId != - 1 && standort.passportId != 0)
                     passport = standort.passport; //getPassport(standort.passportId); //Passport.findByPk(standort.passportId);
 
                 row = sheet.createRow(r);
@@ -158,10 +154,9 @@ public class Writer{
 
 
                 int mp = 0;
-                if(!werteAll.isClosed() && standort.id == werteAll.getInt(0)) {
+                if (! werteAll.isClosed() && standort.id == werteAll.getInt(0)) {
                     for (Marker m : marker) {
-                        if(standort.id != werteAll.getInt(0))
-                        {
+                        if (standort.id != werteAll.getInt(0)) {
                             break;
                         }
                         if (m.id == werteAll.getInt(1)) {
@@ -169,7 +164,7 @@ public class Writer{
                             if (show_datum) {
                                 row.createCell(2 * mp + 9 + 1).setCellValue(werteAll.getString(3));
                             }
-                            if (!werteAll.moveToNext()) {
+                            if (! werteAll.moveToNext()) {
                                 werteAll.close();
                                 break;
                             }
@@ -183,7 +178,7 @@ public class Writer{
                     }
                 }
                 r++;
-                if(r%25 == 0) {
+                if (r % 25 == 0) {
                     try {
                         //System.gc();
                     } catch (Exception e) {
@@ -191,7 +186,7 @@ public class Writer{
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ErrorLog(e, BoniturSafe.APP_CONTEXT);
         }
 
@@ -203,13 +198,13 @@ public class Writer{
 
     private String getValueFromWerteAll(Cursor werteAll, Marker m) {
         String value = "";
-        switch (m.type){
+        switch (m.type) {
             case Marker.MARKER_TYPE_BONITUR:
                 value = werteAll.getString(5);
-            break;
+                break;
             case Marker.MARKER_TYPE_MESSEN:
-                value = ""+werteAll.getInt(2);
-            break;
+                value = "" + werteAll.getInt(2);
+                break;
             case Marker.MARKER_TYPE_DATUM:
             case Marker.MARKER_TYPE_BEMERKUNG:
             case Marker.MARKER_TYPE_BBCH:
@@ -218,23 +213,23 @@ public class Writer{
         return value;
     }
 
-    private Akzession getAkzession(int id){
+    private Akzession getAkzession(int id) {
         Akzession res = null;
-        if(this.akzessionHashMap.containsKey(id)){
+        if (this.akzessionHashMap.containsKey(id)) {
             res = Akzession.findByPk(id);
-            this.akzessionHashMap.put(id,res);
+            this.akzessionHashMap.put(id, res);
         } else {
             res = this.akzessionHashMap.get(id);
         }
         return res;
     }
 
-    private Passport getPassport(int id){
+    private Passport getPassport(int id) {
         Passport res = null;
-        if(this.passportHashMapt.containsKey(id)){
+        if (this.passportHashMapt.containsKey(id)) {
             res = Passport.findByPk(id);
             this.passportHashMapt.put(id, res);
-        } else{
+        } else {
             res = this.passportHashMapt.get(id);
         }
         return res;

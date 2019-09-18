@@ -8,12 +8,10 @@ import de.bund.jki.jki_bonitur.BoniturActivity;
 /**
  * Created by toni.schreiber on 19.06.2015.
  */
-public class BoniturTextWatcher implements TextWatcher
-{
+public class BoniturTextWatcher implements TextWatcher {
     private BoniturActivity mBa;
 
-    public BoniturTextWatcher(BoniturActivity ba)
-    {
+    public BoniturTextWatcher(BoniturActivity ba) {
         mBa = ba;
     }
 

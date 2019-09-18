@@ -27,16 +27,13 @@ import de.bund.jki.jki_bonitur.excel.Reader;
 
 public class BoniturActivity extends Activity {
 
-    public static String RELOAD_VIEW    = "de.bund.jki.bonitur.reload";
-    public static String ERROR_INTENT   = "de.bund.jki.bunitur.error";
-
-    private BoniturDatenbank bonDb;
-    public BoniturActivityHelper bah;
-
-    public Marker currentMarker;
-    public Standort currentStandort;
-
-    public BoniturIntentReceiver bir = null;
+    public static String                RELOAD_VIEW  = "de.bund.jki.bonitur.reload";
+    public static String                ERROR_INTENT = "de.bund.jki.bunitur.error";
+    public        BoniturActivityHelper bah;
+    public        Marker                currentMarker;
+    public        Standort              currentStandort;
+    public        BoniturIntentReceiver bir          = null;
+    private       BoniturDatenbank      bonDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +44,8 @@ public class BoniturActivity extends Activity {
         filter.addAction(ERROR_INTENT);
         try {
             this.registerReceiver(bir, filter);
-        }catch (Exception e){
-            new ErrorLog(e,this);
+        } catch (Exception e) {
+            new ErrorLog(e, this);
         }
         init();
     }
@@ -78,13 +75,13 @@ public class BoniturActivity extends Activity {
             bah = new BoniturActivityHelper(this);
 
             Reader reader = new Reader(getIntent().getStringExtra("FILE"));
-            if(reader.read()) {
+            if (reader.read()) {
 
                 BoniturSafe.CURRENT_PARZELLE = "-";
-                BoniturSafe.CURRENT_REIHE = -1;
-                BoniturSafe.CURRENT_PFLANZE = -1;
+                BoniturSafe.CURRENT_REIHE = - 1;
+                BoniturSafe.CURRENT_PFLANZE = - 1;
 
-                BoniturSafe.CURRENT_MARKER = -1;
+                BoniturSafe.CURRENT_MARKER = - 1;
 
                 BoniturSafe.MARKER_FILTER = new ArrayList<>();
 
@@ -95,7 +92,7 @@ public class BoniturActivity extends Activity {
                 bah.init_TabFarbe();
 
                 Config.load(this);
-                if(Config.SHOW_BBCH_FRAGE) {
+                if (Config.SHOW_BBCH_FRAGE) {
                     bah.askNewBbch();
                 }
 
@@ -106,7 +103,7 @@ public class BoniturActivity extends Activity {
                 fillView(StandortManager.next());
             }
         } catch (Exception e) {
-            new ErrorLog(e,getApplicationContext());
+            new ErrorLog(e, getApplicationContext());
         }
     }
 
@@ -132,7 +129,7 @@ public class BoniturActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void fillView(Object[] daten){
+    public void fillView(Object[] daten) {
         try {
             Standort s = null;
 
@@ -210,7 +207,7 @@ public class BoniturActivity extends Activity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    new ErrorLog(e,getApplication());
+                    new ErrorLog(e, getApplication());
                 }
 
                 bah.setNewPosition();
@@ -228,46 +225,88 @@ public class BoniturActivity extends Activity {
             }
             //String a = null;
             //a.charAt(2);
-        }catch (Exception e){
+        } catch (Exception e) {
             new ErrorLog(e, getApplicationContext());
         }
     }
 
 
     //---------- OnClick - Events-------------------------------------------------------------------
-    public void onClick(final View v){
-        try{
-            switch (v.getId()){
+    public void onClick(final View v) {
+        try {
+            switch (v.getId()) {
                 case R.id.btnNext:
-                case R.id.btnNichtBewerten: bah.onNextMarkerOrStandort(); break;
-                case R.id.btnPrev:          bah.onPrevMarkerOrStandort(); break;
-                case R.id.btnPrevMarker:    bah.onPrevMarker();break;
-                case R.id.btnNextMarker:    bah.onNextMarker(); break;
-                case R.id.btnDatumHeute:    bah.setDatumHeute();  break;
-                case R.id.btnDatumWaehlen:  new DatePicker(this); break;
-                case R.id.btnDatumLoeschen: ((EditText) findViewById(R.id.etDatumEingabe)).setText(""); break;
-                case R.id.btnSpeichenClose: new SpeichernDialog(this); break;
-                case R.id.btnSettings:      new SettingsDialog(this); break;
+                case R.id.btnNichtBewerten:
+                    bah.onNextMarkerOrStandort();
+                    break;
+                case R.id.btnPrev:
+                    bah.onPrevMarkerOrStandort();
+                    break;
+                case R.id.btnPrevMarker:
+                    bah.onPrevMarker();
+                    break;
+                case R.id.btnNextMarker:
+                    bah.onNextMarker();
+                    break;
+                case R.id.btnDatumHeute:
+                    bah.setDatumHeute();
+                    break;
+                case R.id.btnDatumWaehlen:
+                    new DatePicker(this);
+                    break;
+                case R.id.btnDatumLoeschen:
+                    ((EditText) findViewById(R.id.etDatumEingabe)).setText("");
+                    break;
+                case R.id.btnSpeichenClose:
+                    new SpeichernDialog(this);
+                    break;
+                case R.id.btnSettings:
+                    new SettingsDialog(this);
+                    break;
                 case R.id.btnRichtungLinks:
-                case R.id.btnRichtungRechts:StandortManager.changeRichtung(StandortManager.PFLANZEN_RICHTUNG); fillView(new Object[] {currentStandort, currentMarker}); break;
+                case R.id.btnRichtungRechts:
+                    StandortManager.changeRichtung(StandortManager.PFLANZEN_RICHTUNG);
+                    fillView(new Object[]{currentStandort, currentMarker});
+                    break;
                 case R.id.btnRichtungOben:
-                case R.id.btnRichtungUnten: StandortManager.changeRichtung(StandortManager.REIHEN_RICHTUNG); fillView(new Object[] {currentStandort, currentMarker}); break;
-                case R.id.btnFirstEmpty:    bah.gotoFirstEmpty(); break;
-                case R.id.btnRight:         fillView(StandortManager.nextStandort(StandortManager.NEXT, currentMarker)); break;
-                case R.id.btnLeft:          fillView(StandortManager.nextStandort(StandortManager.PREV,currentMarker)); break;
-                case R.id.btnUp:            fillView(StandortManager.nextReihe(StandortManager.PREV, currentMarker)); break;
-                case R.id.btnDown:          fillView(StandortManager.nextReihe(StandortManager.NEXT,currentMarker)); break;
-                case R.id.btnFoto:          bah.createFoto(); break;
-                case R.id.btnStandortInfo:  bah.openStandortInformation();break;
-                case R.id.ivBild:           bah.showBildGross(); break;
-                case R.id.ivBildGross:      bah.closeShowBildGross(); break;
+                case R.id.btnRichtungUnten:
+                    StandortManager.changeRichtung(StandortManager.REIHEN_RICHTUNG);
+                    fillView(new Object[]{currentStandort, currentMarker});
+                    break;
+                case R.id.btnFirstEmpty:
+                    bah.gotoFirstEmpty();
+                    break;
+                case R.id.btnRight:
+                    fillView(StandortManager.nextStandort(StandortManager.NEXT, currentMarker));
+                    break;
+                case R.id.btnLeft:
+                    fillView(StandortManager.nextStandort(StandortManager.PREV, currentMarker));
+                    break;
+                case R.id.btnUp:
+                    fillView(StandortManager.nextReihe(StandortManager.PREV, currentMarker));
+                    break;
+                case R.id.btnDown:
+                    fillView(StandortManager.nextReihe(StandortManager.NEXT, currentMarker));
+                    break;
+                case R.id.btnFoto:
+                    bah.createFoto();
+                    break;
+                case R.id.btnStandortInfo:
+                    bah.openStandortInformation();
+                    break;
+                case R.id.ivBild:
+                    bah.showBildGross();
+                    break;
+                case R.id.ivBildGross:
+                    bah.closeShowBildGross();
+                    break;
             }
-        }catch (Exception e){
-            new ErrorLog(e,getApplicationContext());
+        } catch (Exception e) {
+            new ErrorLog(e, getApplicationContext());
         }
     }
 
-    public void loadSettings(){
+    public void loadSettings() {
         try {
             Config.load(this);
             if (Config.ZICK_ZACK_MODUS) {
@@ -285,20 +324,20 @@ public class BoniturActivity extends Activity {
             findViewById(R.id.llSorte).setVisibility(Config.SHOW_SORTE ? View.VISIBLE : View.GONE);
             findViewById(R.id.llSortiment).setVisibility(Config.SHOW_SORTIMENT ? View.VISIBLE : View.GONE);
             bah.init_TabFarbe();
-        }catch (Exception e){
-            new ErrorLog(e,getApplicationContext());
+        } catch (Exception e) {
+            new ErrorLog(e, getApplicationContext());
         }
     }
 
-    public class BoniturIntentReceiver extends BroadcastReceiver{
+    public class BoniturIntentReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().compareTo(RELOAD_VIEW)==0) {
+            if (intent.getAction().compareTo(RELOAD_VIEW) == 0) {
                 init();
             }
 
-            if(intent.getAction().compareTo(ERROR_INTENT)==0){
+            if (intent.getAction().compareTo(ERROR_INTENT) == 0) {
                 Toast.makeText(context, intent.getStringExtra("TEXT"), Toast.LENGTH_LONG);
             }
         }

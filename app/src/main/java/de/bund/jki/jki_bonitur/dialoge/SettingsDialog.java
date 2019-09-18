@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,17 +24,16 @@ import de.bund.jki.jki_bonitur.config.Config;
  * Created by toni.schreiber on 23.06.2015.
  */
 public class SettingsDialog {
-    public SettingsDialog(Activity ba){
+    public SettingsDialog(Activity ba) {
         SettingsDialogFragment sdf = new SettingsDialogFragment();
         sdf.mBa = ba;
         sdf.setCancelable(false);
-        sdf.show(ba.getFragmentManager(), "");;
+        sdf.show(ba.getFragmentManager(), "");
     }
 
-    public static class SettingsDialogFragment extends DialogFragment
-    {
-        public Activity mBa;
-        private View mView;
+    public static class SettingsDialogFragment extends DialogFragment {
+        public  Activity mBa;
+        private View     mView;
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,14 +43,14 @@ public class SettingsDialog {
 
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
-            mView = inflater.inflate(R.layout.dialog_settings,null);
+            mView = inflater.inflate(R.layout.dialog_settings, null);
 
             builder.setView(mView)
                     .setPositiveButton("Speichern", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mBa);
-                            SharedPreferences.Editor editor = preferences.edit();
+                            SharedPreferences        preferences = PreferenceManager.getDefaultSharedPreferences(mBa);
+                            SharedPreferences.Editor editor      = preferences.edit();
 
                             Config.ZICK_ZACK_MODUS = ((CheckBox) mView.findViewById(R.id.cbZickTack)).isChecked();
                             editor.putBoolean(Config.NAME_ZICK_ZACK_MODUS, Config.ZICK_ZACK_MODUS);
@@ -87,7 +85,7 @@ public class SettingsDialog {
                             editor.apply();
 
                             SettingsDialogFragment.this.getDialog().cancel();
-                            if (mBa.getLocalClassName().toString().contains("BoniturActivity")) {
+                            if (mBa.getLocalClassName().contains("BoniturActivity")) {
                                 ((BoniturActivity) mBa).loadSettings();
                             } else {
                                 ((VersuchListActivity) mBa).loadSettings();
@@ -111,7 +109,7 @@ public class SettingsDialog {
         public void onResume() {
             super.onResume();
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mBa);
-            Typeface typeface = Typeface.createFromAsset(mBa.getAssets(),"fonts/fontawesome.ttf");
+            Typeface          typeface    = Typeface.createFromAsset(mBa.getAssets(), "fonts/fontawesome.ttf");
             ((TextView) mView.findViewById(R.id.tvSettingsIcon)).setTypeface(typeface);
             ((TextView) mView.findViewById(R.id.tvFolderIcon)).setTypeface(typeface);
             ((TextView) mView.findViewById(R.id.tvZickZackIcon)).setTypeface(typeface);
@@ -132,7 +130,7 @@ public class SettingsDialog {
             ((CheckBox) mView.findViewById(R.id.cbExcelDatum)).setChecked(preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM));
             ((CheckBox) mView.findViewById(R.id.cbBbch)).setChecked(preferences.getBoolean(Config.NAME_BBCH_FRAGE, Config.SHOW_BBCH_FRAGE));
 
-            ((EditText) mView.findViewById((R.id.etSpeicherOrt))).setSelected(false);
+            mView.findViewById((R.id.etSpeicherOrt)).setSelected(false);
         }
 
 

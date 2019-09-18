@@ -1,20 +1,15 @@
 package de.bund.jki.jki_bonitur;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,16 +33,13 @@ import de.bund.jki.jki_bonitur.db.Standort;
 import de.bund.jki.jki_bonitur.db.Versuch;
 import de.bund.jki.jki_bonitur.db.VersuchWert;
 import de.bund.jki.jki_bonitur.dialoge.SettingsDialog;
-import de.bund.jki.jki_bonitur.tools.DateTool;
 
 
 public class VersuchListActivity extends Activity {
 
-    private Context context;
-    public Versuch[] versuche;
-
-    public Versuch delVersuch;
-
+    public  Versuch[] versuche;
+    public  Versuch   delVersuch;
+    private Context   context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,54 +77,54 @@ public class VersuchListActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showFiles()
-    {
+    private void showFiles() {
         try {
 
             // <editor-fold desc="In-Ordner">
             Config.load(this);
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder +  File.separator + "in" + File.separator;
-            String appPath = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
-            File appFolder = new File(appPath);
-            File sd = Environment.getExternalStorageDirectory();
-            File folder = new File(path);
+            String path      = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder + File.separator + "in" + File.separator;
+            String appPath   = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
+            File   appFolder = new File(appPath);
+            File   sd        = Environment.getExternalStorageDirectory();
+            File   folder    = new File(path);
 
 
-            if(!appFolder.exists()){
-                Log.v("Files","Create AppFolder: " + appFolder.mkdir() + "(" + appPath + ")");
+            if (! appFolder.exists()) {
+                Log.v("Files", "Create AppFolder: " + appFolder.mkdir() + "(" + appPath + ")");
             }
-            if(!folder.exists()){
-                Log.v("Files","Create InFolder: " + folder.mkdir() + " ("+path+")");
+            if (! folder.exists()) {
+                Log.v("Files", "Create InFolder: " + folder.mkdir() + " (" + path + ")");
             }
 
-            Log.v("Files",folder.exists()+"");
-            Log.v("Files",folder.isDirectory()+"");
-            Log.v("Files",folder.listFiles()+"");
+            Log.v("Files", folder.exists() + "");
+            Log.v("Files", folder.isDirectory() + "");
+            Log.v("Files", folder.listFiles() + "");
 
-            File[] files = folder.listFiles();
-            ArrayList<String> list = new ArrayList<String>();
+            File[]            files = folder.listFiles();
+            ArrayList<String> list  = new ArrayList<String>();
 
-            if(list == null) {
+            if (list == null) {
                 return;
                 //ToDo: Fehlermeldung keine Dateien gefunden
             }
 
-            for (int i = 0; i < files.length; ++i) {
+            for (int i = 0; i < files.length; ++ i) {
                 list.add(files[i].getName());
             }
 
             ListView lv = (ListView) findViewById(R.id.lvDateien);
 
             ArrayAdapter adapter = new ArrayAdapter(this,
-                    android.R.layout.simple_list_item_1, list);
+                                                    android.R.layout.simple_list_item_1, list
+            );
             lv.setAdapter(adapter);
 
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     TextView tv = (TextView) view.findViewById(android.R.id.text1);
-                    Intent i = new Intent(context, BoniturActivity.class);
-                    i.putExtra("FILE",tv.getText().toString());
+                    Intent   i  = new Intent(context, BoniturActivity.class);
+                    i.putExtra("FILE", tv.getText().toString());
                     context.startActivity(i);
                 }
             });
@@ -140,7 +132,7 @@ public class VersuchListActivity extends Activity {
 
             // <editor-fold desc="begonnen Bonituren">
             BoniturDatenbank boniturDatenbank = new BoniturDatenbank(this);
-            SQLiteDatabase db = boniturDatenbank.getReadableDatabase();
+            SQLiteDatabase   db               = boniturDatenbank.getReadableDatabase();
             BoniturSafe.db = db;
 
             Cursor c = null;
@@ -156,10 +148,10 @@ public class VersuchListActivity extends Activity {
                         v++;
                     } while (c.moveToNext());
                 }
-            }catch (Exception e){
-                new ErrorLog(e,getApplication());
-            }finally {
-                if ( c != null )
+            } catch (Exception e) {
+                new ErrorLog(e, getApplication());
+            } finally {
+                if (c != null)
                     c.close();
             }
 
@@ -170,7 +162,7 @@ public class VersuchListActivity extends Activity {
                     try {
                         View view = super.getView(position, convertView, parent);
                         ((TextView) view.findViewById(android.R.id.text1)).setText(versuche[position].name);
-                        ((Button) view.findViewById(R.id.btnDelete)).setTag(versuche[position]);
+                        view.findViewById(R.id.btnDelete).setTag(versuche[position]);
 
                         return view;
                     } catch (Exception e) {
@@ -187,45 +179,43 @@ public class VersuchListActivity extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     TextView tv = (TextView) view.findViewById(android.R.id.text1);
-                    Intent i = new Intent(context, BoniturActivity.class);
-                    i.putExtra("FILE",tv.getText().toString());
+                    Intent   i  = new Intent(context, BoniturActivity.class);
+                    i.putExtra("FILE", tv.getText().toString());
                     context.startActivity(i);
                 }
             });
 
             // </editor-fold>
 
-        }catch (Exception e){
-            new ErrorLog(e,getApplication());
+        } catch (Exception e) {
+            new ErrorLog(e, getApplication());
         }
     }
 
-    public void loadSettings()
-    {
+    public void loadSettings() {
         Config.load(this);
         showFiles();
 
     }
 
-    public void onClick(final View v)
-    {
-        if(v.getId() == R.id.btnSettingList){
+    public void onClick(final View v) {
+        if (v.getId() == R.id.btnSettingList) {
             new SettingsDialog(this);
         }
     }
 
     public void init_typefaces() {
-        Typeface typeface = Typeface.createFromAsset(this.getAssets(),"fonts/fontawesome.ttf");
+        Typeface typeface = Typeface.createFromAsset(this.getAssets(), "fonts/fontawesome.ttf");
         int[] buttonIds = new int[]{
                 R.id.btnSettingList,
         };
 
-        for (int id: buttonIds) {
+        for (int id : buttonIds) {
             ((Button) this.findViewById(id)).setTypeface(typeface);
         }
     }
 
-    public void onClickBoniturDelete(final View v){
+    public void onClickBoniturDelete(final View v) {
         delVersuch = (Versuch) v.getTag();
 
         AlertDialog dialog = new AlertDialog.Builder(this)
@@ -257,7 +247,6 @@ public class VersuchListActivity extends Activity {
                 .create();
 
         dialog.show();
-
 
 
     }

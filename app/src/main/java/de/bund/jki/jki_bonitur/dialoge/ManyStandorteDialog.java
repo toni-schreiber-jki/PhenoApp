@@ -25,19 +25,19 @@ import de.bund.jki.jki_bonitur.db.Standort;
  * Created by toni.schreiber on 19.06.2015.
  */
 public class ManyStandorteDialog {
-    private Standort[] mStandorte;
+    private Standort[]      mStandorte;
     private BoniturActivity mBa;
 
     public ManyStandorteDialog(BoniturActivity ba, Standort[] standorte) {
         ManyStandortDialogFragment msd = new ManyStandortDialogFragment();
         msd.mBa = ba;
         msd.mStandorte = standorte;
-        msd.show(ba.getFragmentManager(),"");
+        msd.show(ba.getFragmentManager(), "");
     }
 
     public static class ManyStandortDialogFragment extends DialogFragment {
         public BoniturActivity mBa;
-        public Standort[] mStandorte;
+        public Standort[]      mStandorte;
 
         private View mView;
 
@@ -49,7 +49,7 @@ public class ManyStandorteDialog {
 
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
-            mView = inflater.inflate(R.layout.dialog_many_standorte,null);
+            mView = inflater.inflate(R.layout.dialog_many_standorte, null);
 
             builder.setView(mView);
 
@@ -59,7 +59,7 @@ public class ManyStandorteDialog {
         @Override
         public void onResume() {
             super.onResume();
-            Typeface typeface = Typeface.createFromAsset(mBa.getAssets(),"fonts/fontawesome.ttf");
+            Typeface typeface = Typeface.createFromAsset(mBa.getAssets(), "fonts/fontawesome.ttf");
             ((TextView) mView.findViewById(R.id.tvFragezeichen)).setTypeface(typeface);
             ((GridView) mView.findViewById(R.id.gvStandort)).setAdapter(getStandortAdapter());
             ((GridView) mView.findViewById(R.id.gvStandort)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,11 +73,10 @@ public class ManyStandorteDialog {
 
         private ArrayAdapter getStandortAdapter() {
             List<String> standortList = new ArrayList<String>();
-            for(Standort s: mStandorte)
-            {
+            for (Standort s : mStandorte) {
                 standortList.add(s.getName());
             }
-            ArrayAdapter<String> result = new ArrayAdapter<String>(mBa,android.R.layout.simple_list_item_1, standortList){
+            ArrayAdapter<String> result = new ArrayAdapter<String>(mBa, android.R.layout.simple_list_item_1, standortList) {
 
                 @Override
                 public View getView(int position, View convertView, ViewGroup parent) {

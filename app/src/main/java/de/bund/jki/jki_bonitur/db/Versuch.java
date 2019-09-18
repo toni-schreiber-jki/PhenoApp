@@ -10,35 +10,23 @@ import de.bund.jki.jki_bonitur.BoniturSafe;
  */
 public class Versuch extends DbModelInterface {
 
-    public int id       = -1;
-    public String name  = null;
-
-    public static String COLUMN_ID = "_id";
-    public static String COLUMN_NAME = "name";
-
-    public static String TABLE_NAME = "versuch";
-
-    public static String CREATE_TABLE = "CREATE TABLE "+ Versuch.TABLE_NAME + "(" + '\n'+
-            Versuch.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +'\n'+
+    public static String COLUMN_ID    = "_id";
+    public static String COLUMN_NAME  = "name";
+    public static String TABLE_NAME   = "versuch";
+    public static String CREATE_TABLE = "CREATE TABLE " + Versuch.TABLE_NAME + "(" + '\n' +
+            Versuch.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + '\n' +
             Versuch.COLUMN_NAME + " VARCHAR(100) NOT NULL" + '\n' +
-    ")";
+            ")";
 
-    public Versuch()
-    {
+    public int    id   = - 1;
+    public String name = null;
+
+    public Versuch() {
         super.TABLE_NAME = TABLE_NAME;
         super.COLUMN_ID = COLUMN_ID;
     }
 
-    @Override
-    public boolean save() {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, name);
-
-        id = saveRow(id,values);
-        return id==-1;
-    }
-
-    public static Versuch findByPk(int id){
+    public static Versuch findByPk(int id) {
         Versuch res = new Versuch();
 
         Cursor c = null;
@@ -60,10 +48,18 @@ public class Versuch extends DbModelInterface {
             //c.close();
 
             return null;
-        }
-        finally {
-            if( c != null )
+        } finally {
+            if (c != null)
                 c.close();
         }
+    }
+
+    @Override
+    public boolean save() {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, name);
+
+        id = saveRow(id, values);
+        return id == - 1;
     }
 }

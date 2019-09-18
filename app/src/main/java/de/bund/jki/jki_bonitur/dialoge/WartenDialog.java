@@ -16,46 +16,39 @@ import de.bund.jki.jki_bonitur.R;
  */
 public class WartenDialog {
 
-    WartenDialogFragment wdf;
-    public static int MELDUNG_LADEN = 1;
+    public static int MELDUNG_LADEN     = 1;
     public static int MELDUNG_SPEICHERN = 2;
+    WartenDialogFragment wdf;
 
 
-
-    public WartenDialog(BoniturActivity ba)
-    {
+    public WartenDialog(BoniturActivity ba) {
         wdf = new WartenDialogFragment();
-        wdf.ba          = ba;
+        wdf.ba = ba;
         wdf.showMeldung = MELDUNG_LADEN;
         wdf.setCancelable(false);
         wdf.show(ba.getFragmentManager(), "");
     }
 
-    public WartenDialog(BoniturActivity ba, int meldung)
-    {
+    public WartenDialog(BoniturActivity ba, int meldung) {
         wdf = new WartenDialogFragment();
-        wdf.ba          = ba;
+        wdf.ba = ba;
         wdf.showMeldung = meldung;
         wdf.setCancelable(false);
         wdf.show(ba.getFragmentManager(), "");
     }
 
-    public void close()
-    {
+    public void close() {
         wdf.close();
     }
 
-    public static class WartenDialogFragment extends DialogFragment
-    {
-        private String[] meldungen = new String[]{
+    public static class WartenDialogFragment extends DialogFragment {
+        public  int             showMeldung = 1;
+        public  BoniturActivity ba;
+        private String[]        meldungen   = new String[]{
                 "Daten werden geladen",
                 "Daten werden gespeichert"
         };
-
-        public int showMeldung = 1;
-
-        public BoniturActivity ba;
-        private View mView;
+        private View            mView;
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -65,7 +58,7 @@ public class WartenDialog {
 
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
-            mView = inflater.inflate(R.layout.dialog_warten,null);
+            mView = inflater.inflate(R.layout.dialog_warten, null);
 
             builder.setView(mView);
 
@@ -76,7 +69,7 @@ public class WartenDialog {
         public void onResume() {
             super.onResume();
 
-            ((TextView) mView.findViewById(R.id.tvMeldung)).setText(meldungen[showMeldung-1]);
+            ((TextView) mView.findViewById(R.id.tvMeldung)).setText(meldungen[showMeldung - 1]);
             /*
             Typeface typeface = Typeface.createFromAsset(ba.getAssets(),"fonts/fontawesome.ttf");
             ((TextView) mView.findViewById(R.id.tvFragezeichen)).setTypeface(typeface);
@@ -85,10 +78,10 @@ public class WartenDialog {
 
         }
 
-        public void close(){
+        public void close() {
             try {
                 WartenDialogFragment.this.getDialog().cancel();
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
