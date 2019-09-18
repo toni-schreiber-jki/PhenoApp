@@ -9,6 +9,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bund.jki.jki_bonitur.BoniturSafe;
@@ -154,7 +155,7 @@ public class Writer {
 
 
                 int mp = 0;
-                if (! werteAll.isClosed() && standort.id == werteAll.getInt(0)) {
+                if(!werteAll.isClosed() && standort.id == werteAll.getInt(0)) {
                     for (Marker m : marker) {
                         if (standort.id != werteAll.getInt(0)) {
                             break;
@@ -164,7 +165,7 @@ public class Writer {
                             if (show_datum) {
                                 row.createCell(2 * mp + 9 + 1).setCellValue(werteAll.getString(3));
                             }
-                            if (! werteAll.moveToNext()) {
+                            if (!werteAll.moveToNext()){
                                 werteAll.close();
                                 break;
                             }
