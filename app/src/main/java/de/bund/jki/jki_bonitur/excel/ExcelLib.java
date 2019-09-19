@@ -6,12 +6,19 @@ package de.bund.jki.jki_bonitur.excel;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Iterator;
 
 /**
  * Created by Toni on 03.03.2015.
@@ -88,4 +95,33 @@ public class ExcelLib {
     }
 
 
+    public static void writeCSV(HSSFWorkbook workbook, String path) {
+        try {
+            if (path.toLowerCase().endsWith(".xls")) {
+                path = path.substring(0, path.length() - 3) + "csv";
+            }
+            FileOutputStream fos = new FileOutputStream(path);
+            BufferedWriter   bw  = new BufferedWriter(new OutputStreamWriter(fos));
+
+            Sheet         sheet     = workbook.getSheetAt(workbook.getActiveSheetIndex());
+            DataFormatter formatter = new DataFormatter();
+            for (int rowNum = 0; rowNum < sheet.getLastRowNum(); rowNum++) {
+                Iterator<Cell> cells = sheet.getRow(rowNum).cellIterator();
+                while (cells.hasNext()) {
+                    Cell cell = cells.next();
+                    bw.write(formatter.formatCellValue(cell));
+                    bw.write(";");
+                }
+                bw.write(13);
+                bw.write(10);
+            }
+            bw.flush();
+            bw.close();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

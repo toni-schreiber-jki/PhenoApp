@@ -9,7 +9,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bund.jki.jki_bonitur.BoniturSafe;
@@ -28,14 +27,26 @@ import de.bund.jki.jki_bonitur.dialoge.WartenDialog;
  */
 public class Writer {
 
+    public static final int FORMAT_XLS = 1;
+    public static final int FORMAT_CSV = 10;
+
     private HashMap<Integer, Akzession> akzessionHashMap;
     private HashMap<Integer, Passport>  passportHashMapt;
 
+
     public Writer(String s) {
-        writeResult(s);
+        writeResult(s, FORMAT_XLS);
+    }
+
+    public Writer(String s, int format) {
+        writeResult(s, format);
     }
 
     public void writeResult(String filePath) {
+        writeResult(filePath, FORMAT_XLS);
+    }
+
+    public void writeResult(String filePath, int format) {
         try {
             //String filePath = mFile.replaceFirst("/in/", "/" + folder + "/");
 
@@ -46,8 +57,12 @@ public class Writer {
 
                     HSSFWorkbook workbook = new HSSFWorkbook();
                     workbook = ((Writer) params[0]).addReportFinal(workbook);
-                    ExcelLib.writeWorkbook(workbook, ((String) params[1]));
-
+                    if ((int) params[2] == FORMAT_XLS) {
+                        ExcelLib.writeWorkbook(workbook, ((String) params[1]));
+                    }
+                    if ((int) params[2] == FORMAT_CSV) {
+                        ExcelLib.writeCSV(workbook, ((String) params[1]));
+                    }
 
                     wd.close();
 
@@ -65,7 +80,7 @@ public class Writer {
                 }
             };
 
-            execute.execute(this, filePath);
+            execute.execute(this, filePath, format);
 
         } catch (Exception e) {
             new ErrorLog(e, null);

@@ -54,7 +54,7 @@ public class SpeichernDialog {
             mView = inflater.inflate(R.layout.dialog_speicherort, null);
 
             builder.setView(mView)
-                    .setPositiveButton("Speichern", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("XLS Speichern", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             File outFolder = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/out/");
@@ -70,6 +70,24 @@ public class SpeichernDialog {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
+                            SpeichernDialogFragment.this.getDialog().cancel();
+                        }
+                    })
+
+                    .setNeutralButton("CSV Speichern", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            File outFolder = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/out/");
+                            if (! outFolder.exists()) {
+                                outFolder.mkdir();
+                            }
+                            new Writer(
+                                    Environment.getExternalStorageDirectory().toString()
+                                            + Config.BaseFolder
+                                            + "/out/"
+                                            + (((EditText) mView.findViewById(R.id.etFilename)).getText().toString()),
+                                    Writer.FORMAT_CSV
+                            );
                             SpeichernDialogFragment.this.getDialog().cancel();
                         }
                     });
