@@ -20,5 +20,6 @@
     <dimen name="main_si_button_margin_right">20dp</dimen>
 
     <dimen name="pfadenkreuz_size">165dp</dimen>
+    <dimen name="pfadankreuz_fontsize">30sp</dimen>
 
 </resources>

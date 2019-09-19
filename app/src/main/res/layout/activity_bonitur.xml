@@ -235,22 +235,23 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
                     android:id="@+id/llBeschreibungKurz"
-                    style="@style/JKI_KeyValueRow">
+                    style="@style/JKI_KeyValueRow"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:text="Merkmal:"
                         android:id="@+id/textView6"
-                        style="@style/JKI_Eigenschaft_Title" />
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:text="Merkmal:" />
 
                     <TextView
+                        android:id="@+id/tvMerkmal"
+                        style="@style/JKI_Eigenschaft_Value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Junger Trieb: Verteilung der Anthocyanfärbung der Wollbehaarung"
-                        android:id="@+id/tvMerkmal"
-                        style="@style/JKI_Eigenschaft_Value" />
+                        tools:text="Junger Trieb: Verteilung der Anthocyanfärbung der Wollbehaarung" />
                 </LinearLayout>
 
                 <TextView

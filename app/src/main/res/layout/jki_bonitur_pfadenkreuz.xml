@@ -16,7 +16,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/main_button_height"
         android:onClick="onClick"
-        android:text="\uf062" />
+        android:text="\uf062"
+        android:textSize="@dimen/pfadankreuz_fontsize" />
 
     <Button
         android:id="@+id/btnRight"
@@ -27,7 +28,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:onClick="onClick"
-        android:text="\uf061" />
+        android:text="\uf061"
+        android:textSize="@dimen/pfadankreuz_fontsize" />
 
     <Button
         android:id="@+id/btnDown"
@@ -37,7 +39,8 @@
         android:layout_below="@+id/btnRight"
         android:layout_centerHorizontal="true"
         android:onClick="onClick"
-        android:text="\uf063" />
+        android:text="\uf063"
+        android:textSize="@dimen/pfadankreuz_fontsize" />
 
     <Button
         android:id="@+id/btnLeft"
@@ -49,6 +52,7 @@
         android:layout_alignParentLeft="true"
         android:nestedScrollingEnabled="true"
         android:onClick="onClick"
-        android:text="\uf060" />
+        android:text="\uf060"
+        android:textSize="@dimen/pfadankreuz_fontsize" />
 
 </RelativeLayout>
