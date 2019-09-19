@@ -17,9 +17,11 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textAppearance="@style/JKI.Spinner.TextAppearance"
+    android:layout_height="@dimen/main_tabelle_row_big_height"
     android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:text="@android:string/VideoView_error_button"
+    android:textAppearance="@style/JKI.Spinner.TextAppearance"
+    android:textSize="@dimen/main_textsize" />
     <!--android:paddingStart="?android:attr/listPreferredItemPaddingStart"
        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"-->

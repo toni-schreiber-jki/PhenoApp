@@ -10,4 +10,16 @@
     <dimen name="top_medium_margin">4dp</dimen>
     <dimen name="top_large_margin">8dp</dimen>
 
+    <dimen name="main_tabelle_label_column_width">100dp</dimen>
+    <dimen name="main_tabelle_row_height">20dp</dimen>
+    <dimen name="main_tabelle_row_big_height">25dp</dimen>
+    <dimen name="main_textsize">10sp</dimen>
+
+    <dimen name="main_button_height">35dp</dimen>
+    <dimen name="main_si_button_margin_top">5dp</dimen>
+    <dimen name="main_si_button_margin_right">10dp</dimen>
+
+    <dimen name="pfadenkreuz_size">105dp</dimen>
+
+
 </resources>

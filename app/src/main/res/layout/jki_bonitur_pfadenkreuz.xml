@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
-    android:layout_height="200dp"
     android:id="@+id/rlPfadenkreuz"
+    android:layout_width="@dimen/pfadenkreuz_size"
+    android:layout_height="@dimen/pfadenkreuz_size"
     android:layout_alignParentBottom="true"
     tools:showIn="@layout/activity_bonitur">
 
     <Button
-        android:layout_width="66dp"
-        android:layout_height="66dp"
-        android:text="\uf062"
         android:id="@+id/btnUp"
-
-        android:textSize="45dp"
-        android:onClick="onClick"
+        style="@style/JKI_Button_Main_Text"
+        android:layout_width="@dimen/main_button_height"
+        android:layout_height="@dimen/main_button_height"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="66dp" />
+        android:layout_marginLeft="@dimen/main_button_height"
+        android:onClick="onClick"
+        android:text="\uf062" />
 
     <Button
-        android:layout_width="66dp"
-        android:layout_height="66dp"
-        android:text="\uf061"
         android:id="@+id/btnRight"
-        android:textSize="45dp"
-        android:onClick="onClick"
+        style="@style/JKI_Button_Main_Text"
+        android:layout_width="@dimen/main_button_height"
+        android:layout_height="@dimen/main_button_height"
         android:layout_below="@+id/btnUp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="66dp"
-        android:layout_height="66dp"
-        android:text="\uf063"
-        android:id="@+id/btnDown"
-        android:textSize="45dp"
         android:onClick="onClick"
-        android:layout_below="@+id/btnRight"
-        android:layout_centerHorizontal="true" />
+        android:text="\uf061" />
 
     <Button
-        android:layout_width="66dp"
-        android:layout_height="66dp"
-        android:text="\uf060"
+        android:id="@+id/btnDown"
+        style="@style/JKI_Button_Main_Text"
+        android:layout_width="@dimen/main_button_height"
+        android:layout_height="@dimen/main_button_height"
+        android:layout_below="@+id/btnRight"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"
+        android:text="\uf063" />
+
+    <Button
         android:id="@+id/btnLeft"
-        android:textSize="45dp"
+        style="@style/JKI_Button_Main_Text"
+        android:layout_width="@dimen/main_button_height"
+        android:layout_height="@dimen/main_button_height"
+        android:layout_below="@+id/btnUp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:nestedScrollingEnabled="true"
         android:onClick="onClick"
-        android:layout_below="@+id/btnUp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="\uf060" />
 
 </RelativeLayout>

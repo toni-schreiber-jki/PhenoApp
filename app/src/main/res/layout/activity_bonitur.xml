@@ -50,43 +50,43 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
                     android:id="@+id/llAkzession"
+                    style="@style/JKI_KeyValueRow_Gross"
+                    android:layout_width="fill_parent"
                     android:background="#ffdedede"
-                    style="@style/JKI_KeyValueRow_Gross">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:text="Akzession"
                         android:id="@+id/textView99"
+                        style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        style="@style/JKI_Eigenschaft_Title" />
+                        android:text="Akzession" />
 
                     <Spinner
                         android:id="@+id/spAkzession"
-                        style="@style/JKI_Spinner"
+                        style="@style/JKI_Spinner_Main"
                         android:layout_width="wrap_content"
                         tools:listitem="@layout/jki_simple_list_item_1" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
                     android:id="@+id/llPassport"
-                    style="@style/JKI_KeyValueRow_Gross">
+                    style="@style/JKI_KeyValueRow_Gross"
+                    android:layout_width="fill_parent"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:text="Passport"
                         android:id="@+id/textView9"
+                        style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        style="@style/JKI_Eigenschaft_Title" />
+                        android:text="Passport" />
 
                     <Spinner
-                        android:layout_width="wrap_content"
                         android:id="@+id/spPassport"
-                        style="@style/JKI_Spinner"
-                        tools:listitem="@layout/jki_simple_list_item_1"/>
+                        style="@style/JKI_Spinner_Main"
+                        android:layout_width="wrap_content"
+                        tools:listitem="@layout/jki_simple_list_item_1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -191,19 +191,19 @@
                         android:visibility="gone" />
 
                     <Spinner
-                        android:layout_width="wrap_content"
                         android:id="@+id/spMarker"
+                        style="@style/JKI_Spinner_Main"
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
-                        style="@style/JKI_Spinner"
-                        tools:listitem="@layout/jki_simple_list_item_1"/>
+                        tools:listitem="@layout/jki_simple_list_item_1" />
 
                     <CheckBox
-                        android:scaleX="1.5"
-                        android:scaleY="1.5"
                         android:id="@+id/cbMarker"
-                        android:gravity="center_vertical|center_horizontal"
+                        style="@style/JKI_KeyValueRow_Gross_elements"
                         android:layout_marginLeft="1dp"
-                        style="@style/JKI_KeyValueRow_Gross_elements" />
+                        android:gravity="left|center_vertical"
+                        android:scaleX="1.05"
+                        android:scaleY="1.15" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -211,21 +211,25 @@
                         android:layout_height="fill_parent">
 
                         <Button
-                            android:text="\uf060"
                             android:id="@+id/btnPrevMarker"
+                            style="@style/JKI_KeyValueRow_Gross_elements"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
                             android:nestedScrollingEnabled="false"
                             android:onClick="onClick"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            style="@style/JKI_KeyValueRow_Gross_elements" />
+                            android:scaleX="1.05"
+                            android:scaleY="1.15"
+                            android:text="\uf060" />
 
                         <Button
-                            android:text="\uf061"
                             android:id="@+id/btnNextMarker"
-                            android:onClick="onClick"
-                            android:layout_alignParentRight="true"
+                            style="@style/JKI_KeyValueRow_Gross_elements"
                             android:layout_alignParentEnd="true"
-                            style="@style/JKI_KeyValueRow_Gross_elements" />
+                            android:layout_alignParentRight="true"
+                            android:onClick="onClick"
+                            android:scaleX="1.05"
+                            android:scaleY="1.15"
+                            android:text="\uf061" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -280,15 +284,17 @@
             <include layout="@layout/jki_bonitur_pfadenkreuz" />
 
             <Button
+                android:id="@+id/btnStandortInfo"
+                style="@style/JKI_Button_Main_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Standortinformationen"
-                android:id="@+id/btnStandortInfo"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:onClick="onClick" />
+                android:layout_marginTop="@dimen/main_si_button_margin_top"
+                android:layout_marginRight="@dimen/main_si_button_margin_right"
+                android:onClick="onClick"
+                android:text="@string/ba_si_button_text"
+                android:textSize="@dimen/main_textsize" />
 
             <ImageView
                 android:layout_width="fill_parent"
@@ -314,36 +320,38 @@
                 android:id="@+id/linearLayout">
 
                 <Button
+                    android:id="@+id/btnPrev"
+                    style="@style/JKI_Button_Main_Text"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:text="zurück"
-                    android:id="@+id/btnPrev"
+                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
+                    android:nestedScrollingEnabled="false"
+                    android:onClick="onClick"
+                    android:text="zurück" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    style="@style/JKI_Button_Main_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:nestedScrollingEnabled="false" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="vor"
-                    android:id="@+id/btnNext"
-                    android:layout_alignParentTop="true"
-                    android:layout_weight="1"
-                    android:onClick="onClick" />
+                    android:text="vor" />
 
             </LinearLayout>
 
             <Button
+                android:id="@+id/btnNichtBewerten"
+                style="@style/JKI_Button_Main_Text"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="nicht bewerten"
-                android:id="@+id/btnNichtBewerten"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:onClick="onClick"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                />
+                android:text="nicht bewerten" />
 
             <GridView
                 android:layout_width="wrap_content"
@@ -381,29 +389,32 @@
                     android:layout_below="@+id/etDatumEingabe">
 
                     <Button
+                        android:id="@+id/btnDatumHeute"
+                        style="@style/JKI_Button_Main_Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Heute"
-                        android:id="@+id/btnDatumHeute"
                         android:layout_below="@+id/etDatumEingabe"
                         android:layout_weight="1"
-                        android:onClick="onClick" />
+                        android:onClick="onClick"
+                        android:text="Heute" />
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Datum wählen"
                         android:id="@+id/btnDatumWaehlen"
-                        android:layout_weight="1"
-                        android:onClick="onClick" />
-
-                    <Button
+                        style="@style/JKI_Button_Main_Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="löschen"
-                        android:id="@+id/btnDatumLoeschen"
                         android:layout_weight="1"
-                        android:onClick="onClick" />
+                        android:onClick="onClick"
+                        android:text="Datum wählen" />
+
+                    <Button
+                        android:id="@+id/btnDatumLoeschen"
+                        style="@style/JKI_Button_Main_Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:text="löschen" />
                 </LinearLayout>
 
             </RelativeLayout>

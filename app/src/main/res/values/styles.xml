@@ -11,6 +11,10 @@
         <item name="android:layout_height">@dimen/top_line_element_size</item>
     </style>
 
+    <style name="JKI_Spinner_Main" parent="@android:style/Widget.Holo.Light.Spinner">
+        <item name="android:layout_height">@dimen/main_tabelle_row_big_height</item>
+    </style>
+
     <style name="JKI.Spinner.Position.Top.TextAppearance" parent="@android:style/TextAppearance.Holo.Widget.TextView.SpinnerItem">
         <item name="android:textColor">@color/darkred</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
@@ -26,9 +30,10 @@
     </style>
 
     <style name="JKI_Eigenschaft_Title">
-        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_width">@dimen/main_tabelle_label_column_width</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textSize">@dimen/main_textsize</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">#33FFFFFF</item>
         <item name="android:textColor">@color/jki_blau</item>
@@ -38,20 +43,32 @@
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:textColor">@color/jki_braun</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/main_textsize</item>
     </style>
 
     <style name="JKI_KeyValueRow">
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_height">@dimen/main_tabelle_row_height</item>
     </style>
 
     <style name="JKI_KeyValueRow_Gross">
-        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_height">@dimen/main_tabelle_row_big_height</item>
     </style>
 
     <style name="JKI_KeyValueRow_Gross_elements">
-        <item name="android:layout_height">45dp</item>
-        <item name="android:layout_width">45dp</item>
-        <item name="android:textSize">25dp</item>
+        <item name="android:layout_height">@dimen/main_tabelle_row_big_height</item>
+        <item name="android:layout_width">@dimen/main_tabelle_row_big_height</item>
+        <item name="android:textSize">@dimen/main_textsize</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+    <style name="JKI_Button_Main_Text">
+        <item name="android:height">@dimen/main_button_height</item>
+        <item name="android:minHeight">@dimen/main_tabelle_row_big_height</item>
+        <item name="android:textSize">@dimen/main_textsize</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+
     </style>
 
 

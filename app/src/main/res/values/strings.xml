@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">JKI-Bonitur</string>
 
@@ -5,4 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_bonitur">BoniturActivity</string>
     <string name="title_activity_standort_info">BoniturActivity</string>
+    <string name="ba_si_button_text">Standortinfos</string>
+
 </resources>
