@@ -85,7 +85,11 @@ public class SpeichernDialog {
                                     Environment.getExternalStorageDirectory().toString()
                                             + Config.BaseFolder
                                             + "/out/"
-                                            + (((EditText) mView.findViewById(R.id.etFilename)).getText().toString()),
+                                            + (
+                                            ((EditText) mView.findViewById(R.id.etFilename))
+                                                    .getText()
+                                                    .toString()
+                                    ),
                                     Writer.FORMAT_CSV
                             );
                             SpeichernDialogFragment.this.getDialog().cancel();
