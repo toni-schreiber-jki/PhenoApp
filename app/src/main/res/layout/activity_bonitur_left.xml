@@ -58,148 +58,15 @@
                 android:onClick="onClick"
                 android:text="nicht bewerten" />
 
-            <GridView
-                android:id="@+id/gvWerte"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/btnNichtBewerten"
-                android:layout_below="@+id/linearLayout"
-                android:layout_weight="3"
-                android:choiceMode="singleChoice"
-                android:columnWidth="100dp"
-                android:layoutMode="clipBounds"
-                android:numColumns="2"
-                android:visibility="gone" />
+            <include layout="@layout/bon_bonwerte" />
 
-            <RelativeLayout
-                android:id="@+id/rlDatum"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_above="@+id/btnNichtBewerten"
-                android:layout_below="@+id/linearLayout"
-                android:visibility="visible">
+            <include layout="@layout/bon_datum" />
 
-                <EditText
-                    android:id="@+id/etDatumEingabe"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="date"
-                    android:visibility="visible" />
+            <include layout="@layout/bon_text" />
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/etDatumEingabe"
-                    android:orientation="horizontal">
+            <include layout="@layout/bon_messen" />
 
-                    <Button
-                        android:id="@+id/btnDatumHeute"
-                        style="@style/JKI_Button_Main_Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/etDatumEingabe"
-                        android:layout_weight="1"
-                        android:onClick="onClick"
-                        android:text="Heute" />
-
-                    <Button
-                        android:id="@+id/btnDatumWaehlen"
-                        style="@style/JKI_Button_Main_Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="onClick"
-                        android:text="Datum wählen" />
-
-                    <Button
-                        android:id="@+id/btnDatumLoeschen"
-                        style="@style/JKI_Button_Main_Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="onClick"
-                        android:text="löschen" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rlBemerkung"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_above="@+id/btnNichtBewerten"
-                android:layout_below="@+id/linearLayout"
-                android:visibility="gone">
-
-                <EditText
-                    android:id="@+id/etBemerkungEingabe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:ems="10"
-                    android:inputType="textMultiLine" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rlMessen"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_above="@+id/btnNichtBewerten"
-                android:layout_below="@+id/linearLayout"
-                android:visibility="gone">
-
-                <EditText
-                    android:id="@+id/etMessenEingabe"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:ems="10"
-                    android:inputType="number" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rlBBCH"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_above="@+id/btnNichtBewerten"
-                android:layout_below="@+id/linearLayout"
-                android:visibility="gone">
-
-                <EditText
-                    android:id="@+id/etBbchWert"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:ems="10"
-                    android:inputType="number" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_below="@+id/etBbchWert"
-                    android:orientation="vertical">
-
-                    <Spinner
-                        android:id="@+id/spBbchStadium"
-                        style="@android:style/Widget.Holo.Light.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:spinnerMode="dropdown"
-                        android:transitionGroup="false" />
-
-                    <Spinner
-                        android:id="@+id/spBbchDetail"
-                        style="@android:style/Widget.Holo.Light.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:spinnerMode="dialog" />
-                </LinearLayout>
-            </RelativeLayout>
+            <include layout="@layout/bon_bbch" />
 
         </RelativeLayout>
 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlDatum"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_above="@+id/btnNichtBewerten"
+    android:layout_below="@+id/linearLayout"
+    android:visibility="visible"
+    tools:showIn="@layout/activity_bonitur">
+
+    <EditText
+        android:id="@+id/etDatumEingabe"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDatumEingabe"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnDatumHeute"
+            style="@style/JKI_Button_Main_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etDatumEingabe"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="Heute" />
+
+        <Button
+            android:id="@+id/btnDatumWaehlen"
+            style="@style/JKI_Button_Main_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="Datum wählen" />
+
+        <Button
+            android:id="@+id/btnDatumLoeschen"
+            style="@style/JKI_Button_Main_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="löschen" />
+    </LinearLayout>
+
+</RelativeLayout>
