@@ -5,4 +5,5 @@
 * CSV-Ergebnisse
 * Frontend anpassungen für verschiedene Größen
 * Linkshändler Modus
+* Datumeingabe erweitert um Vor-, Gestern, Über-, Morgen 
 

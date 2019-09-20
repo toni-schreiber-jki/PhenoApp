@@ -262,6 +262,18 @@ public class BoniturActivity extends Activity {
                 case R.id.btnDatumHeute:
                     bah.setDatumDiff(0);
                     break;
+                case R.id.btnVorGestern:
+                    bah.setDatumDiff(- 2);
+                    break;
+                case R.id.btnGestern:
+                    bah.setDatumDiff(- 1);
+                    break;
+                case R.id.btnMorgen:
+                    bah.setDatumDiff(1);
+                    break;
+                case R.id.btnUMorgen:
+                    bah.setDatumDiff(2);
+                    break;
                 case R.id.btnDatumWaehlen:
                     new DatePicker(this);
                     break;
