@@ -40,24 +40,27 @@
                 android:layout_height="fill_parent">
 
                 <TextView
+                    android:id="@+id/tvFolderIcon"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="\uf07c"
-                    android:id="@+id/tvFolderIcon" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView11"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Speicherort:"
-                    android:id="@+id/textView11" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <EditText
+                    android:id="@+id/etSpeicherOrt"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/etSpeicherOrt"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textSize="@dimen/main_textsize" />
             </LinearLayout>
 
             <LinearLayout
@@ -66,25 +69,29 @@
                 android:layout_height="fill_parent" >
 
                 <TextView
+                    android:id="@+id/tvZickZackIcon"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="\uf0ec"
-                    android:id="@+id/tvZickZackIcon" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView15"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="&quot;Zick Zack Modus&quot;:"
-                    android:id="@+id/textView15" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/cbZickTack"
-                    android:focusableInTouchMode="false"
-                    ><requestFocus></requestFocus></CheckBox>
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/main_tabelle_row_height"
+                    android:focusableInTouchMode="false">
+
+                    <requestFocus></requestFocus>
+                </CheckBox>
 
             </LinearLayout>
 
@@ -94,23 +101,25 @@
                 android:layout_height="fill_parent" >
 
                 <TextView
+                    android:id="@+id/tvFirstEmptyIcon"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="\uf120"
-                    android:id="@+id/tvFirstEmptyIcon" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView16"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="&quot;First Empty Button&quot;:"
-                    android:id="@+id/textView16" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
+                    android:id="@+id/cbFirstEmpty"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cbFirstEmpty" />
+                    android:layout_height="@dimen/main_tabelle_row_height" />
             </LinearLayout>
 
             <LinearLayout
@@ -119,22 +128,24 @@
                 android:layout_height="fill_parent" >
 
                 <TextView
+                    android:id="@+id/textView13"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView13" />
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView20"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Akzession:"
-                    android:id="@+id/textView20" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
+                    android:id="@+id/cbAkzession"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cbAkzession" />
+                    android:layout_height="@dimen/main_tabelle_row_height" />
             </LinearLayout>
 
             <LinearLayout
@@ -143,22 +154,24 @@
                 android:layout_height="fill_parent" >
 
                 <TextView
+                    android:id="@+id/textView21"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView21" />
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView24"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Passport:"
-                    android:id="@+id/textView24" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
+                    android:id="@+id/cbPassport"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cbPassport" />
+                    android:layout_height="@dimen/main_tabelle_row_height" />
             </LinearLayout>
 
             <LinearLayout
@@ -167,22 +180,24 @@
                 android:layout_height="fill_parent" >
 
                 <TextView
+                    android:id="@+id/textView25"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView25" />
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView26"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Sorte /Zuchtstamm:"
-                    android:id="@+id/textView26" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
+                    android:id="@+id/cbSorte"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cbSorte" />
+                    android:layout_height="@dimen/main_tabelle_row_height" />
             </LinearLayout>
 
             <LinearLayout
@@ -191,23 +206,25 @@
                 android:layout_height="fill_parent" >
 
                 <TextView
+                    android:id="@+id/tvElternIcon"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="\uf182\uf183"
-                    android:id="@+id/tvElternIcon" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView19"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Eltern:"
-                    android:id="@+id/textView19" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
+                    android:id="@+id/cbEltern"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cbEltern" />
+                    android:layout_height="@dimen/main_tabelle_row_height" />
             </LinearLayout>
 
             <LinearLayout
@@ -216,22 +233,24 @@
                 android:layout_height="fill_parent" >
 
                 <TextView
+                    android:id="@+id/textView27"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView27" />
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView28"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Sortimentsnummer:"
-                    android:id="@+id/textView28" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
+                    android:id="@+id/cbSortNr"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cbSortNr" />
+                    android:layout_height="@dimen/main_tabelle_row_height" />
             </LinearLayout>
 
             <LinearLayout
@@ -240,23 +259,25 @@
                 android:layout_height="fill_parent" >
 
                 <TextView
+                    android:id="@+id/tvCalendar"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="\uf1c3\uf073"
-                    android:id="@+id/tvCalendar" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView31"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Excelausgabe mit Datum:"
-                    android:id="@+id/textView31" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
+                    android:id="@+id/cbExcelDatum"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cbExcelDatum" />
+                    android:layout_height="@dimen/main_tabelle_row_height" />
 
             </LinearLayout>
 
@@ -266,22 +287,24 @@
                 android:layout_height="fill_parent" >
 
                 <TextView
+                    android:id="@+id/textView32"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView32" />
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
+                    android:id="@+id/textView33"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="BBCH Frage"
-                    android:id="@+id/textView33" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/cbBbch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/main_tabelle_row_height"
                     android:checked="false" />
             </LinearLayout>
 
@@ -295,19 +318,21 @@
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:text="\uf0a5"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <TextView
                     android:id="@+id/textView35"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:text="Linkshändler"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="@dimen/main_textsize" />
 
                 <CheckBox
                     android:id="@+id/cbLeftHand"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/main_tabelle_row_height"
                     android:checked="false" />
             </LinearLayout>
 
