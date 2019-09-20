@@ -1278,11 +1278,11 @@ public class BoniturActivityHelper {
     }
 
     //----------------Datum-------------------------------------------------------------------------
-    public void setDatumHeute() {
+    public void setDatumDiff(int diff) {
         try {
             Calendar         c        = Calendar.getInstance();
             SimpleDateFormat df       = new SimpleDateFormat("dd.MM.yyyy");
-            String           datum    = df.format(c.getTime());
+            String           datum    = df.format(new Date(c.getTimeInMillis() + diff * 24 * 60 * 60 * 1000));
             EditText         editText = getEtDatumEingabe();
             editText.setText(datum);
 
