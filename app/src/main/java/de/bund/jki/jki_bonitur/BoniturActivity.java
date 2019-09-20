@@ -5,7 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,11 +36,18 @@ public class BoniturActivity extends Activity {
     public        Standort              currentStandort;
     public        BoniturIntentReceiver bir          = null;
     private       BoniturDatenbank      bonDb;
+    private       boolean               was_left_active;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bonitur);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        was_left_active = preferences.getBoolean(Config.NAME_LEFT_HAND_MODE, Config.IS_LEFT_HAND_MODE);
+        if (! was_left_active) {
+            setContentView(R.layout.activity_bonitur);
+        } else {
+            setContentView(R.layout.activity_bonitur_left);
+        }
         bir = new BoniturIntentReceiver();
         IntentFilter filter = new IntentFilter(RELOAD_VIEW);
         filter.addAction(ERROR_INTENT);
@@ -323,7 +332,12 @@ public class BoniturActivity extends Activity {
             findViewById(R.id.llPassport).setVisibility(Config.SHOW_PASSPORT ? View.VISIBLE : View.GONE);
             findViewById(R.id.llSorte).setVisibility(Config.SHOW_SORTE ? View.VISIBLE : View.GONE);
             findViewById(R.id.llSortiment).setVisibility(Config.SHOW_SORTIMENT ? View.VISIBLE : View.GONE);
+
             bah.init_TabFarbe();
+
+            if (was_left_active != Config.IS_LEFT_HAND_MODE) {
+                Toast.makeText(this, "Zum Wechsel Rechts/Links - Modus Bonitur neu öffnen", Toast.LENGTH_LONG).show();
+            }
         } catch (Exception e) {
             new ErrorLog(e, getApplicationContext());
         }

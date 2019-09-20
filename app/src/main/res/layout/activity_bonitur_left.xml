@@ -1,0 +1,506 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/activity_bonitur_top" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="3">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnPrev"
+                    style="@style/JKI_Button_Main_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
+                    android:nestedScrollingEnabled="false"
+                    android:onClick="onClick"
+                    android:text="zurück" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    style="@style/JKI_Button_Main_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="vor" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnNichtBewerten"
+                style="@style/JKI_Button_Main_Text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:onClick="onClick"
+                android:text="nicht bewerten" />
+
+            <GridView
+                android:id="@+id/gvWerte"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/btnNichtBewerten"
+                android:layout_below="@+id/linearLayout"
+                android:layout_weight="3"
+                android:choiceMode="singleChoice"
+                android:columnWidth="100dp"
+                android:layoutMode="clipBounds"
+                android:numColumns="2"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/rlDatum"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/btnNichtBewerten"
+                android:layout_below="@+id/linearLayout"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/etDatumEingabe"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="date"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etDatumEingabe"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnDatumHeute"
+                        style="@style/JKI_Button_Main_Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/etDatumEingabe"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:text="Heute" />
+
+                    <Button
+                        android:id="@+id/btnDatumWaehlen"
+                        style="@style/JKI_Button_Main_Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:text="Datum wählen" />
+
+                    <Button
+                        android:id="@+id/btnDatumLoeschen"
+                        style="@style/JKI_Button_Main_Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:text="löschen" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlBemerkung"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/btnNichtBewerten"
+                android:layout_below="@+id/linearLayout"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/etBemerkungEingabe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:ems="10"
+                    android:inputType="textMultiLine" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlMessen"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/btnNichtBewerten"
+                android:layout_below="@+id/linearLayout"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/etMessenEingabe"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:ems="10"
+                    android:inputType="number" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlBBCH"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/btnNichtBewerten"
+                android:layout_below="@+id/linearLayout"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/etBbchWert"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:ems="10"
+                    android:inputType="number" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/etBbchWert"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/spBbchStadium"
+                        style="@android:style/Widget.Holo.Light.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:spinnerMode="dropdown"
+                        android:transitionGroup="false" />
+
+                    <Spinner
+                        android:id="@+id/spBbchDetail"
+                        style="@android:style/Widget.Holo.Light.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dialog" />
+                </LinearLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2">
+
+            <LinearLayout
+                android:id="@+id/llInfos"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:id="@+id/llStandort"
+                    style="@style/JKI_KeyValueRow"
+                    android:layout_width="fill_parent"
+                    android:background="#ffffff"
+                    android:focusableInTouchMode="false"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:layout_alignParentTop="true"
+                        android:text="Standort:" />
+
+                    <TextView
+                        android:id="@+id/tvStandort"
+                        style="@style/JKI_Eigenschaft_Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/tvCode"
+                        tools:text="XX-XXX-XXX" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llAkzession"
+                    style="@style/JKI_KeyValueRow_Gross"
+                    android:layout_width="fill_parent"
+                    android:background="#ffdedede"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView99"
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:layout_alignParentTop="true"
+                        android:text="Akzession" />
+
+                    <Spinner
+                        android:id="@+id/spAkzession"
+                        style="@style/JKI_Spinner_Main"
+                        android:layout_width="wrap_content"
+                        tools:listitem="@layout/jki_simple_list_item_1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPassport"
+                    style="@style/JKI_KeyValueRow_Gross"
+                    android:layout_width="fill_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:layout_alignParentTop="true"
+                        android:text="Passport" />
+
+                    <Spinner
+                        android:id="@+id/spPassport"
+                        style="@style/JKI_Spinner_Main"
+                        android:layout_width="wrap_content"
+                        tools:listitem="@layout/jki_simple_list_item_1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llSorte"
+                    style="@style/JKI_KeyValueRow"
+                    android:layout_width="fill_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:layout_alignParentTop="true"
+                        android:text="Sorte/Z. Stamm" />
+
+                    <TextView
+                        android:id="@+id/tvSorteZucht"
+                        style="@style/JKI_Eigenschaft_Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Sorte 1 / Zuchstamm 1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llEltern"
+                    style="@style/JKI_KeyValueRow"
+                    android:layout_width="fill_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:layout_alignParentTop="true"
+                        android:text="Eltern" />
+
+                    <TextView
+                        android:id="@+id/tvEltern"
+                        style="@style/JKI_Eigenschaft_Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Mutter / Vater" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llSortiment"
+                    style="@style/JKI_KeyValueRow"
+                    android:layout_width="fill_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:layout_alignParentTop="true"
+                        android:text="Sortimentsnr" />
+
+                    <TextView
+                        android:id="@+id/tvSortiment"
+                        style="@style/JKI_Eigenschaft_Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="0123455" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llFreifeld"
+                    style="@style/JKI_KeyValueRow"
+                    android:layout_width="fill_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:text="Information" />
+
+                    <TextView
+                        android:id="@+id/tvFreifeld"
+                        style="@style/JKI_Eigenschaft_Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Freifeld" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llEigenschaft"
+                    style="@style/JKI_KeyValueRow_Gross"
+                    android:layout_width="fill_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:text="Deskriptor" />
+
+                    <TextView
+                        android:id="@+id/tvCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:visibility="gone"
+                        tools:text="OIV XXX" />
+
+                    <Spinner
+                        android:id="@+id/spMarker"
+                        style="@style/JKI_Spinner_Main"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        tools:listitem="@layout/jki_simple_list_item_1" />
+
+                    <CheckBox
+                        android:id="@+id/cbMarker"
+                        style="@style/JKI_KeyValueRow_Gross_elements"
+                        android:layout_marginLeft="1dp"
+                        android:gravity="left|center_vertical"
+                        android:scaleX="1.05"
+                        android:scaleY="1.15" />
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnPrevMarker"
+                            style="@style/JKI_KeyValueRow_Gross_elements"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:nestedScrollingEnabled="false"
+                            android:onClick="onClick"
+                            android:scaleX="1.05"
+                            android:scaleY="1.15"
+                            android:text="\uf060" />
+
+                        <Button
+                            android:id="@+id/btnNextMarker"
+                            style="@style/JKI_KeyValueRow_Gross_elements"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:onClick="onClick"
+                            android:scaleX="1.05"
+                            android:scaleY="1.15"
+                            android:text="\uf061" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBeschreibungKurz"
+                    style="@style/JKI_KeyValueRow"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:text="Merkmal:" />
+
+                    <TextView
+                        android:id="@+id/tvMerkmal"
+                        style="@style/JKI_Eigenschaft_Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Junger Trieb: Verteilung der Anthocyanfärbung der Wollbehaarung" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvBeschreibung"
+                    style="@style/JKI_Eigenschaft_Value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMerkmal"
+                    android:layout_marginTop="10dp"
+                    android:textIsSelectable="false"
+                    tools:text="Feststellung während der Blüte. Triebspitze: Bereich oberhalb des ersten freistehenden Blattes. Die Blätter geschlossener oder halb offener Triebspitzen (OIV 001) sind zu entfalten, um Erfassungen am entsprechenden Teil der Triebspitze zu ermöglichen. Beurteilung von 10 Triebspitzen." />
+
+                <ImageView
+                    android:id="@+id/ivBild"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignTop="@+id/rlPfadenkreuz"
+                    android:layout_alignBottom="@+id/llInfos"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="210dp"
+                    android:layout_toEndOf="@+id/rlPfadenkreuz"
+                    android:focusableInTouchMode="true"
+                    android:onClick="onClick"
+                    tools:src="@drawable/bbch_1" />
+
+            </LinearLayout>
+
+            <include layout="@layout/jki_bonitur_pfadenkreuz" />
+
+
+            <Button
+                android:id="@+id/btnStandortInfo"
+                style="@style/JKI_Button_Main_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/main_si_button_margin_top"
+                android:layout_marginRight="@dimen/main_si_button_margin_right"
+                android:onClick="onClick"
+                android:text="@string/ba_si_button_text"
+                android:textSize="@dimen/main_textsize" />
+
+            <ImageView
+                android:id="@+id/ivBildGross"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignBottom="@+id/llInfos"
+                android:layout_alignParentLeft="true"
+                android:onClick="onClick"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

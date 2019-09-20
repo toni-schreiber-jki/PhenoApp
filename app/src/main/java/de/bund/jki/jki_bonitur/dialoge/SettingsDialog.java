@@ -82,6 +82,9 @@ public class SettingsDialog {
                             Config.SHOW_BBCH_FRAGE = ((CheckBox) mView.findViewById(R.id.cbBbch)).isChecked();
                             editor.putBoolean(Config.NAME_BBCH_FRAGE, Config.SHOW_BBCH_FRAGE);
 
+                            Config.IS_LEFT_HAND_MODE = ((CheckBox) mView.findViewById(R.id.cbLeftHand)).isChecked();
+                            editor.putBoolean(Config.NAME_LEFT_HAND_MODE, Config.IS_LEFT_HAND_MODE);
+
                             editor.apply();
 
                             SettingsDialogFragment.this.getDialog().cancel();
@@ -116,6 +119,7 @@ public class SettingsDialog {
             ((TextView) mView.findViewById(R.id.tvFirstEmptyIcon)).setTypeface(typeface);
             ((TextView) mView.findViewById(R.id.tvElternIcon)).setTypeface(typeface);
             ((TextView) mView.findViewById(R.id.tvCalendar)).setTypeface(typeface);
+            ((TextView) mView.findViewById(R.id.tvLeftHand)).setTypeface(typeface);
             //((TextView) mView.findViewById(R.id.tvExcel)).setTypeface(typeface);
 
 
@@ -129,6 +133,7 @@ public class SettingsDialog {
             ((CheckBox) mView.findViewById(R.id.cbSortNr)).setChecked(preferences.getBoolean(Config.NAME_SHOW_SORTIMENT, Config.SHOW_SORTIMENT));
             ((CheckBox) mView.findViewById(R.id.cbExcelDatum)).setChecked(preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM));
             ((CheckBox) mView.findViewById(R.id.cbBbch)).setChecked(preferences.getBoolean(Config.NAME_BBCH_FRAGE, Config.SHOW_BBCH_FRAGE));
+            ((CheckBox) mView.findViewById(R.id.cbLeftHand)).setChecked(preferences.getBoolean(Config.NAME_LEFT_HAND_MODE, Config.IS_LEFT_HAND_MODE));
 
             mView.findViewById((R.id.etSpeicherOrt)).setSelected(false);
         }
