@@ -1255,6 +1255,10 @@ public class BoniturActivityHelper {
                         values.put(VersuchWert.COLUMN_WERT_ID, werte[position].id);
                         values.put(VersuchWert.COLUMN_WERT_DATUM, DateTool.currentDate());
                         BoniturSafe.db.insert(VersuchWert.TABLE_NAME, null, values);
+
+                        if (! mBa.is_multiple_value) {
+                            onNextMarkerOrStandort();
+                        }
                     } else {
                         view.setBackgroundColor(gvUnSelected);
                         BoniturSafe.db.delete(
@@ -1281,6 +1285,10 @@ public class BoniturActivityHelper {
             String           datum    = df.format(c.getTime());
             EditText         editText = getEtDatumEingabe();
             editText.setText(datum);
+
+            if (! mBa.is_multiple_value) {
+                onNextMarkerOrStandort();
+            }
         } catch (Exception e) {
             new ErrorLog(e, mBa.getApplication());
             e.printStackTrace();

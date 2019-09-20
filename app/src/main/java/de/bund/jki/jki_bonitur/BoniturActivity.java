@@ -37,12 +37,14 @@ public class BoniturActivity extends Activity {
     public        BoniturIntentReceiver bir          = null;
     private       BoniturDatenbank      bonDb;
     private       boolean               was_left_active;
+    public        boolean               is_multiple_value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         was_left_active = preferences.getBoolean(Config.NAME_LEFT_HAND_MODE, Config.IS_LEFT_HAND_MODE);
+        is_multiple_value = preferences.getBoolean(Config.NAME_MULTIPLE_VALUES, Config.IS_MULTIPLE_VALUES);
         if (! was_left_active) {
             setContentView(R.layout.activity_bonitur);
         } else {
@@ -258,7 +260,7 @@ public class BoniturActivity extends Activity {
                     bah.onNextMarker();
                     break;
                 case R.id.btnDatumHeute:
-                    bah.setDatumHeute();
+                    bah.setDatumDiff(0);
                     break;
                 case R.id.btnDatumWaehlen:
                     new DatePicker(this);
@@ -334,6 +336,8 @@ public class BoniturActivity extends Activity {
             findViewById(R.id.llSortiment).setVisibility(Config.SHOW_SORTIMENT ? View.VISIBLE : View.GONE);
 
             bah.init_TabFarbe();
+
+            is_multiple_value = Config.IS_MULTIPLE_VALUES;
 
             if (was_left_active != Config.IS_LEFT_HAND_MODE) {
                 Toast.makeText(this, "Zum Wechsel Rechts/Links - Modus Bonitur neu öffnen", Toast.LENGTH_LONG).show();
