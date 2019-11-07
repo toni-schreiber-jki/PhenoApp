@@ -1,15 +1,19 @@
 package de.bund.jki.jki_bonitur;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -79,6 +83,21 @@ public class VersuchListActivity extends Activity {
 
     private void showFiles() {
         try {
+            if (
+                    ContextCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                            != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        },
+                        4711
+                );
+            }
 
             // <editor-fold desc="In-Ordner">
             Config.load(this);
@@ -112,7 +131,7 @@ public class VersuchListActivity extends Activity {
                 list.add(files[i].getName());
             }
 
-            ListView lv = (ListView) findViewById(R.id.lvDateien);
+            ListView lv = findViewById(R.id.lvDateien);
 
             ArrayAdapter adapter = new ArrayAdapter(this,
                                                     android.R.layout.simple_list_item_1, list
@@ -122,7 +141,7 @@ public class VersuchListActivity extends Activity {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                    TextView tv = view.findViewById(android.R.id.text1);
                     Intent   i  = new Intent(context, BoniturActivity.class);
                     i.putExtra("FILE", tv.getText().toString());
                     context.startActivity(i);
@@ -172,13 +191,13 @@ public class VersuchListActivity extends Activity {
                 }
             };
 
-            lv = (ListView) findViewById(R.id.lvDateiBegonnen);
+            lv = findViewById(R.id.lvDateiBegonnen);
             lv.setAdapter(arrayAdapter2);
 
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                    TextView tv = view.findViewById(android.R.id.text1);
                     Intent   i  = new Intent(context, BoniturActivity.class);
                     i.putExtra("FILE", tv.getText().toString());
                     context.startActivity(i);
@@ -186,7 +205,6 @@ public class VersuchListActivity extends Activity {
             });
 
             // </editor-fold>
-
         } catch (Exception e) {
             new ErrorLog(e, getApplication());
         }
