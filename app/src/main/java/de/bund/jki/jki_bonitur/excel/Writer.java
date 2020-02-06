@@ -117,6 +117,7 @@ public class Writer {
             for (Marker m : marker) {
                 if (show_datum) {
                     row.createCell(2 * p + 9).setCellValue(m.code);
+                    row.createCell(2 * p + 9 + 1).setCellValue("");
                 } else {
                     row.createCell(p + 9).setCellValue(m.code);
                 }
@@ -176,18 +177,22 @@ public class Writer {
                             break;
                         }
                         if (m.id == werteAll.getInt(1)) {
-                            row.createCell(2 * mp + 9).setCellValue(getValueFromWerteAll(werteAll, m));
                             if (show_datum) {
+                                row.createCell(2 * mp + 9).setCellValue(getValueFromWerteAll(werteAll, m));
                                 row.createCell(2 * mp + 9 + 1).setCellValue(werteAll.getString(3));
+                            } else {
+                                row.createCell(mp + 9).setCellValue(getValueFromWerteAll(werteAll, m));
                             }
                             if (!werteAll.moveToNext()){
                                 werteAll.close();
                                 break;
                             }
                         } else {
-                            row.createCell(2 * mp + 9).setCellValue("");
                             if (show_datum) {
+                                row.createCell(2 * mp + 9).setCellValue("");
                                 row.createCell(2 * mp + 9 + 1).setCellValue("");
+                            } else {
+                                row.createCell(mp + 9).setCellValue("");
                             }
                         }
                         mp++;
