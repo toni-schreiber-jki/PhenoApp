@@ -7,8 +7,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -1372,10 +1374,23 @@ public class BoniturActivityHelper {
                 // Create the File where the photo should go
                 // Continue only if the File was successfully created
                 if (image != null) {
-                    takePictureIntent.putExtra(
-                            MediaStore.EXTRA_OUTPUT,
-                            Uri.fromFile(image)
-                    );
+                    if (Build.VERSION.SDK_INT < 24) {
+                        takePictureIntent.putExtra(
+                                MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(image)
+                        );
+                    } else {
+                        Uri photoURI = FileProvider.getUriForFile(
+                                mBa,
+                                "de.bund.jki.jki_bonitur.fileprovider",
+                                image
+                        );
+
+                        takePictureIntent.putExtra(
+                                MediaStore.EXTRA_OUTPUT,
+                                photoURI
+                        );
+                    }
                     mBa.startActivityForResult(takePictureIntent, 1);
                 }
             }
@@ -1444,6 +1459,5 @@ public class BoniturActivityHelper {
         }
         new BbchDialog(mBa, "BBCH " + df.format(c.getTime()));
     }
-
 
 }
