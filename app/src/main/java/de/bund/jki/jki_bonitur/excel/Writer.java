@@ -231,7 +231,7 @@ public class Writer {
             case Marker.MARKER_TYPE_BBCH:
                 value = werteAll.getString(4);
         }
-        return value;
+        return value.replace("\n", "").replace("\r", "");
     }
 
     private Akzession getAkzession(int id) {
