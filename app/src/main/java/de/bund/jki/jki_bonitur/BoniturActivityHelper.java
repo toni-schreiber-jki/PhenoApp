@@ -247,7 +247,7 @@ public class BoniturActivityHelper {
 
     public Spinner getMarkerSpinner() {
         if (spMarker != null) return spMarker;
-        spMarker = (Spinner) mBa.findViewById(R.id.spMarker);
+        spMarker = mBa.findViewById(R.id.spMarker);
         return spMarker;
     }
 
@@ -297,7 +297,7 @@ public class BoniturActivityHelper {
 
     public Spinner getAkzessionSpinner() {
         if (spAkzession != null) return spAkzession;
-        spAkzession = (Spinner) mBa.findViewById(R.id.spAkzession);
+        spAkzession = mBa.findViewById(R.id.spAkzession);
         return spAkzession;
     }
 
@@ -390,7 +390,7 @@ public class BoniturActivityHelper {
 
     public Spinner getPassportSpinner() {
         if (spPassport != null) return spPassport;
-        spPassport = (Spinner) mBa.findViewById(R.id.spPassport);
+        spPassport = mBa.findViewById(R.id.spPassport);
         return spPassport;
     }
 
@@ -482,7 +482,7 @@ public class BoniturActivityHelper {
 
     public Spinner getSpBbchStadium() {
         if (spBbchStadium != null) return spBbchStadium;
-        spBbchStadium = (Spinner) mBa.findViewById(R.id.spBbchStadium);
+        spBbchStadium = mBa.findViewById(R.id.spBbchStadium);
         return spBbchStadium;
     }
 
@@ -558,7 +558,7 @@ public class BoniturActivityHelper {
 
     public Spinner getSpBbchDetail() {
         if (spBbchDetail != null) return spBbchDetail;
-        spBbchDetail = (Spinner) mBa.findViewById(R.id.spBbchDetail);
+        spBbchDetail = mBa.findViewById(R.id.spBbchDetail);
         return spBbchDetail;
     }
 
@@ -593,7 +593,7 @@ public class BoniturActivityHelper {
 
     public Spinner getSpParzelle() {
         if (spParzelle != null) return spParzelle;
-        spParzelle = (Spinner) mBa.findViewById(R.id.spParzelle);
+        spParzelle = mBa.findViewById(R.id.spParzelle);
         return spParzelle;
     }
 
@@ -632,7 +632,7 @@ public class BoniturActivityHelper {
                     new String[]{"" + BoniturSafe.VERSUCH_ID},
                     null,
                     null,
-                    Standort.COLUMN_PARZELLE + " ASC",
+                    Standort.COLUMN_PARZELLE + "*1 ASC, " + Standort.COLUMN_PARZELLE + " ASC",
                     null
             );
             if (c.getCount() > 0) {
@@ -661,7 +661,7 @@ public class BoniturActivityHelper {
 
     public Spinner getSpReihe() {
         if (spReihe != null) return spReihe;
-        spReihe = (Spinner) mBa.findViewById(R.id.spReihe);
+        spReihe = mBa.findViewById(R.id.spReihe);
         return spReihe;
     }
 
@@ -735,7 +735,7 @@ public class BoniturActivityHelper {
 
     public Spinner getSpPflanzen() {
         if (spPflanzen != null) return spPflanzen;
-        spPflanzen = (Spinner) mBa.findViewById(R.id.spPflanze);
+        spPflanzen = mBa.findViewById(R.id.spPflanze);
         return spPflanzen;
     }
 
@@ -816,7 +816,7 @@ public class BoniturActivityHelper {
 
     public CheckBox getCbMarker() {
         if (cbMarker != null) return cbMarker;
-        cbMarker = (CheckBox) mBa.findViewById(R.id.cbMarker);
+        cbMarker = mBa.findViewById(R.id.cbMarker);
         return cbMarker;
     }
 
@@ -879,37 +879,37 @@ public class BoniturActivityHelper {
 
     public ImageView getIvBild() {
         if (ivBild != null) return ivBild;
-        ivBild = (ImageView) mBa.findViewById(R.id.ivBild);
+        ivBild = mBa.findViewById(R.id.ivBild);
         return ivBild;
     }
 
     public GridView getGvWerte() {
         if (gvWerte != null) return gvWerte;
-        gvWerte = (GridView) mBa.findViewById(R.id.gvWerte);
+        gvWerte = mBa.findViewById(R.id.gvWerte);
         return gvWerte;
     }
 
     public RelativeLayout getRlDatum() {
         if (rlDatum != null) return rlDatum;
-        rlDatum = (RelativeLayout) mBa.findViewById(R.id.rlDatum);
+        rlDatum = mBa.findViewById(R.id.rlDatum);
         return rlDatum;
     }
 
     public RelativeLayout getRlBemerkung() {
         if (rlBemerkung != null) return rlBemerkung;
-        rlBemerkung = (RelativeLayout) mBa.findViewById(R.id.rlBemerkung);
+        rlBemerkung = mBa.findViewById(R.id.rlBemerkung);
         return rlBemerkung;
     }
 
     public RelativeLayout getRlMessen() {
         if (rlMessen != null) return rlMessen;
-        rlMessen = (RelativeLayout) mBa.findViewById(R.id.rlMessen);
+        rlMessen = mBa.findViewById(R.id.rlMessen);
         return rlMessen;
     }
 
     public RelativeLayout getRlBBCH() {
         if (rlBBCH != null) return rlBBCH;
-        rlBBCH = (RelativeLayout) mBa.findViewById(R.id.rlBBCH);
+        rlBBCH = mBa.findViewById(R.id.rlBBCH);
         return rlBBCH;
     }
 
@@ -1146,19 +1146,19 @@ public class BoniturActivityHelper {
 
     public EditText getEtDatumEingabe() {
         if (etDatumEingabe != null) return etDatumEingabe;
-        etDatumEingabe = (EditText) mBa.findViewById(R.id.etDatumEingabe);
+        etDatumEingabe = mBa.findViewById(R.id.etDatumEingabe);
         return etDatumEingabe;
     }
 
     public EditText getEtBbchWert() {
         if (etBbchWert != null) return etBbchWert;
-        etBbchWert = (EditText) mBa.findViewById(R.id.etBbchWert);
+        etBbchWert = mBa.findViewById(R.id.etBbchWert);
         return etBbchWert;
     }
 
     public EditText getEtBemerkungEingabe() {
         if (etBemerkungEingabe != null) return etBemerkungEingabe;
-        etBemerkungEingabe = (EditText) mBa.findViewById(R.id.etBemerkungEingabe);
+        etBemerkungEingabe = mBa.findViewById(R.id.etBemerkungEingabe);
         return etBemerkungEingabe;
     }
 
@@ -1166,7 +1166,7 @@ public class BoniturActivityHelper {
 
     public EditText getEtMessenEingabe() {
         if (etMessenEingabe != null) return etMessenEingabe;
-        etMessenEingabe = (EditText) mBa.findViewById(R.id.etMessenEingabe);
+        etMessenEingabe = mBa.findViewById(R.id.etMessenEingabe);
         return etMessenEingabe;
     }
     //----------Ende: Datum-------------------------------------------------------------------------
@@ -1297,25 +1297,25 @@ public class BoniturActivityHelper {
 
     public Button getBtnZzUnten() {
         if (btnZzUnten != null) return btnZzUnten;
-        btnZzUnten = (Button) mBa.findViewById(R.id.btnRichtungUnten);
+        btnZzUnten = mBa.findViewById(R.id.btnRichtungUnten);
         return btnZzUnten;
     }
 
     public Button getBtnZzOben() {
         if (btnZzOben != null) return btnZzOben;
-        btnZzOben = (Button) mBa.findViewById(R.id.btnRichtungOben);
+        btnZzOben = mBa.findViewById(R.id.btnRichtungOben);
         return btnZzOben;
     }
 
     public Button getBtnZzLinks() {
         if (btnZzLinks != null) return btnZzLinks;
-        btnZzLinks = (Button) mBa.findViewById(R.id.btnRichtungLinks);
+        btnZzLinks = mBa.findViewById(R.id.btnRichtungLinks);
         return btnZzLinks;
     }
 
     public Button getBtnZzRechts() {
         if (btnZzRechts != null) return btnZzRechts;
-        btnZzRechts = (Button) mBa.findViewById(R.id.btnRichtungRechts);
+        btnZzRechts = mBa.findViewById(R.id.btnRichtungRechts);
         return btnZzRechts;
     }
 
@@ -1418,7 +1418,7 @@ public class BoniturActivityHelper {
 
     public void showBildGross() {
         String    code = mBa.currentMarker.code;
-        ImageView iv   = (ImageView) mBa.findViewById(R.id.ivBildGross);
+        ImageView iv   = mBa.findViewById(R.id.ivBildGross);
         if (new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/boniturBilder/" + code + ".JPG").exists()) {
             iv.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/boniturBilder/" + code + ".JPG"));
             iv.setVisibility(View.VISIBLE);
