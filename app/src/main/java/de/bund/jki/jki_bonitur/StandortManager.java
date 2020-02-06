@@ -148,8 +148,8 @@ public class StandortManager {
             c = BoniturSafe.db.query(
                     Standort.TABLE_NAME,
                     new String[]{Standort.COLUMN_ID},
-                    Standort.COLUMN_PARZELLE + "=? AND " + Standort.COLUMN_REIHE + "= ? AND " + Standort.COLUMN_PFLANZE + "=?",
-                    new String[]{parzelle, "" + reihe, "" + pflanze},
+                    Standort.COLUMN_PARZELLE + "=? AND " + Standort.COLUMN_REIHE + "= ? AND " + Standort.COLUMN_PFLANZE + "=? AND " + Standort.COLUMN_VERSUCH + "=?",
+                    new String[]{parzelle, "" + reihe, "" + pflanze, "" + BoniturSafe.VERSUCH_ID},
                     null,
                     null,
                     null,
