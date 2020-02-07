@@ -10,6 +10,7 @@ import android.widget.Toast;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
 
 import de.bund.jki.jki_bonitur.BoniturActivity;
 import de.bund.jki.jki_bonitur.BoniturSafe;
@@ -110,8 +111,19 @@ public class Reader {
 
                 values.put(Marker.COLUMN_VERSUCH, BoniturSafe.VERSUCH_ID);
 
-                values.put(Marker.COLUMN_CODE, row.getCell(0).getStringCellValue());
-                values.put(Marker.COLUMN_NAME, row.getCell(1).getStringCellValue());
+
+                values.put(
+                        Marker.COLUMN_CODE,
+                        row.getCell(0).getCellTypeEnum() == CellType.NUMERIC ?
+                                "" + row.getCell(0).getNumericCellValue() :
+                                row.getCell(0).getStringCellValue()
+                );
+                values.put(
+                        Marker.COLUMN_NAME,
+                        row.getCell(1).getCellTypeEnum() == CellType.NUMERIC ?
+                                "" + row.getCell(1).getNumericCellValue() :
+                                row.getCell(1).getStringCellValue()
+                );
                 values.put(Marker.COLUMN_BESCHREIBUNG, ! ExcelLib.isCellEmpty(row, 4) ? row.getCell(4).getStringCellValue() : null);
                 values.put(Marker.COLUMN_TYPE, (int) row.getCell(2).getNumericCellValue());
 
