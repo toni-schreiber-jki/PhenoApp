@@ -93,7 +93,7 @@ public class Writer {
         this.passportHashMapt = new HashMap<Integer, Passport>();
         try {
             HSSFSheet sheet = workbook.createSheet("Daten");
-            sheet.createFreezePane(9, 1);
+            sheet.createFreezePane(10, 1);
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(BoniturSafe.APP_CONTEXT);
             boolean           show_datum  = preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM);
