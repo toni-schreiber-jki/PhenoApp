@@ -26,6 +26,7 @@ public class Standort extends DbModelInterface {
     public static String COLUMN_SORTIMENTNR = "Sortimentsnummer";
     public static String COLUMN_FREIFELD    = "freifeld";
     public static String COLUMN_INFO        = "information";
+    public static String COLUMN_DB_KEY      = "db_key";
     public static String TABLE_NAME         = "standort";
     public static String CREATE_TABLE       = "CREATE TABLE " + TABLE_NAME + "(" + '\n' +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + '\n' +
@@ -49,6 +50,7 @@ public class Standort extends DbModelInterface {
     public static String ALTER_TABLE_2      = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_PASSPORT + " INTEGER REFERENCES " + Passport.TABLE_NAME + "(" + Versuch.COLUMN_ID + ")" + '\n';
     public static String ALTER_TABLE_3      = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_FREIFELD + " TEXT" + '\n';
     public static String ALTER_TABLE_4      = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_INFO + " TEXT" + '\n';
+    public static String ALTER_TABLE_5      = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_DB_KEY + " TEXT" + '\n';
 
     public int       id          = - 1;
     public int       versuchId   = - 1;
@@ -64,6 +66,7 @@ public class Standort extends DbModelInterface {
     public String    sortimentsnummer;
     public String    freifeld;
     public String    info;
+    public String    dbKey;
     public Akzession akzession;
     public Passport  passport;
 
@@ -239,6 +242,7 @@ public class Standort extends DbModelInterface {
         this.passportId = c.getInt(c.getColumnIndex(Standort.COLUMN_PASSPORT));
         this.freifeld = c.isNull(c.getColumnIndex(Standort.COLUMN_FREIFELD)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_FREIFELD));
         this.info = c.isNull(c.getColumnIndex(Standort.COLUMN_INFO)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_INFO));
+        this.dbKey = c.isNull(c.getColumnIndex(Standort.COLUMN_DB_KEY)) ? "" : c.getString(c.getColumnIndex(Standort.COLUMN_DB_KEY));
     }
 
     public void fillAkzession(Cursor c) {

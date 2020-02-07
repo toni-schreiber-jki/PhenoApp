@@ -25,7 +25,7 @@ import de.bund.jki.jki_bonitur.config.Config;
 public class BoniturDatenbank extends SQLiteOpenHelper {
 
     public static final String  DATENBANK_NAME    = "bonitur.sqlite";
-    public static final int     DATENBANK_VERSION = 3;
+    public static final int     DATENBANK_VERSION = 4;
     public              Context c;
 
     public BoniturDatenbank(Context context) {
@@ -142,6 +142,8 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
                 case 3:
                     db.execSQL(Standort.ALTER_TABLE_4);
                     break;
+                case 4:
+                    db.execSQL(Standort.ALTER_TABLE_5);
             }
         } catch (Exception e) {
             new ErrorLog(e, null);

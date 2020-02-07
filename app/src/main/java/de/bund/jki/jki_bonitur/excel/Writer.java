@@ -109,17 +109,20 @@ public class Writer {
             row.createCell(6).setCellValue("Leitname");
             row.createCell(7).setCellValue("StandortInfo");
             row.createCell(8).setCellValue("Charkteristische Merkmale");
+            row.createCell(9).setCellValue("DB Key");
 
             Marker[]   marker    = MarkerManager.getAllMarker();
             Standort[] standorte = StandortManager.getAllStandorte();
 
+            int colum_offset = 10;
+
             int p = 0;
             for (Marker m : marker) {
                 if (show_datum) {
-                    row.createCell(2 * p + 9).setCellValue(m.code);
-                    row.createCell(2 * p + 9 + 1).setCellValue("");
+                    row.createCell(2 * p + colum_offset).setCellValue(m.code);
+                    row.createCell(2 * p + colum_offset + 1).setCellValue("");
                 } else {
-                    row.createCell(p + 9).setCellValue(m.code);
+                    row.createCell(p + colum_offset).setCellValue(m.code);
                 }
                 p++;
             }
@@ -168,6 +171,7 @@ public class Writer {
                 row.createCell(6).setCellValue(passport != null ? passport.leitname : "");
                 row.createCell(7).setCellValue(standort.info != null ? standort.info : "");
                 row.createCell(8).setCellValue(akzession != null ? akzession.merkmale : "");
+                row.createCell(9).setCellValue(standort.dbKey != null ? standort.dbKey : "");
 
 
                 int mp = 0;
@@ -178,10 +182,10 @@ public class Writer {
                         }
                         if (m.id == werteAll.getInt(1)) {
                             if (show_datum) {
-                                row.createCell(2 * mp + 9).setCellValue(getValueFromWerteAll(werteAll, m));
-                                row.createCell(2 * mp + 9 + 1).setCellValue(werteAll.getString(3));
+                                row.createCell(2 * mp + colum_offset).setCellValue(getValueFromWerteAll(werteAll, m));
+                                row.createCell(2 * mp + colum_offset + 1).setCellValue(werteAll.getString(3));
                             } else {
-                                row.createCell(mp + 9).setCellValue(getValueFromWerteAll(werteAll, m));
+                                row.createCell(mp + colum_offset).setCellValue(getValueFromWerteAll(werteAll, m));
                             }
                             if (!werteAll.moveToNext()){
                                 werteAll.close();
@@ -189,10 +193,10 @@ public class Writer {
                             }
                         } else {
                             if (show_datum) {
-                                row.createCell(2 * mp + 9).setCellValue("");
-                                row.createCell(2 * mp + 9 + 1).setCellValue("");
+                                row.createCell(2 * mp + colum_offset).setCellValue("");
+                                row.createCell(2 * mp + colum_offset + 1).setCellValue("");
                             } else {
-                                row.createCell(mp + 9).setCellValue("");
+                                row.createCell(mp + colum_offset).setCellValue("");
                             }
                         }
                         mp++;
