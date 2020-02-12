@@ -1,4 +1,9 @@
+0.8.1
+-----
+* error DB-Keys werden nicht übernommen
+
 0.8.0
+-----
 * Neues Standortfeld Danbenk-Key (siehe Tabelle Standort)
 * Fehlerkorrektur: [#1679](https://promadmz.julius-kuehn.de/issues/1679) XLS ausgabe ohne Datum - Spalten verschoben
 * Fehlerkorrektur: [#1678](https://promadmz.julius-kuehn.de/issues/1678) CSV Ausgabe - Text erzeugt Zeilenumbruch
