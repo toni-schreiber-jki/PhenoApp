@@ -204,6 +204,7 @@ public class Reader {
                 standort.vater = ExcelLib.isCellEmpty(row, 11) ? null : ExcelLib.getCellValueString(row, 11, true);
                 standort.sortimentsnummer = ExcelLib.isCellEmpty(row, 12) ? null : ExcelLib.getCellValueString(row, 12, true);
                 standort.freifeld = ExcelLib.isCellEmpty(row, 13) ? null : ExcelLib.getCellValueString(row, 13, true);
+                standort.dbKey = ExcelLib.isCellEmpty(row, 14) ? null : ExcelLib.getCellValueString(row, 14, true);
 
                 if (! ExcelLib.isCellEmpty(row, 5)) {
                     standort.akzessionId = readAkzession(row);

@@ -125,9 +125,10 @@ public class Standort extends DbModelInterface {
             values.put(COLUMN_SORTIMENTNR, sortimentsnummer.isEmpty() ? null : sortimentsnummer);
         if (freifeld != null)
             values.put(COLUMN_FREIFELD, freifeld.isEmpty() ? null : freifeld);
-
         if (info != null)
             values.put(COLUMN_INFO, info.isEmpty() ? null : info);
+        if (dbKey != null)
+            values.put(COLUMN_DB_KEY, dbKey.isEmpty() ? null : dbKey);
 
         id = saveRow(id, values);
         return id == - 1;
