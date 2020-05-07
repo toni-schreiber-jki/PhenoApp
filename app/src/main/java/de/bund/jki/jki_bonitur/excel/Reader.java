@@ -318,18 +318,22 @@ public class Reader {
                         int step = 1;
                         for (int col = 9; col <= row.getLastCellNum(); col += step) {
                             step = 1;
+                            marker = null;
                             String value = ExcelLib.getCellValueString(row, col, true);
                             if (! (value == null || value == "")) {
                                 String code  = ExcelLib.getCellValueString(headerRow, col);
                                 String code2 = ExcelLib.getCellValueString(headerRow, col + 1);
                                 String datum = null;
-                                if (code2 == null) {
+                                if (code2 == null || code2 == "") {
                                     datum = ExcelLib.getCellValueString(row, col + 1, true);
-                                    if (! datum.contains("."))
+                                    if (! datum.contains(".")) {
                                         datum = null;
+                                    } else {
+                                        step = 2;
+                                    }
 
                                 }
-                                if (! (code == null || value == "")) {
+                                if (! (code == null || code == "" || value == "" || value == null)) {
                                     c = BoniturSafe.db.query(
                                             Marker.TABLE_NAME,
                                             new String[]{Marker.COLUMN_ID},

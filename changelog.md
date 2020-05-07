@@ -1,3 +1,7 @@
+0.8.2
+-----
+* Probleme beim Daten Import behoben
+
 0.8.1
 -----
 * error DB-Keys werden nicht übernommen
