@@ -69,6 +69,7 @@ public class StandortManager {
             //c.close();
             return nextReihe(direction, marker);
         } catch (Exception e) {
+            //Todo: ggf neue Fehlermeldung einbauen, denn am Parzellenende ist dies eigentlich kein Fehler
             new ErrorLog(e, null);
             e.printStackTrace();
             return new Object[]{null, null};
