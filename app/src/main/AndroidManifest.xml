@@ -25,6 +25,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ImpressumActivity"
+            android:label="ImpressumActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity
             android:name=".BoniturActivity"
             android:label="@string/title_activity_bonitur"
             android:screenOrientation="landscape">
@@ -33,8 +37,7 @@
             android:name=".StandortInformationActivity"
             android:label="@string/title_activity_standort_info"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

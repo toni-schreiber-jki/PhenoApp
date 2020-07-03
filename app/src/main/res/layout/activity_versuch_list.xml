@@ -53,16 +53,24 @@
                 android:layout_height="fill_parent">
 
                 <Button
+                    android:id="@+id/btnImpressum"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-                    android:text="\uf013"
-                    android:id="@+id/btnSettingList"
-                    android:textSize="45dp"
-                    android:onClick="onClick"
-                    android:layout_gravity="top"
-                    android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:onClick="onClick"
+                    android:text="\uf05a"
+                    android:textSize="45dp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btnSettingList"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_toLeftOf="@+id/btnImpressum"
+                    android:onClick="onClick"
+                    android:text="\uf013"
+                    android:textSize="45dp" />
+
             </RelativeLayout>
 
             <!--android:src="@drawable/icon" -->

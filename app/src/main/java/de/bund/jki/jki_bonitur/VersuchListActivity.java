@@ -219,13 +219,18 @@ public class VersuchListActivity extends Activity {
     public void onClick(final View v) {
         if (v.getId() == R.id.btnSettingList) {
             new SettingsDialog(this);
+        } else if (v.getId() == R.id.btnImpressum) {
+            Intent i = new Intent(this.context, ImpressumActivity.class);
+            this.context.startActivity(i);
         }
+
     }
 
     public void init_typefaces() {
         Typeface typeface = Typeface.createFromAsset(this.getAssets(), "fonts/fontawesome.ttf");
         int[] buttonIds = new int[]{
                 R.id.btnSettingList,
+                R.id.btnImpressum
         };
 
         for (int id : buttonIds) {
