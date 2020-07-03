@@ -1,3 +1,7 @@
+0.9
+---
+* Impressum und OpenSourceLizenzen
+
 0.8.2
 -----
 * Probleme beim Daten Import behoben
