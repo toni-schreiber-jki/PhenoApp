@@ -33,7 +33,7 @@
                     android:layout_weight="1"
                     android:nestedScrollingEnabled="false"
                     android:onClick="onClick"
-                    android:text="zurück" />
+                    android:text="@string/btn_back" />
 
                 <Button
                     android:id="@+id/btnNext"
@@ -43,7 +43,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="vor" />
+                    android:text="@string/btn_next" />
 
             </LinearLayout>
 
@@ -56,7 +56,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:onClick="onClick"
-                android:text="nicht bewerten" />
+                android:text="@string/btn_not_evaluate" />
 
             <include layout="@layout/bon_bonwerte" />
 
@@ -97,7 +97,7 @@
                         android:id="@+id/textView"
                         style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        android:text="Standort:" />
+                        android:text="@string/label_location" />
 
                     <TextView
                         android:id="@+id/tvStandort"
@@ -119,7 +119,7 @@
                         android:id="@+id/textView99"
                         style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        android:text="Akzession" />
+                        android:text="@string/label_accession" />
 
                     <Spinner
                         android:id="@+id/spAkzession"
@@ -139,7 +139,7 @@
                         android:id="@+id/textView9"
                         style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        android:text="Passport" />
+                        android:text="@string/label_passport" />
 
                     <Spinner
                         android:id="@+id/spPassport"
@@ -158,7 +158,7 @@
                         android:id="@+id/textView12"
                         style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        android:text="Sorte/Z. Stamm" />
+                        android:text="@string/label_variety_breeding_strain" />
 
                     <TextView
                         android:id="@+id/tvSorteZucht"
@@ -178,7 +178,7 @@
                         android:id="@+id/textView10"
                         style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        android:text="Eltern" />
+                        android:text="@string/label_parents" />
 
                     <TextView
                         android:id="@+id/tvEltern"
@@ -198,8 +198,9 @@
                     <TextView
                         android:id="@+id/textView14"
                         style="@style/JKI_Eigenschaft_Title"
+                        android:layout_height="41dp"
                         android:layout_alignParentTop="true"
-                        android:text="Sortimentsnr" />
+                        android:text="@string/label_assortment_no" />
 
                     <TextView
                         android:id="@+id/tvSortiment"
@@ -218,7 +219,7 @@
                     <TextView
                         android:id="@+id/textView29"
                         style="@style/JKI_Eigenschaft_Title"
-                        android:text="Information" />
+                        android:text="@string/label_information" />
 
                     <TextView
                         android:id="@+id/tvFreifeld"
@@ -238,7 +239,7 @@
                     <TextView
                         android:id="@+id/textView4"
                         style="@style/JKI_Eigenschaft_Title"
-                        android:text="Deskriptor" />
+                        android:text="@string/label_descriptor" />
 
                     <TextView
                         android:id="@+id/tvCode"
@@ -303,7 +304,7 @@
                     <TextView
                         android:id="@+id/textView6"
                         style="@style/JKI_Eigenschaft_Title"
-                        android:text="Merkmal:" />
+                        android:text="@string/label_characteristic" />
 
                     <TextView
                         android:id="@+id/tvMerkmal"

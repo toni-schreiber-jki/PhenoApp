@@ -35,10 +35,10 @@
                     style="@style/JKI_KeyValueRow">
 
                     <TextView
-                        android:text="Standort:"
                         android:id="@+id/textView"
+                        style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        style="@style/JKI_Eigenschaft_Title" />
+                        android:text="@string/label_location" />
 
                     <TextView
                         android:id="@+id/tvStandort"
@@ -60,7 +60,7 @@
                         android:id="@+id/textView99"
                         style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        android:text="Akzession" />
+                        android:text="@string/label_accession" />
 
                     <Spinner
                         android:id="@+id/spAkzession"
@@ -80,7 +80,7 @@
                         android:id="@+id/textView9"
                         style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        android:text="Passport" />
+                        android:text="@string/label_passport" />
 
                     <Spinner
                         android:id="@+id/spPassport"
@@ -96,10 +96,10 @@
                     style="@style/JKI_KeyValueRow">
 
                     <TextView
-                        android:text="Sorte/Z. Stamm"
                         android:id="@+id/textView12"
+                        style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        style="@style/JKI_Eigenschaft_Title" />
+                        android:text="@string/label_variety_breeding_strain" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -116,10 +116,10 @@
                     style="@style/JKI_KeyValueRow">
 
                     <TextView
-                        android:text="Eltern"
                         android:id="@+id/textView10"
+                        style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        style="@style/JKI_Eigenschaft_Title" />
+                        android:text="@string/label_parents" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -137,10 +137,10 @@
                     style="@style/JKI_KeyValueRow">
 
                     <TextView
-                        android:text="Sortimentsnr"
                         android:id="@+id/textView14"
+                        style="@style/JKI_Eigenschaft_Title"
                         android:layout_alignParentTop="true"
-                        style="@style/JKI_Eigenschaft_Title" />
+                        android:text="@string/label_assortment_no" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -157,9 +157,9 @@
                     style="@style/JKI_KeyValueRow">
 
                     <TextView
-                        android:text="Information"
                         android:id="@+id/textView29"
-                        style="@style/JKI_Eigenschaft_Title" />
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:text="@string/label_information" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -177,9 +177,9 @@
                     style="@style/JKI_KeyValueRow_Gross">
 
                     <TextView
-                        android:text="Deskriptor"
                         android:id="@+id/textView4"
-                        style="@style/JKI_Eigenschaft_Title" />
+                        style="@style/JKI_Eigenschaft_Title"
+                        android:text="@string/label_descriptor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -244,7 +244,7 @@
                     <TextView
                         android:id="@+id/textView6"
                         style="@style/JKI_Eigenschaft_Title"
-                        android:text="Merkmal:" />
+                        android:text="@string/label_characteristic" />
 
                     <TextView
                         android:id="@+id/tvMerkmal"
@@ -329,7 +329,7 @@
                     android:layout_weight="1"
                     android:nestedScrollingEnabled="false"
                     android:onClick="onClick"
-                    android:text="zurück" />
+                    android:text="@string/btn_back" />
 
                 <Button
                     android:id="@+id/btnNext"
@@ -339,7 +339,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="vor" />
+                    android:text="@string/btn_next" />
 
             </LinearLayout>
 
@@ -352,7 +352,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:onClick="onClick"
-                android:text="nicht bewerten" />
+                android:text="@string/btn_not_evaluate" />
 
             <include layout="@layout/bon_bonwerte" />
 

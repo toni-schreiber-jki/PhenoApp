@@ -25,21 +25,21 @@
             android:layout_height="wrap_content" >
 
             <TextView
+                android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="BBCH Wert hinzufügen?"
-                android:id="@+id/textView17"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:text="@string/title_add_bbch"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
+                android:id="@+id/textView18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Möchten Sie einen BBCH-Wert für das heutige Datum hinzufügen?"
-                android:id="@+id/textView18"
+                android:layout_marginTop="5dp"
                 android:maxLines="2"
-                android:layout_marginTop="5dp" />
+                android:text="@string/text_add_bbch_question"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -48,11 +48,11 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
+                    android:id="@+id/textView19"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Name/Code:"
-                    android:id="@+id/textView19" />
+                    android:text="@string/label_name_code"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
                     android:layout_width="300dp"

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PhenoApp</string>
+    <string name="label_location">Standort</string>
+    <string name="label_accession">Akzession</string>
+    <string name="label_passport">Passport</string>
+    <string name="label_variety_breeding_strain">Sorte/Zuchtstamm</string>
+    <string name="label_parents">Eltern</string>
+    <string name="label_assortment_no">Sortimentsnr</string>
+    <string name="label_information">Informationen</string>
+    <string name="label_descriptor">Deskriptor</string>
+    <string name="label_characteristic">Merkmal</string>
+    <string name="ba_si_button_text">Standortinformationen</string>
+    <string name="btn_back">zurück</string>
+    <string name="btn_next">weiter</string>
+    <string name="btn_not_evaluate">nicht bewerten</string>
+    <string name="title_legal_notice">Impressum</string>
+    <string name="label_location_information">Standortinformationen</string>
+    <string name="label_characteristic_features">Charakteristische Merkmale</string>
+    <string name="title_file_selection">Dateiauswahl</string>
+    <string name="label_available_documents">verfügbare Dokumente</string>
+    <string name="label_started_documents">begonnene Dokumente</string>
+    <string name="btn_today">heute</string>
+    <string name="btn_select_date">datum auswählen</string>
+    <string name="btn_delete">löschen</string>
+    <string name="btn_day_before_yesterday">vorgestern</string>
+    <string name="btn_yesterday">gestern</string>
+    <string name="btn_tomorrow">morgen</string>
+    <string name="btn_day_after_tomorrow">übermorgen</string>
+    <string name="title_add_bbch">BBCH Wert hinzufügen?</string>
+    <string name="text_add_bbch_question">Möchten Sie einen BBCH-Wert für das heutige Datum hinzufügen?</string>
+    <string name="label_name_code">Name/Code</string>
+    <string name="title_select_location">Standort wählen</string>
+    <string name="text_select_location">Es wurden mehrere Standorte gefunden, bitte einen Standort wählen:</string>
+    <string name="title_settings">Einstellungen</string>
+    <string name="label_settings_storage_location">Speicherort</string>
+    <string name="label_settings_zig_zag_mode">Zick Zack Modus</string>
+    <string name="label_settings_excel_date">Excelausgabe mit Datum</string>
+    <string name="label_settings_bbch_question">BBCH Frage</string>
+    <string name="label_settings_left_handed_people">Linkshändler</string>
+    <string name="label_settings_multiple_rating">Mehrfachauswahl</string>
+    <string name="title_save_result">Ergebnis speichern</string>
+    <string name="label_filename">Dateiname</string>
+    <string name="title_please_wait">bitte warten</string>
+    <string name="text_loading_data">Daten werden geladen</string>
+</resources>

@@ -30,7 +30,7 @@
             android:layout_below="@+id/etDatumEingabe"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Heute" />
+            android:text="@string/btn_today" />
 
         <Button
             android:id="@+id/btnDatumWaehlen"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Datum wählen" />
+            android:text="@string/btn_select_date" />
 
         <Button
             android:id="@+id/btnDatumLoeschen"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="löschen" />
+            android:text="@string/btn_delete" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Vorgestern" />
+            android:text="@string/btn_day_before_yesterday" />
 
         <Button
             android:id="@+id/btnGestern"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Gestern" />
+            android:text="@string/btn_yesterday" />
 
         <Button
             android:id="@+id/btnMorgen"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Morgen" />
+            android:text="@string/btn_tomorrow" />
 
         <Button
             android:id="@+id/btnUMorgen"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Übermorgen" />
+            android:text="@string/btn_day_after_tomorrow" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -35,7 +35,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="@dimen/top_small_margin"
                 android:layout_marginRight="@dimen/top_small_margin"
-                android:text="JKI-Bonitur"
+                android:text="@string/app_name"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/top_line_text_font_size" />
 

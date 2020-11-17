@@ -27,12 +27,12 @@
             android:layout_height="wrap_content" >
 
             <TextView
+                android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Einstellungen"
-                android:id="@+id/textView22"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:text="@string/title_settings"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -51,7 +51,7 @@
                     android:id="@+id/textView11"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="Speicherort:"
+                    android:text="@string/label_settings_storage_location"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -80,7 +80,7 @@
                     android:id="@+id/textView15"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="&quot;Zick Zack Modus&quot;:"
+                    android:text="@string/label_settings_zig_zag_mode"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -138,7 +138,7 @@
                     android:id="@+id/textView20"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="Akzession:"
+                    android:text="@string/label_accession"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -164,7 +164,7 @@
                     android:id="@+id/textView24"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="Passport:"
+                    android:text="@string/label_passport"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -190,7 +190,7 @@
                     android:id="@+id/textView26"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="Sorte /Zuchtstamm:"
+                    android:text="@string/label_variety_breeding_strain"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -217,7 +217,7 @@
                     android:id="@+id/textView19"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="Eltern:"
+                    android:text="@string/label_parents"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -243,7 +243,7 @@
                     android:id="@+id/textView28"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="Sortimentsnummer:"
+                    android:text="@string/label_assortment_no"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -270,7 +270,7 @@
                     android:id="@+id/textView31"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="Excelausgabe mit Datum:"
+                    android:text="@string/label_settings_excel_date"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -297,7 +297,7 @@
                     android:id="@+id/textView33"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="BBCH Frage"
+                    android:text="@string/label_settings_bbch_question"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -325,7 +325,7 @@
                     android:id="@+id/textView35"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="Linkshändler"
+                    android:text="@string/label_settings_left_handed_people"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
@@ -353,7 +353,7 @@
                     android:id="@+id/textView36"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
-                    android:text="Mehrfachbewertung"
+                    android:text="@string/label_settings_multiple_rating"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="@dimen/main_textsize" />
 
