@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
@@ -57,6 +59,10 @@ public class VersuchListActivity extends Activity {
         super.onResume();
         showFiles();
         init_typefaces();
+
+        Resources  res = getResources();
+        TypedArray test = res.obtainTypedArray(R.array.bbch);
+        int a = 1;
     }
 
     @Override

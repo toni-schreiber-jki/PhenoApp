@@ -17,6 +17,7 @@ import java.nio.channels.FileChannel;
 
 import de.bund.jki.jki_bonitur.ErrorLog;
 import de.bund.jki.jki_bonitur.config.Config;
+import de.bund.jki.jki_bonitur.db.data.BbchDataImport;
 
 
 /**
@@ -25,7 +26,7 @@ import de.bund.jki.jki_bonitur.config.Config;
 public class BoniturDatenbank extends SQLiteOpenHelper {
 
     public static final String  DATENBANK_NAME    = "bonitur.sqlite";
-    public static final int     DATENBANK_VERSION = 4;
+    public static final int     DATENBANK_VERSION = 5;
     public              Context c;
 
     public BoniturDatenbank(Context context) {
@@ -144,6 +145,14 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
                     break;
                 case 4:
                     db.execSQL(Standort.ALTER_TABLE_5);
+                    break;
+                case 5:
+                    db.execSQL(BbchArt.CREATE_TABLE);
+                    db.execSQL(BbchMainStadium.CREATE_TABLE);
+                    db.execSQL(BbchStadium.CREATE_TABLE);
+                    BbchArt.insertStartValues(db);
+                    BbchDataImport.insertValuesTo(db);
+                    break;
             }
         } catch (Exception e) {
             new ErrorLog(e, null);
