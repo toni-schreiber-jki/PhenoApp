@@ -99,7 +99,7 @@ public class Reader {
                 BoniturSafe.APP_CONTEXT.sendBroadcast(i);
                 return;
             }
-            HSSFSheet sheet = mWorkbook.getSheet("Marker");
+            HSSFSheet sheet = mWorkbook.getSheetAt(1);// .getSheet("Marker");
             if (sheet == null) {
                 Toast.makeText(BoniturSafe.BON_ACTIVITY, "Beim Import der Merkmale kam es zu einem Fehler: kein Tabellenblatt Marker gefunden", Toast.LENGTH_LONG).show();
                 return;
@@ -167,7 +167,7 @@ public class Reader {
                 BoniturSafe.APP_CONTEXT.sendBroadcast(i);
                 return;
             }
-            HSSFSheet sheet = mWorkbook.getSheet("Standorte");
+            HSSFSheet sheet = mWorkbook.getSheetAt(0);// getSheet("Standorte");
             if (sheet == null) {
                 Intent i = new Intent();
                 i.putExtra("TEXT", "Beim Import der Standorte kam es zu einem Fehler: kein Tabellenblatt Standorte gefunden");
@@ -287,7 +287,7 @@ public class Reader {
                 BoniturSafe.APP_CONTEXT.sendBroadcast(i);
                 return;
             }
-            HSSFSheet sheet = mWorkbook.getSheet("Daten");
+            HSSFSheet sheet = mWorkbook.getSheetAt(2);//getSheet("Daten");
             if (sheet != null) {
                 HSSFRow headerRow = sheet.getRow(0);
                 for (int i = 1; i <= sheet.getLastRowNum(); i++) {
