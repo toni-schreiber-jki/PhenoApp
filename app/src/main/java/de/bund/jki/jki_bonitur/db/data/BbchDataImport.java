@@ -6,9 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 import de.bund.jki.jki_bonitur.db.BbchMainStadium;
 import de.bund.jki.jki_bonitur.db.BbchStadium;
 
-public class BbchDataImport {
-    public static void insertValuesTo(SQLiteDatabase database){
-        for (Object[] mainstadium: BbchGrape.data){
+public abstract class BbchDataImport {
+
+    public abstract Object[][] getData();
+
+    public void insertValuesTo(SQLiteDatabase database){
+        for (Object[] mainstadium: getData()){
             ContentValues values = new ContentValues();
 
             values.put(BbchMainStadium.COLUMN_ART_ID, mainstadium[0].toString());

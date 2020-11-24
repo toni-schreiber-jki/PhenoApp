@@ -17,7 +17,12 @@ import java.nio.channels.FileChannel;
 
 import de.bund.jki.jki_bonitur.ErrorLog;
 import de.bund.jki.jki_bonitur.config.Config;
+import de.bund.jki.jki_bonitur.db.data.BbchCereal;
 import de.bund.jki.jki_bonitur.db.data.BbchDataImport;
+import de.bund.jki.jki_bonitur.db.data.BbchGrape;
+import de.bund.jki.jki_bonitur.db.data.BbchMaize;
+import de.bund.jki.jki_bonitur.db.data.BbchRape;
+import de.bund.jki.jki_bonitur.db.data.BbchRice;
 
 
 /**
@@ -151,7 +156,11 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
                     db.execSQL(BbchMainStadium.CREATE_TABLE);
                     db.execSQL(BbchStadium.CREATE_TABLE);
                     BbchArt.insertStartValues(db);
-                    BbchDataImport.insertValuesTo(db);
+                    (new BbchCereal()).insertValuesTo(db);
+                    (new BbchGrape()).insertValuesTo(db);
+                    (new BbchMaize()).insertValuesTo(db);
+                    (new BbchRape()).insertValuesTo(db);
+                    (new BbchRice()).insertValuesTo(db);
                     break;
             }
         } catch (Exception e) {

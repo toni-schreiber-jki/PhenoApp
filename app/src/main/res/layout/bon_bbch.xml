@@ -26,9 +26,18 @@
         android:orientation="vertical">
 
         <Spinner
+            android:id="@+id/spBbchArt"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:spinnerMode="dropdown"
+            android:transitionGroup="false" />
+
+        <Spinner
             android:id="@+id/spBbchStadium"
             style="@android:style/Widget.Holo.Light.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:spinnerMode="dropdown"
@@ -37,8 +46,9 @@
         <Spinner
             android:id="@+id/spBbchDetail"
             style="@android:style/Widget.Holo.Light.Spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:spinnerMode="dialog" />
     </LinearLayout>
 </RelativeLayout>

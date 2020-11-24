@@ -8,6 +8,10 @@ import de.bund.jki.jki_bonitur.db.BbchStadium;
 
 public class BbchGrape extends BbchDataImport{
 
+    public Object[][] getData() {
+        return data;
+    }
+
     public static Object[][] data = new Object[][]
         {
             {

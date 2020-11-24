@@ -18,12 +18,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.apache.poi.hssf.record.aggregates.CustomViewSettingsRecordAggregate;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -35,6 +39,9 @@ import java.util.List;
 
 import de.bund.jki.jki_bonitur.config.Config;
 import de.bund.jki.jki_bonitur.db.Akzession;
+import de.bund.jki.jki_bonitur.db.BbchArt;
+import de.bund.jki.jki_bonitur.db.BbchMainStadium;
+import de.bund.jki.jki_bonitur.db.BbchStadium;
 import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
@@ -87,8 +94,12 @@ public class BoniturActivityHelper {
     //-----------Ende Akzession Spinner-------------------------------------------------------------
     //--------------- Passport Spinner-------------------------------------------------------------
     private Spinner                   spPassport         = null;
+    //----------------BBCH Art Spinner--------------------------------------------------------------
+    private Spinner                   spBbchArt          = null;
+    private Cursor                    cBbchArt           = null;
     //----------------BBCH Stadien Spinner----------------------------------------------------------
     private Spinner                   spBbchStadium      = null;
+    private Cursor                    cBbchStadium       = null;
     //----------------BBCH Detail Spinner-----------------------------------------------------------
     private Spinner                   spBbchDetail       = null;
     //-----------------Parzellen Spinner------------------------------------------------------------
@@ -141,8 +152,9 @@ public class BoniturActivityHelper {
         getPassportSpinner().setAdapter(getPassportAdpter());
         passportSpinnerAddSelectListener();
 
-        //BBCH:
-        updateSpinner(getSpBbchStadium(), R.array.bbch_stadien);
+        //BBCH New
+        updateSpinnerBbchArt();
+        spBbchArtAddSelectListener();
         spBbchStadiumAddSelectListener();
         spBbchDetailAddSelectListener();
 
@@ -159,23 +171,114 @@ public class BoniturActivityHelper {
 
     }
 
+    private void spBbchArtAddSelectListener() {
+        getSpBbchArt().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    updateSpinnerBbchStadium();
+                } catch (Exception e) {
+                    new ErrorLog(e, mBa.getApplicationContext());
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void updateSpinnerBbchArt() {
+        cBbchArt = BoniturSafe.db.query(
+            BbchArt.TABLE_NAME,
+            new String[]{BbchArt.COLUMN_ID, BbchArt.COLUMN_NAME_EN, BbchArt.COLUMN_NAME_DE},
+            null,
+            null,
+            null,
+            null,
+            BbchArt.COLUMN_NAME_EN + " ASC"
+        );
+
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+            mBa,
+            android.R.layout.simple_list_item_1,
+            cBbchArt,
+            new String[]{BbchArt.COLUMN_NAME_EN},
+            new int[]{android.R.id.text1},
+            0
+        );
+
+        getSpBbchArt().setAdapter(adapter);
+    }
+
+    private void updateSpinnerBbchStadium() {
+        cBbchArt.moveToPosition(spBbchArt.getSelectedItemPosition());
+
+        cBbchStadium = BoniturSafe.db.rawQuery(
+            "SELECT " +
+                BbchMainStadium.COLUMN_ID + ", " +
+                BbchMainStadium.COLUMN_NUMBER + " || ': ' || " + BbchMainStadium.COLUMN_NAME_EN + " AS " + BbchMainStadium.COLUMN_NAME_EN + ' ' +
+                "FROM " + BbchMainStadium.TABLE_NAME + ' ' +
+                "WHERE " + BbchMainStadium.COLUMN_ART_ID + " = ?",
+            new String[]{cBbchArt.getString(0)}
+        );
+
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+            mBa,
+            android.R.layout.simple_list_item_1,
+            cBbchStadium,
+            new String[]{BbchArt.COLUMN_NAME_EN},
+            new int[]{android.R.id.text1},
+            0
+        );
+
+        getSpBbchStadium().setAdapter(adapter);
+    }
+
+    private void updateSpinnerBbchDetail() {
+        cBbchStadium.moveToPosition(spBbchStadium.getSelectedItemPosition());
+
+        Cursor cBbchDetail = BoniturSafe.db.rawQuery(
+            "SELECT " +
+                BbchStadium.COLUMN_ID + ", " +
+                BbchStadium.COLUMN_NUMBER + " || ': ' || " + BbchStadium.COLUMN_NAME_EN + " AS " + BbchStadium.COLUMN_NAME_EN + ' ' +
+                "FROM " + BbchStadium.TABLE_NAME + ' ' +
+                "WHERE " + BbchStadium.COLUMN_MAIN_ID + " = ?",
+            new String[]{cBbchStadium.getString(0)}
+        );
+
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+            mBa,
+            android.R.layout.simple_list_item_1,
+            cBbchDetail,
+            new String[]{BbchArt.COLUMN_NAME_EN},
+            new int[]{android.R.id.text1},
+            0
+        );
+
+        getSpBbchDetail().setAdapter(adapter);
+    }
+
     public void init_typefaces() {
         Typeface typeface = Typeface.createFromAsset(mBa.getAssets(), "fonts/fontawesome.ttf");
         int[] buttonIds = new int[]{
-                R.id.btnFoto,
-                R.id.btnSpeichenClose,
-                R.id.btnLeft,
-                R.id.btnRight,
-                R.id.btnDown,
-                R.id.btnUp,
-                R.id.btnRichtungLinks,
-                R.id.btnRichtungOben,
-                R.id.btnRichtungRechts,
-                R.id.btnRichtungUnten,
-                R.id.btnPrevMarker,
-                R.id.btnNextMarker,
-                R.id.btnSettings,
-                R.id.btnFirstEmpty,
+            R.id.btnFoto,
+            R.id.btnSpeichenClose,
+            R.id.btnLeft,
+            R.id.btnRight,
+            R.id.btnDown,
+            R.id.btnUp,
+            R.id.btnRichtungLinks,
+            R.id.btnRichtungOben,
+            R.id.btnRichtungRechts,
+            R.id.btnRichtungUnten,
+            R.id.btnPrevMarker,
+            R.id.btnNextMarker,
+            R.id.btnSettings,
+            R.id.btnFirstEmpty,
         };
 
         for (int id : buttonIds) {
@@ -185,16 +288,16 @@ public class BoniturActivityHelper {
 
     public void init_TabFarbe() {
         int[] buttonIds = new int[]{
-                R.id.llStandort,
-                R.id.llAkzession,
-                R.id.llPassport,
-                R.id.llSorte,
-                R.id.llEltern,
-                R.id.llSortiment,
-                R.id.llFreifeld,
-                R.id.llEigenschaft,
-                R.id.llBeschreibungKurz,
-                R.id.tvBeschreibung,
+            R.id.llStandort,
+            R.id.llAkzession,
+            R.id.llPassport,
+            R.id.llSorte,
+            R.id.llEltern,
+            R.id.llSortiment,
+            R.id.llFreifeld,
+            R.id.llEigenschaft,
+            R.id.llBeschreibungKurz,
+            R.id.tvBeschreibung,
         };
 
         int count = 0;
@@ -355,13 +458,13 @@ public class BoniturActivityHelper {
         Cursor c = null;
         try {
             c = BoniturSafe.db.query(
-                    Standort.TABLE_NAME,
-                    new String[]{Standort.COLUMN_ID},
-                    Standort.COLUMN_AKZESSION + "=?",
-                    new String[]{akzession.id + ""},
-                    null,
-                    null,
-                    Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC"
+                Standort.TABLE_NAME,
+                new String[]{Standort.COLUMN_ID},
+                Standort.COLUMN_AKZESSION + "=?",
+                new String[]{akzession.id + ""},
+                null,
+                null,
+                Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC"
             );
 
             if (c.getCount() == 1) {
@@ -447,13 +550,13 @@ public class BoniturActivityHelper {
         Cursor c = null;
         try {
             c = BoniturSafe.db.query(
-                    Standort.TABLE_NAME,
-                    new String[]{Standort.COLUMN_ID},
-                    Standort.COLUMN_PASSPORT + "=?",
-                    new String[]{passport.id + ""},
-                    null,
-                    null,
-                    Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC"
+                Standort.TABLE_NAME,
+                new String[]{Standort.COLUMN_ID},
+                Standort.COLUMN_PASSPORT + "=?",
+                new String[]{passport.id + ""},
+                null,
+                null,
+                Standort.COLUMN_PARZELLE + " ASC, " + Standort.COLUMN_REIHE + " ASC, " + Standort.COLUMN_PFLANZE + " ASC"
             );
 
             if (c.getCount() == 1) {
@@ -482,6 +585,13 @@ public class BoniturActivityHelper {
         }
     }
 
+    public Spinner getSpBbchArt() {
+        if (spBbchArt == null) {
+            spBbchArt = mBa.findViewById(R.id.spBbchArt);
+        }
+        return spBbchArt;
+    }
+
     public Spinner getSpBbchStadium() {
         if (spBbchStadium != null) return spBbchStadium;
         spBbchStadium = mBa.findViewById(R.id.spBbchStadium);
@@ -495,56 +605,7 @@ public class BoniturActivityHelper {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     spBbchStatiumCheck++;
-                    if (spBbchStatiumCheck > 1) {
-                        int res      = 0;
-                        int imageRes = 0;
-                        switch (position) {
-                            case 0:
-                                return;
-                            case 1:
-                                res = R.array.bbch_stadien_details_0;
-                                imageRes = R.drawable.bbch_0;
-                                break;
-                            case 2:
-                                res = R.array.bbch_stadien_details_1;
-                                imageRes = R.drawable.bbch_1;
-                                break;
-                            case 3:
-                                res = R.array.bbch_stadien_details_5;
-                                imageRes = R.drawable.bbch_5;
-                                break;
-                            case 4:
-                                res = R.array.bbch_stadien_details_6;
-                                imageRes = R.drawable.bbch_6;
-                                break;
-                            case 5:
-                                res = R.array.bbch_stadien_details_7;
-                                imageRes = R.drawable.bbch_7;
-                                break;
-                            case 6:
-                                res = R.array.bbch_stadien_details_8;
-                                imageRes = R.drawable.bbch_8;
-                                break;
-                            case 7:
-                                res = R.array.bbch_stadien_details_9;
-                                imageRes = R.drawable.bbch_9;
-                                break;
-                        }
-                        getIvBild().setVisibility(View.GONE);
-                        if (res == 0) return;
-                        getIvBild().setVisibility(View.VISIBLE);
-                        getIvBild().setImageResource(imageRes);
-                        updateSpinner(getSpBbchDetail(), res);
-                        if (setBbchDetail != - 1 && setBbchDetail != getSpBbchDetail().getSelectedItemPosition()) {
-                            if (getSpBbchDetail().getCount() < setBbchDetail)
-                                return;
-                            spBbchDetailCheck = 0;
-                            getSpBbchDetail().setSelection(setBbchDetail, false);
-                        } else {
-                            spBbchStatiumCheck++;
-                            spBbchDetailCheck++;
-                        }
-                    }
+                    updateSpinnerBbchDetail();
                 } catch (Exception e) {
                     new ErrorLog(e, mBa.getApplicationContext());
                 }
@@ -627,15 +688,15 @@ public class BoniturActivityHelper {
         try {
             List<String> parzellenList = new ArrayList<>();
             c = BoniturSafe.db.query(
-                    true,
-                    Standort.TABLE_NAME,
-                    new String[]{Standort.COLUMN_PARZELLE},
-                    Standort.COLUMN_VERSUCH + "=?",
-                    new String[]{"" + BoniturSafe.VERSUCH_ID},
-                    null,
-                    null,
-                    Standort.COLUMN_PARZELLE + "*1 ASC, " + Standort.COLUMN_PARZELLE + " ASC",
-                    null
+                true,
+                Standort.TABLE_NAME,
+                new String[]{Standort.COLUMN_PARZELLE},
+                Standort.COLUMN_VERSUCH + "=?",
+                new String[]{"" + BoniturSafe.VERSUCH_ID},
+                null,
+                null,
+                Standort.COLUMN_PARZELLE + "*1 ASC, " + Standort.COLUMN_PARZELLE + " ASC",
+                null
             );
             if (c.getCount() > 0) {
                 parzellenNrPos = new HashMap<>();
@@ -672,15 +733,15 @@ public class BoniturActivityHelper {
         try {
             List<String> reihenList = new ArrayList<>();
             c = BoniturSafe.db.query(
-                    true,
-                    Standort.TABLE_NAME,
-                    new String[]{Standort.COLUMN_REIHE},
-                    Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + " = ?",
-                    new String[]{"" + BoniturSafe.VERSUCH_ID, parzelle},
-                    null,
-                    null,
-                    Standort.COLUMN_REIHE + " ASC",
-                    null
+                true,
+                Standort.TABLE_NAME,
+                new String[]{Standort.COLUMN_REIHE},
+                Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + " = ?",
+                new String[]{"" + BoniturSafe.VERSUCH_ID, parzelle},
+                null,
+                null,
+                Standort.COLUMN_REIHE + " ASC",
+                null
             );
             if (c.getCount() > 0) {
                 reihenNrPos = new HashMap<>();
@@ -746,15 +807,15 @@ public class BoniturActivityHelper {
         try {
             List<String> pflanzenList = new ArrayList<>();
             c = BoniturSafe.db.query(
-                    true,
-                    Standort.TABLE_NAME,
-                    new String[]{Standort.COLUMN_PFLANZE},
-                    Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + " = ? AND " + Standort.COLUMN_REIHE + "=?",
-                    new String[]{"" + BoniturSafe.VERSUCH_ID, parzellenNr[getSpParzelle().getSelectedItemPosition()], "" + reihe},
-                    null,
-                    null,
-                    Standort.COLUMN_PFLANZE + " ASC",
-                    null
+                true,
+                Standort.TABLE_NAME,
+                new String[]{Standort.COLUMN_PFLANZE},
+                Standort.COLUMN_VERSUCH + "=? AND " + Standort.COLUMN_PARZELLE + " = ? AND " + Standort.COLUMN_REIHE + "=?",
+                new String[]{"" + BoniturSafe.VERSUCH_ID, parzellenNr[getSpParzelle().getSelectedItemPosition()], "" + reihe},
+                null,
+                null,
+                Standort.COLUMN_PFLANZE + " ASC",
+                null
             );
             if (c.getCount() > 0) {
                 pflanzenPos = new HashMap<>();
@@ -795,10 +856,10 @@ public class BoniturActivityHelper {
                     spPflanzenCheck++;
                     if (spPflanzenCheck > 1) {
                         mBa.fillView(StandortManager.gotoStandort(
-                                parzellenNr[getSpParzelle().getSelectedItemPosition()],
-                                reihenNr[getSpReihe().getSelectedItemPosition()],
-                                pflanzen[getSpPflanzen().getSelectedItemPosition()],
-                                mBa.currentMarker
+                            parzellenNr[getSpParzelle().getSelectedItemPosition()],
+                            reihenNr[getSpReihe().getSelectedItemPosition()],
+                            pflanzen[getSpPflanzen().getSelectedItemPosition()],
+                            mBa.currentMarker
                                      )
                         );
                     }
@@ -941,8 +1002,8 @@ public class BoniturActivityHelper {
                         String[] whereArg = new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_STANDORT_ID, "" + mBa.currentMarker.id, "" + werte[position].id};
 
                         c = BoniturSafe.db.query(
-                                VersuchWert.TABLE_NAME, new String[]{VersuchWert.COLUMN_ID},
-                                where, whereArg, null, null, null
+                            VersuchWert.TABLE_NAME, new String[]{VersuchWert.COLUMN_ID},
+                            where, whereArg, null, null, null
                         );
 
                         if (c.getCount() > 0)
@@ -1210,9 +1271,9 @@ public class BoniturActivityHelper {
     private void writeValue(String column, Object wert) {
         try {
             BoniturSafe.db.delete(
-                    VersuchWert.TABLE_NAME,
-                    VersuchWert.COLUMN_VERSUCH + "=? AND " + VersuchWert.COLUMN_MARKER + "=? AND " + VersuchWert.COLUMN_STANDORT + "=?",
-                    new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_MARKER, "" + BoniturSafe.CURRENT_STANDORT_ID}
+                VersuchWert.TABLE_NAME,
+                VersuchWert.COLUMN_VERSUCH + "=? AND " + VersuchWert.COLUMN_MARKER + "=? AND " + VersuchWert.COLUMN_STANDORT + "=?",
+                new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_MARKER, "" + BoniturSafe.CURRENT_STANDORT_ID}
             );
 
             ContentValues values = new ContentValues();
@@ -1244,8 +1305,8 @@ public class BoniturActivityHelper {
                     String[] whereArg = new String[]{"" + BoniturSafe.VERSUCH_ID, "" + BoniturSafe.CURRENT_STANDORT_ID, "" + mBa.currentMarker.id, "" + werte[position].id};
 
                     c = BoniturSafe.db.query(
-                            VersuchWert.TABLE_NAME, new String[]{VersuchWert.COLUMN_ID},
-                            where, whereArg, null, null, null
+                        VersuchWert.TABLE_NAME, new String[]{VersuchWert.COLUMN_ID},
+                        where, whereArg, null, null, null
                     );
 
                     if (c.getCount() == 0) {
@@ -1264,7 +1325,7 @@ public class BoniturActivityHelper {
                     } else {
                         view.setBackgroundColor(gvUnSelected);
                         BoniturSafe.db.delete(
-                                VersuchWert.TABLE_NAME, where, whereArg);
+                            VersuchWert.TABLE_NAME, where, whereArg);
                     }
 
                     //c.close();
@@ -1376,19 +1437,19 @@ public class BoniturActivityHelper {
                 if (image != null) {
                     if (Build.VERSION.SDK_INT < 24) {
                         takePictureIntent.putExtra(
-                                MediaStore.EXTRA_OUTPUT,
-                                Uri.fromFile(image)
+                            MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(image)
                         );
                     } else {
                         Uri photoURI = FileProvider.getUriForFile(
-                                mBa,
-                                "de.bund.jki.jki_bonitur.fileprovider",
-                                image
+                            mBa,
+                            "de.bund.jki.jki_bonitur.fileprovider",
+                            image
                         );
 
                         takePictureIntent.putExtra(
-                                MediaStore.EXTRA_OUTPUT,
-                                photoURI
+                            MediaStore.EXTRA_OUTPUT,
+                            photoURI
                         );
                     }
                     mBa.startActivityForResult(takePictureIntent, 1);
@@ -1421,9 +1482,9 @@ public class BoniturActivityHelper {
 
     private void setVisibilityBildHintergrund(int visible) {
         int[] ids = new int[]{
-                R.id.llInfos,
-                R.id.rlPfadenkreuz,
-                R.id.btnStandortInfo
+            R.id.llInfos,
+            R.id.rlPfadenkreuz,
+            R.id.btnStandortInfo
         };
 
         for (int id : ids) {
