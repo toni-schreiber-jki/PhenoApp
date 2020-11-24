@@ -1,3 +1,9 @@
+1.0
+---
+* new Name PhenoApp
+* Multi-Language Gui
+* Input Excelfiles: Worksheets loaded by Index
+
 0.9
 ---
 * Impressum und OpenSourceLizenzen
