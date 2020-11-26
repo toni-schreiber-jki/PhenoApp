@@ -61,8 +61,6 @@ public class VersuchListActivity extends Activity {
         init_typefaces();
 
         Resources  res = getResources();
-        TypedArray test = res.obtainTypedArray(R.array.bbch);
-        int a = 1;
     }
 
     @Override

@@ -1053,8 +1053,8 @@ public class BoniturActivityHelper {
         try {
             boolean setNull = false;
             if (wert != null && wert.length() > 0) {
-                spBbchStadium.setSelection(0, false);
                 sBbchOverwirte = wert;
+                spBbchStadium.setSelection(0, false);
             }
 
 

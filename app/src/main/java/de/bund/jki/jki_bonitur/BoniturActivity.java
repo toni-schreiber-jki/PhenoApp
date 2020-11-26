@@ -188,33 +188,35 @@ public class BoniturActivity extends Activity {
                 bah.hideAllEingabeTypen();
 
                 try {
-                    switch (marker.type) {
-                        case Marker.MARKER_TYPE_BONITUR:
-                            bah.getGvWerte().setVisibility(View.VISIBLE);
-                            bah.fillGridView(marker.werte);
-                            bah.showBild();
-                            break;
-                        case Marker.MARKER_TYPE_DATUM:
-                            bah.getRlDatum().setVisibility(View.VISIBLE);
-                            bah.getEtDatumEingabe().setText(s.getValue(marker.id));
-                            bah.showBild();
-                            break;
-                        case Marker.MARKER_TYPE_MESSEN:
-                            bah.getRlMessen().setVisibility(View.VISIBLE);
-                            bah.getEtMessenEingabe().setText(s.getValue(marker.id));
-                            bah.showBild();
-                            break;
-                        case Marker.MARKER_TYPE_BEMERKUNG:
-                            bah.getRlBemerkung().setVisibility(View.VISIBLE);
-                            bah.getEtBemerkungEingabe().setText(s.getValue(marker.id));
-                            bah.showBild();
-                            break;
-                        case Marker.MARKER_TYPE_BBCH:
-                            bah.getRlBBCH().setVisibility(View.VISIBLE);
-                            bah.getIvBild().setVisibility(View.VISIBLE);
-                            bah.getEtBbchWert().setText(s.getValue(marker.id));
-                            bah.setBbchWert(s.getValue(marker.id));
-                            break;
+                    if(s != null) {
+                        switch (marker.type) {
+                            case Marker.MARKER_TYPE_BONITUR:
+                                bah.getGvWerte().setVisibility(View.VISIBLE);
+                                bah.fillGridView(marker.werte);
+                                bah.showBild();
+                                break;
+                            case Marker.MARKER_TYPE_DATUM:
+                                bah.getRlDatum().setVisibility(View.VISIBLE);
+                                bah.getEtDatumEingabe().setText(s.getValue(marker.id));
+                                bah.showBild();
+                                break;
+                            case Marker.MARKER_TYPE_MESSEN:
+                                bah.getRlMessen().setVisibility(View.VISIBLE);
+                                bah.getEtMessenEingabe().setText(s.getValue(marker.id));
+                                bah.showBild();
+                                break;
+                            case Marker.MARKER_TYPE_BEMERKUNG:
+                                bah.getRlBemerkung().setVisibility(View.VISIBLE);
+                                bah.getEtBemerkungEingabe().setText(s.getValue(marker.id));
+                                bah.showBild();
+                                break;
+                            case Marker.MARKER_TYPE_BBCH:
+                                bah.getRlBBCH().setVisibility(View.VISIBLE);
+                                bah.getIvBild().setVisibility(View.VISIBLE);
+                                bah.getEtBbchWert().setText(s.getValue(marker.id));
+                                bah.setBbchWert(s.getValue(marker.id));
+                                break;
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
