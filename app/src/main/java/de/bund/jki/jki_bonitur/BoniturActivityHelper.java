@@ -102,6 +102,7 @@ public class BoniturActivityHelper {
     private Cursor                    cBbchStadium       = null;
     //----------------BBCH Detail Spinner-----------------------------------------------------------
     private Spinner                   spBbchDetail       = null;
+    private String                    sBbchOverwirte     = null;
     //-----------------Parzellen Spinner------------------------------------------------------------
     private Spinner                   spParzelle         = null;
     //-----------------Reihen Spinner---------------------------------------------------------------
@@ -215,9 +216,10 @@ public class BoniturActivityHelper {
     }
 
     private void updateSpinnerBbchStadium() {
-        cBbchArt.moveToPosition(spBbchArt.getSelectedItemPosition());
 
         cBbchStadium = BoniturSafe.db.rawQuery(
+            "SELECT -1 _id, 'empty' name_en " +
+                "UNION ALL " +
             "SELECT " +
                 BbchMainStadium.COLUMN_ID + ", " +
                 BbchMainStadium.COLUMN_NUMBER + " || ': ' || " + BbchMainStadium.COLUMN_NAME_EN + " AS " + BbchMainStadium.COLUMN_NAME_EN + ' ' +
@@ -242,7 +244,9 @@ public class BoniturActivityHelper {
         cBbchStadium.moveToPosition(spBbchStadium.getSelectedItemPosition());
 
         Cursor cBbchDetail = BoniturSafe.db.rawQuery(
-            "SELECT " +
+            "SELECT -1 _id, 'empty' name_en " +
+                "UNION ALL " +
+                "SELECT " +
                 BbchStadium.COLUMN_ID + ", " +
                 BbchStadium.COLUMN_NUMBER + " || ': ' || " + BbchStadium.COLUMN_NAME_EN + " AS " + BbchStadium.COLUMN_NAME_EN + ' ' +
                 "FROM " + BbchStadium.TABLE_NAME + ' ' +
@@ -640,6 +644,10 @@ public class BoniturActivityHelper {
                         if (text.contains(":")) {
                             ((EditText) mBa.findViewById(R.id.etBbchWert)).setText(text.split(":")[0]);
                             //ignoreBbchChange = true;
+                        }
+                        if(sBbchOverwirte != null){
+                            ((EditText) mBa.findViewById(R.id.etBbchWert)).setText(sBbchOverwirte);
+                            sBbchOverwirte = null;
                         }
                     }
                 } catch (Exception e) {
@@ -1044,141 +1052,12 @@ public class BoniturActivityHelper {
         spBbchDetailCheck++;
         try {
             boolean setNull = false;
-            if (wert == null)
-                setNull = true;
-            else {
-                if (wert.length() == 0) {
-                    setNull = true;
-                }
+            if (wert != null && wert.length() > 0) {
+                spBbchStadium.setSelection(0, false);
+                sBbchOverwirte = wert;
             }
 
-            if (setNull) {
-                if (getSpBbchStadium().getSelectedItemPosition() == 0) {
-                    spBbchStatiumCheck++;
-                    return;
-                }
 
-                spBbchStatiumCheck = 0;
-                setBbchDetail = 0;
-                getSpBbchStadium().setSelection(0, false);
-                spBbchDetailCheck = 0;
-                getSpBbchDetail().setSelection(0, false);
-            } else {
-                int bbch              = Integer.parseInt(wert.replaceAll("^0", ""));
-                int setSpBbchStatdium = 0;
-                switch (bbch / 10) {
-                    case 0:
-                        switch (bbch % 10) {
-                            case 0:
-                                setBbchDetail = 1;
-                                break;
-                            case 1:
-                                setBbchDetail = 2;
-                                break;
-                            case 3:
-                                setBbchDetail = 3;
-                                break;
-                            case 5:
-                                setBbchDetail = 4;
-                                break;
-                            case 7:
-                                setBbchDetail = 5;
-                                break;
-                            case 9:
-                                setBbchDetail = 6;
-                                break;
-                        }
-                        setSpBbchStatdium = 1;
-                        break;
-                    case 1:
-                        setBbchDetail = bbch % 10;
-                        setSpBbchStatdium = 2;
-                        break;
-                    case 5:
-                        switch (bbch % 10) {
-                            case 3:
-                                setBbchDetail = 1;
-                                break;
-                            case 5:
-                                setBbchDetail = 2;
-                                break;
-                            case 7:
-                                setBbchDetail = 3;
-                                break;
-                        }
-                        setSpBbchStatdium = 3;
-                        break;
-                    case 6:
-                        setBbchDetail = (bbch % 10) + 1;
-                        setSpBbchStatdium = 4;
-                        break;
-                    case 7:
-                        switch (bbch % 10) {
-                            case 1:
-                                setBbchDetail = 1;
-                                break;
-                            case 3:
-                                setBbchDetail = 2;
-                                break;
-                            case 5:
-                                setBbchDetail = 3;
-                                break;
-                            case 7:
-                                setBbchDetail = 4;
-                                break;
-                            case 9:
-                                setBbchDetail = 5;
-                                break;
-                        }
-                        setSpBbchStatdium = 5;
-                        break;
-                    case 8:
-                        switch (bbch % 10) {
-                            case 1:
-                                setBbchDetail = 1;
-                                break;
-                            case 3:
-                                setBbchDetail = 2;
-                                break;
-                            case 5:
-                                setBbchDetail = 3;
-                                break;
-                            case 9:
-                                setBbchDetail = 4;
-                                break;
-                        }
-                        setSpBbchStatdium = 6;
-                        break;
-                    case 9:
-                        switch (bbch % 10) {
-                            case 1:
-                                setBbchDetail = 1;
-                                break;
-                            case 2:
-                                setBbchDetail = 2;
-                                break;
-                            case 3:
-                                setBbchDetail = 3;
-                                break;
-                            case 5:
-                                setBbchDetail = 4;
-                                break;
-                            case 7:
-                                setBbchDetail = 5;
-                                break;
-                            case 9:
-                                setBbchDetail = 6;
-                                break;
-                        }
-                        setSpBbchStatdium = 7;
-                        break;
-                }
-                if (getSpBbchStadium().getSelectedItemPosition() == setSpBbchStatdium)
-                    setSpBbchDetailSelection(setBbchDetail);
-                else
-                    setSpBbchStadiumSelection(setSpBbchStatdium);
-
-            }
         } catch (Exception e) {
             getSpBbchStadium().setSelection(0);
             getSpBbchDetail().setSelection(0);
