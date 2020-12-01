@@ -55,7 +55,7 @@ public class BbchDialog {
                         public void onClick(DialogInterface dialog, int which) {
                             Marker marker = new Marker();
                             marker.code = ((EditText) mView.findViewById(R.id.et_BBCH_Code)).getText().toString();
-                            marker.beschreibung = "BBCH WERT";
+                            marker.beschreibung = "BBCH";
                             marker.type = Marker.MARKER_TYPE_BBCH;
                             marker.name = marker.code;
                             marker.versuchId = BoniturSafe.VERSUCH_ID;
