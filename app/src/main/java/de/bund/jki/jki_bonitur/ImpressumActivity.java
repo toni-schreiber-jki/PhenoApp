@@ -21,7 +21,7 @@ public class ImpressumActivity extends Activity {
         super.onResume();
         init_typefaces();
         WebView wv = findViewById(R.id.wvImpressum);
-        wv.loadUrl("file:///android_asset/html/impressum.html");
+        wv.loadUrl(getString(R.string.url_impress));
     }
 
 
