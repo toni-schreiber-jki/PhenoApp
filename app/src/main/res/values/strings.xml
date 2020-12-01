@@ -55,6 +55,7 @@
     <string name="btn_no">No</string>
     <string name="label_loading_data">Loading data</string>
     <string name="label_data_will_saved">Data will be saved</string>
+    <string name="url_impress">file:///android_asset/html/impress.html</string>
     
 
 </resources>
