@@ -46,7 +46,7 @@ public class SettingsDialog {
             mView = inflater.inflate(R.layout.dialog_settings, null);
 
             builder.setView(mView)
-                    .setPositiveButton("Speichern", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString(R.string.btn_save), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             SharedPreferences        preferences = PreferenceManager.getDefaultSharedPreferences(mBa);
@@ -99,7 +99,7 @@ public class SettingsDialog {
                         }
                     })
 
-                    .setNegativeButton("Nicht Speichern", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 

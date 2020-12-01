@@ -50,7 +50,7 @@ public class BbchDialog {
             mView = inflater.inflate(R.layout.dialog_add_bbch, null);
 
             builder.setView(mView)
-                    .setPositiveButton("Speichern", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString(R.string.btn_yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Marker marker = new Marker();
@@ -70,7 +70,7 @@ public class BbchDialog {
                         }
                     })
 
-                    .setNegativeButton("Nicht Speichern", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString(R.string.btn_no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 

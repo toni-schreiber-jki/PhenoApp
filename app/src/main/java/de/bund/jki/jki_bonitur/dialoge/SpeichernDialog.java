@@ -54,7 +54,7 @@ public class SpeichernDialog {
             mView = inflater.inflate(R.layout.dialog_speicherort, null);
 
             builder.setView(mView)
-                    .setPositiveButton("XLS Speichern", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString(R.string.btn_save_xls), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             File outFolder = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/out/");
@@ -66,7 +66,7 @@ public class SpeichernDialog {
                         }
                     })
 
-                    .setNegativeButton("Nicht Speichern", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -74,7 +74,7 @@ public class SpeichernDialog {
                         }
                     })
 
-                    .setNeutralButton("CSV Speichern", new DialogInterface.OnClickListener() {
+                    .setNeutralButton(getString(R.string.btn_save_csv), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             File outFolder = new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/out/");

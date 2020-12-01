@@ -47,5 +47,14 @@
     <string name="label_filename">filename</string>
     <string name="title_please_wait">please wait</string>
     <string name="text_loading_data">loading data</string>
+    <string name="btn_save">save</string>
+    <string name="btn_save_xls">save as XLS</string>
+    <string name="btn_save_csv">save as CSV</string>
+    <string name="btn_cancel">cancel</string>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_no">No</string>
+    <string name="label_loading_data">Loading data</string>
+    <string name="label_data_will_saved">Data will be saved</string>
+    
 
 </resources>

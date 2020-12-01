@@ -43,4 +43,12 @@
     <string name="label_filename">Dateiname</string>
     <string name="title_please_wait">bitte warten</string>
     <string name="text_loading_data">Daten werden geladen</string>
+    <string name="btn_yes">Ja</string>
+    <string name="btn_no">Nein</string>
+    <string name="btn_save">Speichern</string>
+    <string name="btn_cancel">Abbrechen</string>
+    <string name="btn_save_xls">als XLS speichern</string>
+    <string name="btn_save_csv">als CSV speichern</string>
+    <string name="label_loading_data">Daten werden geladen</string>
+    <string name="label_data_will_saved">Daten werden gespeichert</string>
 </resources>
