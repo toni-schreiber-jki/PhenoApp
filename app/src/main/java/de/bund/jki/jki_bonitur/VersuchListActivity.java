@@ -89,31 +89,38 @@ public class VersuchListActivity extends Activity {
 
         SQLiteDatabase db = BoniturSafe.db;
         db.beginTransaction();
+        boolean success = true;
 
         //bbch_template.xls + x
-        for(String file: bbchFileList){
-            if(file.compareTo("bbch_template.xls") != 0){
+        for(String filename: bbchFileList){
+            if(filename.compareTo("bbch_template.xls") != 0){
                 try {
-                    createNewBbchEntries(bbchPath, file, db);
+                    createNewBbchEntries(bbchPath, filename, db);
                 } catch (Exception e) {
+                    success = false;
                     new ErrorLog(e, this);
                 }
+                File file = new File(bbchPath + filename);
+                file.delete();
             }
+
         }
-        db.setTransactionSuccessful();
+        if(success) {
+            db.setTransactionSuccessful();
+        }
         db.endTransaction();
 
     }
 
-    private void createNewBbchEntries(String bbchPath, String file, SQLiteDatabase db) throws IOException {
+    private void createNewBbchEntries(String bbchPath, String filename, SQLiteDatabase db) throws IOException {
         ContentValues cv          = new ContentValues();
-        HSSFWorkbook  workbook    = ExcelLib.openExcelFile(bbchPath + file);
+        HSSFWorkbook  workbook    = ExcelLib.openExcelFile(bbchPath + filename);
         HSSFSheet     stagesSheet = workbook.getSheetAt(0);
         HSSFRow       row         = stagesSheet.getRow(0);
         String[]      names       = getNamesFromRow(row);
         cv.put(BbchArt.COLUMN_NAME_EN, names[0]);
         cv.put(BbchArt.COLUMN_NAME_DE, names[1]);
-        long new_art_id = db.insert(BbchArt.TABLE_NAME,null, cv);
+        long new_art_id = db.insertOrThrow(BbchArt.TABLE_NAME,null, cv);
 
         createMainStages(db, workbook, stagesSheet, new_art_id);
     }
@@ -134,7 +141,7 @@ public class VersuchListActivity extends Activity {
                 cv.put(BbchMainStadium.COLUMN_NAME_EN, names[0]);
                 cv.put(BbchMainStadium.COLUMN_NAME_DE, names[0]);
 
-                long new_main_stadium_id = db.insert(BbchMainStadium.TABLE_NAME, null, cv);
+                long new_main_stadium_id = db.insertOrThrow(BbchMainStadium.TABLE_NAME, null, cv);
                 createStages(db, workbook, stage, new_main_stadium_id);
             }
         }
@@ -157,7 +164,7 @@ public class VersuchListActivity extends Activity {
                 cv.put(BbchStadium.COLUMN_NAME_EN, names[0]);
                 cv.put(BbchStadium.COLUMN_NAME_DE, names[1]);
 
-                db.insert(BbchStadium.TABLE_NAME, null, cv);
+                db.insertOrThrow(BbchStadium.TABLE_NAME, null, cv);
             }
         }
     }
