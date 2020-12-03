@@ -3,6 +3,7 @@ package de.bund.jki.jki_bonitur;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -38,6 +43,9 @@ import java.util.ArrayList;
 
 import de.bund.jki.jki_bonitur.config.Config;
 import de.bund.jki.jki_bonitur.db.Akzession;
+import de.bund.jki.jki_bonitur.db.BbchArt;
+import de.bund.jki.jki_bonitur.db.BbchMainStadium;
+import de.bund.jki.jki_bonitur.db.BbchStadium;
 import de.bund.jki.jki_bonitur.db.BoniturDatenbank;
 import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.Passport;
@@ -45,6 +53,7 @@ import de.bund.jki.jki_bonitur.db.Standort;
 import de.bund.jki.jki_bonitur.db.Versuch;
 import de.bund.jki.jki_bonitur.db.VersuchWert;
 import de.bund.jki.jki_bonitur.dialoge.SettingsDialog;
+import de.bund.jki.jki_bonitur.excel.ExcelLib;
 
 
 public class VersuchListActivity extends Activity {
@@ -65,8 +74,100 @@ public class VersuchListActivity extends Activity {
         super.onResume();
         showFiles();
         init_typefaces();
+        loadNewBbch();
 
         Resources  res = getResources();
+    }
+
+    private void loadNewBbch(){
+        String appPath  = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
+        String bbchPath = appPath + File.separator + "bbch" + File.separator;
+        File bbchFolder = new File(bbchPath);
+        String[] bbchFileList = bbchFolder.list();
+
+        ContentValues cv = new ContentValues();
+
+        SQLiteDatabase db = BoniturSafe.db;
+        db.beginTransaction();
+
+        //bbch_template.xls + x
+        for(String file: bbchFileList){
+            if(file.compareTo("bbch_template.xls") != 0){
+                try {
+                    createNewBbchEntries(bbchPath, file, db);
+                } catch (Exception e) {
+                    new ErrorLog(e, this);
+                }
+            }
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+    }
+
+    private void createNewBbchEntries(String bbchPath, String file, SQLiteDatabase db) throws IOException {
+        ContentValues cv          = new ContentValues();
+        HSSFWorkbook  workbook    = ExcelLib.openExcelFile(bbchPath + file);
+        HSSFSheet     stagesSheet = workbook.getSheetAt(0);
+        HSSFRow       row         = stagesSheet.getRow(0);
+        String[]      names       = getNamesFromRow(row);
+        cv.put(BbchArt.COLUMN_NAME_EN, names[0]);
+        cv.put(BbchArt.COLUMN_NAME_DE, names[1]);
+        long new_art_id = db.insert(BbchArt.TABLE_NAME,null, cv);
+
+        createMainStages(db, workbook, stagesSheet, new_art_id);
+    }
+
+    private void createMainStages(SQLiteDatabase db, HSSFWorkbook workbook, HSSFSheet stagesSheet, long new_art_id) {
+        HSSFRow       row;
+        ContentValues cv = new ContentValues();
+
+        for(int stage = 0; stage < 10; stage++){
+            row = stagesSheet.getRow(3 + stage);
+            String[] names = getNamesFromRow(row);
+
+            if(names[0].length() != 0 || names[1].length() != 0){
+                cv = new ContentValues();
+
+                cv.put(BbchMainStadium.COLUMN_ART_ID, "" + new_art_id);
+                cv.put(BbchMainStadium.COLUMN_NUMBER, "" + stage);
+                cv.put(BbchMainStadium.COLUMN_NAME_EN, names[0]);
+                cv.put(BbchMainStadium.COLUMN_NAME_DE, names[0]);
+
+                long new_main_stadium_id = db.insert(BbchMainStadium.TABLE_NAME, null, cv);
+                createStages(db, workbook, stage, new_main_stadium_id);
+            }
+        }
+    }
+
+    private void createStages(SQLiteDatabase db, HSSFWorkbook workbook, int stage, long new_main_stadium_id) {
+        HSSFRow       row;
+        String[]      names;
+        ContentValues cv         = new ContentValues();
+        HSSFSheet     stageSheet = workbook.getSheetAt(1 + stage);
+
+        for(int stage_row = 0; stage_row < 10; stage_row++){
+            row = stageSheet.getRow(1+ stage_row);
+            names = getNamesFromRow(row);
+            if(names[0].length() != 0 || names[1].length() != 0){
+                cv = new ContentValues();
+
+                cv.put(BbchStadium.COLUMN_MAIN_ID, "" + new_main_stadium_id);
+                cv.put(BbchStadium.COLUMN_NUMBER, "" + stage_row);
+                cv.put(BbchStadium.COLUMN_NAME_EN, names[0]);
+                cv.put(BbchStadium.COLUMN_NAME_DE, names[1]);
+
+                db.insert(BbchStadium.TABLE_NAME, null, cv);
+            }
+        }
+    }
+
+    private String[] getNamesFromRow(HSSFRow row) {
+        String[] names = new String[2];
+        names[0] = row.getLastCellNum() >= 2 ? row.getCell(1).getStringCellValue() : "";
+        names[1] = row.getLastCellNum() >= 3 ? row.getCell(2).getStringCellValue() : "";
+
+        return names;
     }
 
     @Override
@@ -109,13 +210,14 @@ public class VersuchListActivity extends Activity {
                 );
             }
 
-            // <editor-fold desc="In-Ordner">
             Config.load(this);
-            String path      = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder + File.separator + "in" + File.separator;
             String appPath   = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
+            String path      = appPath + File.separator + "in" + File.separator;
+            String bbchPath  = appPath + File.separator + "bbch" + File.separator;
             File   appFolder = new File(appPath);
             File   sd        = Environment.getExternalStorageDirectory();
             File   folder    = new File(path);
+            File   bbchFolder = new File(bbchPath);
 
 
             if (! appFolder.exists()) {
@@ -129,96 +231,96 @@ public class VersuchListActivity extends Activity {
             Log.v("Files", folder.exists() + "");
             Log.v("Files", folder.isDirectory() + "");
             Log.v("Files", folder.listFiles() + "");
+            Log.v("Files", "BBCH-Folder: " + bbchFolder.listFiles());
 
-            File[]            files = folder.listFiles();
-            ArrayList<String> list  = new ArrayList<String>();
+            createFileList(folder);
+            createStartedList();
 
-            if (list == null) {
-                return;
-                //ToDo: Fehlermeldung keine Dateien gefunden
-            }
-
-            for (int i = 0; i < files.length; ++ i) {
-                list.add(files[i].getName());
-            }
-
-            ListView lv = findViewById(R.id.lvDateien);
-
-            ArrayAdapter adapter = new ArrayAdapter(this,
-                                                    android.R.layout.simple_list_item_1, list
-            );
-            lv.setAdapter(adapter);
-
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    TextView tv = view.findViewById(android.R.id.text1);
-                    Intent   i  = new Intent(context, BoniturActivity.class);
-                    i.putExtra("FILE", tv.getText().toString());
-                    context.startActivity(i);
-                }
-            });
-            // </editor-fold>
-
-            // <editor-fold desc="begonnen Bonituren">
-            BoniturDatenbank boniturDatenbank = new BoniturDatenbank(this);
-            SQLiteDatabase   db               = boniturDatenbank.getReadableDatabase();
-            BoniturSafe.db = db;
-
-            Cursor c = null;
-            try {
-                c = db.query(Versuch.TABLE_NAME, new String[]{Versuch.COLUMN_ID}, null, null, null, null, null);
-
-                versuche = new Versuch[c.getCount()];
-                int v = 0;
-                if (c.getCount() > 0) {
-                    c.moveToFirst();
-                    do {
-                        versuche[v] = Versuch.findByPk(c.getInt(c.getColumnIndex(Versuch.COLUMN_ID)));
-                        v++;
-                    } while (c.moveToNext());
-                }
-            } catch (Exception e) {
-                new ErrorLog(e, getApplication());
-            } finally {
-                if (c != null)
-                    c.close();
-            }
-
-
-            ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.jki_bonitur_file_list, android.R.id.text1, versuche) {
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    try {
-                        View view = super.getView(position, convertView, parent);
-                        ((TextView) view.findViewById(android.R.id.text1)).setText(versuche[position].name);
-                        view.findViewById(R.id.btnDelete).setTag(versuche[position]);
-
-                        return view;
-                    } catch (Exception e) {
-                        new ErrorLog(e, context);
-                    }
-                    return null;
-                }
-            };
-
-            lv = findViewById(R.id.lvDateiBegonnen);
-            lv.setAdapter(arrayAdapter2);
-
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    TextView tv = view.findViewById(android.R.id.text1);
-                    Intent   i  = new Intent(context, BoniturActivity.class);
-                    i.putExtra("FILE", tv.getText().toString());
-                    context.startActivity(i);
-                }
-            });
-
-            // </editor-fold>
         } catch (Exception e) {
             new ErrorLog(e, getApplication());
         }
+    }
+
+    private void createStartedList() {
+        BoniturDatenbank boniturDatenbank = new BoniturDatenbank(this);
+        SQLiteDatabase   db               = boniturDatenbank.getReadableDatabase();
+        BoniturSafe.db = db;
+
+        Cursor c = null;
+        try {
+            c = db.query(Versuch.TABLE_NAME, new String[]{Versuch.COLUMN_ID}, null, null, null, null, null);
+
+            versuche = new Versuch[c.getCount()];
+            int v = 0;
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                do {
+                    versuche[v] = Versuch.findByPk(c.getInt(c.getColumnIndex(Versuch.COLUMN_ID)));
+                    v++;
+                } while (c.moveToNext());
+            }
+        } catch (Exception e) {
+            new ErrorLog(e, getApplication());
+        } finally {
+            if (c != null)
+                c.close();
+        }
+
+
+        ArrayAdapter arrayAdapter2 = new ArrayAdapter(this, R.layout.jki_bonitur_file_list, android.R.id.text1, versuche) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                try {
+                    View view = super.getView(position, convertView, parent);
+                    ((TextView) view.findViewById(android.R.id.text1)).setText(versuche[position].name);
+                    view.findViewById(R.id.btnDelete).setTag(versuche[position]);
+
+                    return view;
+                } catch (Exception e) {
+                    new ErrorLog(e, context);
+                }
+                return null;
+            }
+        };
+
+        ListView lv = findViewById(R.id.lvDateiBegonnen);
+        lv.setAdapter(arrayAdapter2);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView tv = view.findViewById(android.R.id.text1);
+                Intent   i  = new Intent(context, BoniturActivity.class);
+                i.putExtra("FILE", tv.getText().toString());
+                context.startActivity(i);
+            }
+        });
+    }
+
+    private void createFileList(File folder) {
+        File[]            files = folder.listFiles();
+        ArrayList<String> list  = new ArrayList<String>();
+
+        for (int i = 0; i < files.length; ++ i) {
+            list.add(files[i].getName());
+        }
+
+        ListView lv = findViewById(R.id.lvDateien);
+
+        ArrayAdapter adapter = new ArrayAdapter(this,
+                                                android.R.layout.simple_list_item_1, list
+        );
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView tv = view.findViewById(android.R.id.text1);
+                Intent   i  = new Intent(context, BoniturActivity.class);
+                i.putExtra("FILE", tv.getText().toString());
+                context.startActivity(i);
+            }
+        });
     }
 
     public void loadSettings() {
