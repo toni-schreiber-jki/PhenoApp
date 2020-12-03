@@ -27,7 +27,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import de.bund.jki.jki_bonitur.config.Config;
@@ -114,6 +120,7 @@ public class VersuchListActivity extends Activity {
 
             if (! appFolder.exists()) {
                 Log.v("Files", "Create AppFolder: " + appFolder.mkdir() + "(" + appPath + ")");
+                initFolderStructure();
             }
             if (! folder.exists()) {
                 Log.v("Files", "Create InFolder: " + folder.mkdir() + " (" + path + ")");
@@ -239,6 +246,63 @@ public class VersuchListActivity extends Activity {
 
         for (int id : buttonIds) {
             ((Button) this.findViewById(id)).setTypeface(typeface);
+        }
+    }
+
+    private void initFolderStructure(){
+        String basePath = Environment.getExternalStorageDirectory().getAbsolutePath() +
+            Config.BaseFolder + File.separator;
+
+        String path      = basePath + "in" + File.separator;
+        File   filePath = new File(path);
+        filePath.mkdir();
+
+        path      = basePath + "out" + File.separator;
+        filePath = new File(path);
+        filePath.mkdir();
+
+        path      = basePath + "bbch" + File.separator;
+        filePath = new File(path);
+        filePath.mkdir();
+
+        copyBbchTemplate(path);
+
+        path      = basePath + "error" + File.separator;
+        filePath = new File(path);
+        filePath.mkdir();
+    }
+
+    private void copyBbchTemplate(String path) {
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
+        try{
+            reader = new BufferedReader(
+                new InputStreamReader(
+                    getAssets().open("template" + File.separator  + "bbch_template.xls"))
+            );
+            FileOutputStream fos = new FileOutputStream(path + "bbch_template.xls");
+            writer =  new BufferedWriter(new OutputStreamWriter(fos));
+            int character;
+            while ((character = reader.read()) != -1) {
+                writer.write(character);
+            }
+        } catch (Exception e){
+            new ErrorLog(e, this);
+        }finally {
+            if(reader != null){
+                try{
+                    reader.close();
+                }catch (Exception e){
+                    new ErrorLog(e, this);
+                }
+            }
+            if(writer != null){
+                try{
+                    writer.close();
+                }catch (Exception e){
+                    new ErrorLog(e, this);
+                }
+            }
         }
     }
 
