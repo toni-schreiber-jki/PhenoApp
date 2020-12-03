@@ -45,8 +45,8 @@ public class WartenDialog {
         public  int             showMeldung = 1;
         public  BoniturActivity ba;
         private String[]        meldungen   = new String[]{
-                getString(R.string.label_loading_data),
-                getString(R.string.label_data_will_saved)
+                "Daten werden geladen", //ToDo prüfen wie hier übersetzungen möglichen sind auf
+                "Daten werden gespeichert" // Grund Async Aufruf keine Nutzung von ressourcen möglich
         };
         private View            mView;
 
