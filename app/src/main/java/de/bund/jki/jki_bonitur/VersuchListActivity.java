@@ -35,10 +35,13 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import de.bund.jki.jki_bonitur.config.Config;
@@ -93,7 +96,7 @@ public class VersuchListActivity extends Activity {
 
         //bbch_template.xls + x
         for(String filename: bbchFileList){
-            if(filename.compareTo("bbch_template.xls") != 0){
+            if(filename.compareTo("bbch_template.xls") != 0 && filename.endsWith("xls")){
                 try {
                     createNewBbchEntries(bbchPath, filename, db);
                 } catch (Exception e) {
@@ -125,13 +128,14 @@ public class VersuchListActivity extends Activity {
         createMainStages(db, workbook, stagesSheet, new_art_id);
     }
 
-    private void createMainStages(SQLiteDatabase db, HSSFWorkbook workbook, HSSFSheet stagesSheet, long new_art_id) {
+    private void createMainStages(SQLiteDatabase db, HSSFWorkbook workbook, HSSFSheet stagesSheet, long new_art_id) throws IOException {
         HSSFRow       row;
         ContentValues cv = new ContentValues();
 
         for(int stage = 0; stage < 10; stage++){
             row = stagesSheet.getRow(3 + stage);
             String[] names = getNamesFromRow(row);
+            String imageFile = row.getLastCellNum() >= 4 && row.getCell(3) != null ? row.getCell(3).getStringCellValue() : "";
 
             if(names[0].length() != 0 || names[1].length() != 0){
                 cv = new ContentValues();
@@ -140,11 +144,45 @@ public class VersuchListActivity extends Activity {
                 cv.put(BbchMainStadium.COLUMN_NUMBER, "" + stage);
                 cv.put(BbchMainStadium.COLUMN_NAME_EN, names[0]);
                 cv.put(BbchMainStadium.COLUMN_NAME_DE, names[0]);
+                if(imageFile.length() > 0){
+                    copyAndInsertFile(new_art_id, cv, imageFile);
+                }
 
                 long new_main_stadium_id = db.insertOrThrow(BbchMainStadium.TABLE_NAME, null, cv);
                 createStages(db, workbook, stage, new_main_stadium_id);
             }
         }
+    }
+
+    private void copyAndInsertFile(long new_art_id, ContentValues cv, String imageFile) throws IOException {
+        String appPath  = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
+        String bbchPath = appPath + File.separator + "bbch" + File.separator;
+        String src = bbchPath + File.separator + imageFile;
+        String destBasePath = "/data/data/de.bund.jki.jki_bonitur/images/bbch/";
+        String dest = destBasePath + new_art_id + "/" + imageFile;
+
+        File destFolder = new File(destBasePath + new_art_id);
+        if(!destFolder.exists()){
+            destFolder.mkdirs();
+        }
+
+        File srcFile = new File(src);
+
+        if(srcFile.exists()) {
+            copyFile(src, dest);
+            srcFile.delete();
+            cv.put(BbchMainStadium.COLUMN_IMAGE, imageFile);
+        }
+    }
+
+    private void copyFile(String src, String dest) throws IOException {
+        FileInputStream  inStream   = new FileInputStream(src);
+        FileOutputStream outStream  = new FileOutputStream(dest);
+        FileChannel      inChannel  = inStream.getChannel();
+        FileChannel      outChannel = outStream.getChannel();
+        inChannel.transferTo(0, inChannel.size(), outChannel);
+        inStream.close();
+        outStream.close();
     }
 
     private void createStages(SQLiteDatabase db, HSSFWorkbook workbook, int stage, long new_main_stadium_id) {
@@ -171,8 +209,8 @@ public class VersuchListActivity extends Activity {
 
     private String[] getNamesFromRow(HSSFRow row) {
         String[] names = new String[2];
-        names[0] = row.getLastCellNum() >= 2 ? row.getCell(1).getStringCellValue() : "";
-        names[1] = row.getLastCellNum() >= 3 ? row.getCell(2).getStringCellValue() : "";
+        names[0] = row.getLastCellNum() >= 2 && row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
+        names[1] = row.getLastCellNum() >= 3 && row.getCell(2) != null ? row.getCell(2).getStringCellValue() : "";
 
         return names;
     }

@@ -3,6 +3,7 @@ package de.bund.jki.jki_bonitur;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -636,17 +637,28 @@ public class BoniturActivityHelper {
         cBbchStadium.moveToPosition(spBbchStadium.getSelectedItemPosition());
         int imageColumn = cBbchStadium.getColumnIndex(BbchMainStadium.COLUMN_IMAGE);
         if (!(cBbchStadium.isNull(imageColumn) || cBbchStadium.getString(imageColumn).length() == 0)) {
-            iv.setImageBitmap(BitmapFactory.decodeStream(mBa.getAssets().open(
-                "image" + File.separator +
-                    "bbch" + File.separator +
-                    cBbchStadium.getString(cBbchStadium.getColumnIndex(BbchMainStadium.COLUMN_ART_ID)) + File.separator +
-                    cBbchStadium.getString(imageColumn)
-                    )
-                )
-            );
+            iv.setImageBitmap(getBbchBitmap(imageColumn));
             iv.setVisibility(View.VISIBLE);
         } else {
             iv.setVisibility(View.GONE);
+        }
+    }
+
+    private Bitmap getBbchBitmap(int imageColumn) throws IOException {
+        int artId = cBbchStadium.getInt(cBbchStadium.getColumnIndex(BbchMainStadium.COLUMN_ART_ID));
+        if(artId <= 5 ) {
+            return BitmapFactory.decodeStream(mBa.getAssets().open(
+                "image" + File.separator +
+                    "bbch" + File.separator +
+                    artId + File.separator +
+                    cBbchStadium.getString(imageColumn)
+                                              )
+            );
+        } else {
+            return BitmapFactory.decodeFile(
+                "/data/data/de.bund.jki.jki_bonitur/images/bbch/" +
+                    artId + "/" + cBbchStadium.getString(imageColumn)
+            );
         }
     }
 
