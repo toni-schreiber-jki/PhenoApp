@@ -19,7 +19,7 @@ public class BbchGrape extends BbchDataImport{
                 "0",
                 "Sprouting/Bud development",
                 "Austrieb",
-                "",
+                "0.png",
                 new String[][]{
                     {
                         "0",
@@ -58,7 +58,7 @@ public class BbchGrape extends BbchDataImport{
                 "1",
                 "Leaf development",
                 "Blattentwicklung",
-                "",
+                "1.png",
                 new String[][]{
                     {
                         "11",
@@ -112,7 +112,7 @@ public class BbchGrape extends BbchDataImport{
                 "5",
                 "Inflorescence emerge",
                 "Entwicklung der Blütenanlagen",
-                "",
+                "5.png",
                 new String[][]{
                     {
                         "53",
@@ -136,7 +136,7 @@ public class BbchGrape extends BbchDataImport{
                 "6",
                 "Flowering",
                 "Blüte",
-                "",
+                "6.png",
                 new String[][]{
                     {
                         "60",
@@ -195,7 +195,7 @@ public class BbchGrape extends BbchDataImport{
                 "7",
                 "Development of fruits",
                 "Fruchtentwicklung",
-                "",
+                "7.png",
                 new String[][]{
                     {
                         "71",
@@ -229,7 +229,7 @@ public class BbchGrape extends BbchDataImport{
                 "8",
                 "Ripening of berries",
                 "Fruchtreife",
-                "",
+                "8.png",
                 new String[][]{
                     {
                         "81",
@@ -258,7 +258,7 @@ public class BbchGrape extends BbchDataImport{
                 "9",
                 "Senescence",
                 "Eintreten der Vegetationsruhe",
-                "",
+                "9.png",
                 new String[][]{
                     {
                         "91",

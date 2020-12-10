@@ -20,7 +20,7 @@ public class BbchCereal extends BbchDataImport{
                 "0",
                 "Germination",
                 "Keimung",
-                "",
+                "0.png",
                 new String[][]{
                      {
                         "0",
@@ -64,7 +64,7 @@ public class BbchCereal extends BbchDataImport{
                 "1",
                 "Leaf development",
                 "Blattentwicklung",
-                "",
+                "1.png",
                 new String[][]{
                     {
                         "10",
@@ -123,7 +123,7 @@ public class BbchCereal extends BbchDataImport{
                 "2",
                 "Germination",
                 "Bestocking",
-                "",
+                "2.png",
                 new String[][]{
                     {
                         "20",
@@ -182,7 +182,7 @@ public class BbchCereal extends BbchDataImport{
                     "3",
                     "Stem elongation",
                     "Schossen (Haupttrieb)",
-                    "",
+                    "3.png",
                     new String[][]{
                         {
                             "30",
@@ -236,7 +236,7 @@ public class BbchCereal extends BbchDataImport{
                     "4",
                     "Booting",
                     "Ähren-/Rispenschwellen",
-                    "",
+                    "4.png",
                     new String[][]{
                         {
                             "41",
@@ -270,7 +270,7 @@ public class BbchCereal extends BbchDataImport{
                     "5",
                     "Inflorescence emergence, heading",
                     "Ähren-/Rispenschieben",
-                    "",
+                    "5.png",
                     new String[][]{
                         {
                             "51",
@@ -322,7 +322,7 @@ public class BbchCereal extends BbchDataImport{
                 "6",
                 "Flowering, anthesis",
                 "Blüte",
-                "",
+                "6.png",
                 new String[][]{
                     {
                         "61",
@@ -346,7 +346,7 @@ public class BbchCereal extends BbchDataImport{
             "7",
             "Development of fruit",
             "Fruchtentwicklung",
-            "",
+            "7.png",
             new String[][]{
                 {
                     "71",

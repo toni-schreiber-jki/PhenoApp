@@ -63,7 +63,7 @@ public class BbchRape extends BbchDataImport {
                 "1",
                 "Leaf development",
                 "Blattentwicklung (Hauptsproß)",
-                "",
+                "1.png",
                 new String[][]{
                     {
                         "10",
@@ -181,7 +181,7 @@ public class BbchRape extends BbchDataImport {
                 "3",
                 "Stem elongation",
                 "Längenwachstum (Hauptsproß)",
-                "",
+                "3.png",
                 new String[][]{
                     {
                         "30",
@@ -240,7 +240,7 @@ public class BbchRape extends BbchDataImport {
                 "5",
                 "Inflorescence emergence",
                 "Entwicklung der Blütenanlagen (Hauptsproß);",
-                "",
+                "5.png",
                 new String[][]{
                     {
                         "50",
@@ -284,7 +284,7 @@ public class BbchRape extends BbchDataImport {
                 "6",
                 "Flowering",
                 "Blüte (Hauptsproß)",
-                "",
+                "6.png",
                 new String[][]{
                     {
                         "60",
@@ -333,7 +333,7 @@ public class BbchRape extends BbchDataImport {
                 "7",
                 "Development of fruit",
                 "Fruchtentwicklung",
-                "",
+                "7.png",
                 new String[][]{
                     {
                         "71",
@@ -387,7 +387,7 @@ public class BbchRape extends BbchDataImport {
                 "8",
                 "Ripening",
                 "Frucht- und Samenreife",
-                "",
+                "8.png",
                 new String[][]{
                     {
                         "80",

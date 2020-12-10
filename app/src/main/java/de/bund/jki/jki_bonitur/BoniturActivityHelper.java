@@ -30,6 +30,7 @@ import android.widget.TextView;
 import org.apache.poi.hssf.record.aggregates.CustomViewSettingsRecordAggregate;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -218,11 +219,17 @@ public class BoniturActivityHelper {
     private void updateSpinnerBbchStadium() {
 
         cBbchStadium = BoniturSafe.db.rawQuery(
-            "SELECT -1 _id, 'empty' name_en " +
+            "SELECT "+
+                "-1 _id, "+
+                "null " + BbchMainStadium.COLUMN_ART_ID + ", "+
+                "'empty' " + BbchMainStadium.COLUMN_NAME_EN + ", "+
+                "null " + BbchMainStadium.COLUMN_IMAGE + " " +
                 "UNION ALL " +
             "SELECT " +
                 BbchMainStadium.COLUMN_ID + ", " +
-                BbchMainStadium.COLUMN_NUMBER + " || ': ' || " + BbchMainStadium.COLUMN_NAME_EN + " AS " + BbchMainStadium.COLUMN_NAME_EN + ' ' +
+                BbchMainStadium.COLUMN_ART_ID + ", " +
+                BbchMainStadium.COLUMN_NUMBER + " || ': ' || " + BbchMainStadium.COLUMN_NAME_EN + " AS " + BbchMainStadium.COLUMN_NAME_EN + ", " +
+                BbchMainStadium.COLUMN_IMAGE + " " +
                 "FROM " + BbchMainStadium.TABLE_NAME + ' ' +
                 "WHERE " + BbchMainStadium.COLUMN_ART_ID + " = ?",
             new String[]{cBbchArt.getString(0)}
@@ -610,6 +617,7 @@ public class BoniturActivityHelper {
                 try {
                     spBbchStatiumCheck++;
                     updateSpinnerBbchDetail();
+                    updateBbchPicture();
                 } catch (Exception e) {
                     new ErrorLog(e, mBa.getApplicationContext());
                 }
@@ -621,6 +629,25 @@ public class BoniturActivityHelper {
 
             }
         });
+    }
+
+    private void updateBbchPicture() throws IOException {
+        ImageView iv   = getIvBild();
+        cBbchStadium.moveToPosition(spBbchStadium.getSelectedItemPosition());
+        int imageColumn = cBbchStadium.getColumnIndex(BbchMainStadium.COLUMN_IMAGE);
+        if (!(cBbchStadium.isNull(imageColumn) || cBbchStadium.getString(imageColumn).length() == 0)) {
+            iv.setImageBitmap(BitmapFactory.decodeStream(mBa.getAssets().open(
+                "image" + File.separator +
+                    "bbch" + File.separator +
+                    cBbchStadium.getString(cBbchStadium.getColumnIndex(BbchMainStadium.COLUMN_ART_ID)) + File.separator +
+                    cBbchStadium.getString(imageColumn)
+                    )
+                )
+            );
+            iv.setVisibility(View.VISIBLE);
+        } else {
+            iv.setVisibility(View.GONE);
+        }
     }
 
     public Spinner getSpBbchDetail() {

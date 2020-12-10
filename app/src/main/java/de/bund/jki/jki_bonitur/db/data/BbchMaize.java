@@ -63,7 +63,7 @@ public class BbchMaize extends BbchDataImport {
             "1",
             "Leaf development",
             "Blattentwicklung (Hauptsproß)",
-            "",
+            "1.png",
             new String[][]{
                 {
                     "10",
@@ -122,7 +122,7 @@ public class BbchMaize extends BbchDataImport {
             "3",
             "Stem elongation",
             "Längenwachstum (Hauptsproß); Schossen",
-            "",
+            "3.png",
             new String[][]{
                 {
                     "30",
@@ -181,7 +181,7 @@ public class BbchMaize extends BbchDataImport {
             "5",
             "Inflorescence emergence, heading ",
             "Entwicklung der Blütenanlagen; Rispenschieben",
-            "",
+            "5.png",
             new String[][]{
                 {
                     "51",
@@ -210,7 +210,7 @@ public class BbchMaize extends BbchDataImport {
             "6",
             "Flowering, anthesis ",
             "Blüte",
-            "",
+            "6.png",
             new String[][]{
                 {
                     "61",

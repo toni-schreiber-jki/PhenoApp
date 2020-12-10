@@ -19,7 +19,7 @@ public class BbchRice extends BbchDataImport {
                 "0",
                 "Germination",
                 "Keimung",
-                "",
+                "0.png",
                 new String[][]{
                     {
                         "0",
@@ -63,7 +63,7 @@ public class BbchRice extends BbchDataImport {
                 "1",
                 "Leaf development",
                 "Blattentwicklung",
-                "",
+                "1.png",
                 new String[][]{
                     {
                         "10",
@@ -122,7 +122,7 @@ public class BbchRice extends BbchDataImport {
                 "2",
                 "Tillering",
                 "Bestockung",
-                "",
+                "2.png",
                 new String[][]{
                     {
                         "21",
@@ -176,7 +176,7 @@ public class BbchRice extends BbchDataImport {
                 "3",
                 "Stem elongation",
                 "Schossen",
-                "",
+                "3.png",
                 new String[][]{
                     {
                         "30",
@@ -210,7 +210,7 @@ public class BbchRice extends BbchDataImport {
                 "4",
                 "Booting",
                 "Rispenschwellen",
-                "",
+                "4.png",
                 new String[][]{
                     {
                         "41",
@@ -244,7 +244,7 @@ public class BbchRice extends BbchDataImport {
                 "5",
                 "Inflorescence emergence, heading",
                 "Entwicklung der Blütenanlage; Rispenschieben",
-                "",
+                "5.png",
                 new String[][]{
                     {
                         "51",
@@ -298,7 +298,7 @@ public class BbchRice extends BbchDataImport {
                 "6",
                 "Flowering, anthesis",
                 "Blüte",
-                "",
+                "6.png",
                 new String[][]{
                     {
                         "61",
@@ -322,7 +322,7 @@ public class BbchRice extends BbchDataImport {
                 "7",
                 "Development of fruit",
                 "Fruchtentwicklung",
-                "",
+                "7-9.png",
                 new String[][]{
                     {
                         "71",
@@ -351,7 +351,7 @@ public class BbchRice extends BbchDataImport {
                 "8",
                 "Ripening",
                 "Frucht- und Samenreife",
-                "",
+                "7-9.png",
                 new String[][]{
                     {
                         "83",
@@ -380,7 +380,7 @@ public class BbchRice extends BbchDataImport {
                 "9",
                 "Senescence",
                 "Absterben",
-                "",
+                "7-9.png",
                 new String[][]{
                     {
                         "92",
