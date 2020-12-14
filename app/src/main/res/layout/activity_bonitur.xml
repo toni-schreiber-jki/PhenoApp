@@ -265,19 +265,18 @@
                     style="@style/JKI_Eigenschaft_Value" />
 
                 <ImageView
+                    android:id="@+id/ivBild"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/ivBild"
-                    android:layout_alignParentBottom="true"
-                    android:focusableInTouchMode="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@+id/rlPfadenkreuz"
-                    android:layout_toEndOf="@+id/rlPfadenkreuz"
-                    tools:src="@drawable/bbch_1"
                     android:layout_alignTop="@+id/rlPfadenkreuz"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_gravity="right"
                     android:layout_marginLeft="210dp"
+                    android:layout_toEndOf="@+id/rlPfadenkreuz"
+                    android:layout_toRightOf="@+id/rlPfadenkreuz"
+                    android:focusableInTouchMode="true"
                     android:onClick="onClick" />
 
             </LinearLayout>

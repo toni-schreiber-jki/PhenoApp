@@ -52,4 +52,6 @@
     <string name="label_loading_data">Daten werden geladen</string>
     <string name="label_data_will_saved">Daten werden gespeichert</string>
     <string name="url_impress">file:///android_asset/html/impressum.html</string>
+
+    <string name="_intern_name_column">name_de</string>
 </resources>

@@ -337,8 +337,7 @@
                     android:layout_marginLeft="210dp"
                     android:layout_toEndOf="@+id/rlPfadenkreuz"
                     android:focusableInTouchMode="true"
-                    android:onClick="onClick"
-                    tools:src="@drawable/bbch_1" />
+                    android:onClick="onClick" />
 
             </LinearLayout>
 

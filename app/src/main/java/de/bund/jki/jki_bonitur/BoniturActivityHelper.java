@@ -202,14 +202,14 @@ public class BoniturActivityHelper {
             null,
             null,
             null,
-            BbchArt.COLUMN_NAME_EN + " ASC"
+            mBa.getString(R.string._intern_name_column) + " ASC"
         );
 
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(
             mBa,
             android.R.layout.simple_list_item_1,
             cBbchArt,
-            new String[]{BbchArt.COLUMN_NAME_EN},
+            new String[]{mBa.getString(R.string._intern_name_column)},
             new int[]{android.R.id.text1},
             0
         );
@@ -224,12 +224,14 @@ public class BoniturActivityHelper {
                 "-1 _id, "+
                 "null " + BbchMainStadium.COLUMN_ART_ID + ", "+
                 "'empty' " + BbchMainStadium.COLUMN_NAME_EN + ", "+
+                "'nicht ausgewählt' " + BbchMainStadium.COLUMN_NAME_DE + ", "+
                 "null " + BbchMainStadium.COLUMN_IMAGE + " " +
                 "UNION ALL " +
             "SELECT " +
                 BbchMainStadium.COLUMN_ID + ", " +
                 BbchMainStadium.COLUMN_ART_ID + ", " +
                 BbchMainStadium.COLUMN_NUMBER + " || ': ' || " + BbchMainStadium.COLUMN_NAME_EN + " AS " + BbchMainStadium.COLUMN_NAME_EN + ", " +
+                BbchMainStadium.COLUMN_NUMBER + " || ': ' || " + BbchMainStadium.COLUMN_NAME_DE + " AS " + BbchMainStadium.COLUMN_NAME_DE + ", " +
                 BbchMainStadium.COLUMN_IMAGE + " " +
                 "FROM " + BbchMainStadium.TABLE_NAME + ' ' +
                 "WHERE " + BbchMainStadium.COLUMN_ART_ID + " = ?",
@@ -240,7 +242,7 @@ public class BoniturActivityHelper {
             mBa,
             android.R.layout.simple_list_item_1,
             cBbchStadium,
-            new String[]{BbchArt.COLUMN_NAME_EN},
+            new String[]{mBa.getString(R.string._intern_name_column)},
             new int[]{android.R.id.text1},
             0
         );
@@ -252,11 +254,12 @@ public class BoniturActivityHelper {
         cBbchStadium.moveToPosition(spBbchStadium.getSelectedItemPosition());
 
         Cursor cBbchDetail = BoniturSafe.db.rawQuery(
-            "SELECT -1 _id, 'empty' name_en " +
+            "SELECT -1 _id, 'empty' name_en, 'nicht ausgewählt' name_de " +
                 "UNION ALL " +
                 "SELECT " +
                 BbchStadium.COLUMN_ID + ", " +
-                BbchStadium.COLUMN_NUMBER + " || ': ' || " + BbchStadium.COLUMN_NAME_EN + " AS " + BbchStadium.COLUMN_NAME_EN + ' ' +
+                BbchStadium.COLUMN_NUMBER + " || ': ' || " + BbchStadium.COLUMN_NAME_EN + " AS " + BbchStadium.COLUMN_NAME_EN + ", " +
+                BbchStadium.COLUMN_NUMBER + " || ': ' || " + BbchStadium.COLUMN_NAME_DE + " AS " + BbchStadium.COLUMN_NAME_DE + " " +
                 "FROM " + BbchStadium.TABLE_NAME + ' ' +
                 "WHERE " + BbchStadium.COLUMN_MAIN_ID + " = ?",
             new String[]{cBbchStadium.getString(0)}
@@ -266,7 +269,7 @@ public class BoniturActivityHelper {
             mBa,
             android.R.layout.simple_list_item_1,
             cBbchDetail,
-            new String[]{BbchArt.COLUMN_NAME_EN},
+            new String[]{mBa.getString(R.string._intern_name_column)},
             new int[]{android.R.id.text1},
             0
         );
