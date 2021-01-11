@@ -119,7 +119,7 @@ public class VersuchListActivity extends Activity {
         ContentValues cv          = new ContentValues();
         HSSFWorkbook  workbook    = ExcelLib.openExcelFile(bbchPath + filename);
         HSSFSheet     stagesSheet = workbook.getSheetAt(0);
-        HSSFRow       row         = stagesSheet.getRow(0);
+        HSSFRow       row         = stagesSheet.getRow(1);
         String[]      names       = getNamesFromRow(row);
         cv.put(BbchArt.COLUMN_NAME_EN, names[0]);
         cv.put(BbchArt.COLUMN_NAME_DE, names[1]);
@@ -133,7 +133,7 @@ public class VersuchListActivity extends Activity {
         ContentValues cv = new ContentValues();
 
         for(int stage = 0; stage < 10; stage++){
-            row = stagesSheet.getRow(3 + stage);
+            row = stagesSheet.getRow(4 + stage);
             String[] names = getNamesFromRow(row);
             String imageFile = row.getLastCellNum() >= 4 && row.getCell(3) != null ? row.getCell(3).getStringCellValue() : "";
 
