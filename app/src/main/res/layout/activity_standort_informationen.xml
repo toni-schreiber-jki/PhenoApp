@@ -110,24 +110,24 @@
             android:id="@+id/relativeLayout">
 
             <Button
+                android:id="@+id/btnZurueck"
                 android:layout_width="150dp"
                 android:layout_height="fill_parent"
-                android:text="zurück"
-                android:id="@+id/btnZurueck"
-                android:layout_alignParentLeft="true"
                 android:layout_alignBaseline="@+id/btnSpeichern"
-                android:textColor="@color/darkred"
-                android:onClick="onClick"/>
+                android:layout_alignParentLeft="true"
+                android:onClick="onClick"
+                android:text="@string/btn_back"
+                android:textColor="@color/darkred" />
 
             <Button
+                android:id="@+id/btnSpeichern"
                 android:layout_width="150dp"
                 android:layout_height="fill_parent"
-                android:text="speichern"
-                android:id="@+id/btnSpeichern"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/jki_gruen"
-                android:onClick="onClick" />
+                android:layout_alignParentBottom="true"
+                android:onClick="onClick"
+                android:text="@string/btn_save"
+                android:textColor="@color/jki_gruen" />
         </RelativeLayout>
 
         <LinearLayout
@@ -244,12 +244,12 @@
                             android:background="@color/row_n" >
 
                             <TextView
-                                style="@style/JKI_Eigenschaft_Title"
-                                android:text="Standortinformationen:"
                                 android:id="@+id/textView30"
-                                android:layout_alignParentTop="true"
+                                style="@style/JKI_Eigenschaft_Title"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:text="@string/label_location_information" />
 
                         </LinearLayout>
 
