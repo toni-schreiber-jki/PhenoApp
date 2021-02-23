@@ -2,6 +2,10 @@
 <resources>
     <string name="app_name">PhenoApp</string>
 
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_bonitur">BoniturActivity</string>
+    <string name="title_activity_standort_info">BoniturActivity</string>
+
     <string name="btn_save">save</string>
     <string name="btn_save_xls">save as XLS</string>
     <string name="btn_save_csv">save as CSV</string>
@@ -41,7 +45,7 @@
     <string name="btn_tomorrow">tomorrow</string>
     <string name="btn_day_after_tomorrow">day after tomorrow</string>
     <string name="title_add_bbch">add BBCH Value?</string>
-    <string name="text_add_bbch_question">Do you want to add a BBCH value for today's date?</string>
+    <string name="text_add_bbch_question">Do you want to add a BBCH value for today\'s date?</string>
     <string name="label_name_code">Name/Code</string>
     <string name="title_select_location">Select location</string>
     <string name="text_select_location">Several locations were found, please select a location:</string>
