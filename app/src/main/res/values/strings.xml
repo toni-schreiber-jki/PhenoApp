@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_bonitur">BoniturActivity</string>
     <string name="title_activity_standort_info">BoniturActivity</string>
-    <string name="ba_si_button_text">Locaction info</string>
+    <string name="ba_si_button_text">Remarks</string>
     <string name="label_location">Location</string>
     <string name="label_accession">Accession</string>
     <string name="label_passport">Passport</string>

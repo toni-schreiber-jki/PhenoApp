@@ -10,7 +10,7 @@
     <string name="label_information">Informationen</string>
     <string name="label_descriptor">Deskriptor</string>
     <string name="label_characteristic">Merkmal</string>
-    <string name="ba_si_button_text">Standortinformationen</string>
+    <string name="ba_si_button_text">Notiz</string>
     <string name="btn_back">zurück</string>
     <string name="btn_next">weiter</string>
     <string name="btn_not_evaluate">nicht bewerten</string>
