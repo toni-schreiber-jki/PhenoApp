@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
@@ -36,7 +35,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -83,36 +81,40 @@ public class VersuchListActivity extends Activity {
     }
 
     private void loadNewBbch(){
-        String appPath  = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
-        String bbchPath = appPath + File.separator + "bbch" + File.separator;
-        File bbchFolder = new File(bbchPath);
-        String[] bbchFileList = bbchFolder.list();
+        try {
+            String   appPath      = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
+            String   bbchPath     = appPath + File.separator + "bbch" + File.separator;
+            File     bbchFolder   = new File(bbchPath);
+            String[] bbchFileList = bbchFolder.list();
+            if (bbchFileList != null) {
+                ContentValues cv = new ContentValues();
 
-        ContentValues cv = new ContentValues();
+                SQLiteDatabase db = BoniturSafe.db;
+                db.beginTransaction();
+                boolean success = true;
 
-        SQLiteDatabase db = BoniturSafe.db;
-        db.beginTransaction();
-        boolean success = true;
+                //bbch_template.xls + x
+                for (String filename : bbchFileList) {
+                    if (filename.compareTo("bbch_template.xls") != 0 && filename.endsWith("xls")) {
+                        try {
+                            createNewBbchEntries(bbchPath, filename, db);
+                        } catch (Exception e) {
+                            success = false;
+                            new ErrorLog(e, this);
+                        }
+                        File file = new File(bbchPath + filename);
+                        file.delete();
+                    }
 
-        //bbch_template.xls + x
-        for(String filename: bbchFileList){
-            if(filename.compareTo("bbch_template.xls") != 0 && filename.endsWith("xls")){
-                try {
-                    createNewBbchEntries(bbchPath, filename, db);
-                } catch (Exception e) {
-                    success = false;
-                    new ErrorLog(e, this);
                 }
-                File file = new File(bbchPath + filename);
-                file.delete();
+                if (success) {
+                    db.setTransactionSuccessful();
+                }
+                db.endTransaction();
             }
-
+        } catch (Exception e) {
+            new ErrorLog(e, getApplication());
         }
-        if(success) {
-            db.setTransactionSuccessful();
-        }
-        db.endTransaction();
-
     }
 
     private void createNewBbchEntries(String bbchPath, String filename, SQLiteDatabase db) throws IOException {
