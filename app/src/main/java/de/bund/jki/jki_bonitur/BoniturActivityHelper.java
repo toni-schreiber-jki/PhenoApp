@@ -1171,7 +1171,12 @@ public class BoniturActivityHelper {
                     break;
                 case Marker.MARKER_TYPE_MESSEN:
                     try {
-                        writeValue(VersuchWert.COLUMN_WERT_INT, Integer.parseInt("" + getEtMessenEingabe().getText()));
+                        String eingabe = "" + getEtMessenEingabe().getText();
+                        eingabe = eingabe.trim();
+                        if(eingabe.length() == 0){
+                            eingabe = null;
+                        }
+                        writeValue(VersuchWert.COLUMN_WERT_INT, eingabe);
                     } catch (NumberFormatException e) {
                         //ToDo: implement Fehlermeldung "NUR ZAHLEN ERLAUBT!"
                         writeValue(VersuchWert.COLUMN_WERT_INT, 0);
@@ -1208,6 +1213,8 @@ public class BoniturActivityHelper {
 
             if (wert instanceof String)
                 values.put(column, wert.toString());
+            else if(wert == null)
+                values.putNull(column);
             else
                 values.put(column, (int) wert);
 

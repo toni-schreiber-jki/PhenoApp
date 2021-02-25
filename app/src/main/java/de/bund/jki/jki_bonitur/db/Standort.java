@@ -207,7 +207,10 @@ public class Standort extends DbModelInterface {
                     //c.close();
                     return vw.wert_text;
                 }
-                //c.close();
+                if(vw.wert_int == 0 && vw.int_is_null){
+                    return "";
+                }
+
                 return "" + vw.wert_int;
             }
 
