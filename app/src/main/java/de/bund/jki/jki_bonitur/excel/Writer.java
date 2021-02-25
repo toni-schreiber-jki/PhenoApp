@@ -27,6 +27,7 @@ import de.bund.jki.jki_bonitur.dialoge.WartenDialog;
  */
 public class Writer {
 
+    public static final String WORKSHEET_DATA_NAME = "data";
     public static final int FORMAT_XLS = 1;
     public static final int FORMAT_CSV = 10;
 
@@ -92,7 +93,7 @@ public class Writer {
         this.akzessionHashMap = new HashMap<Integer, Akzession>();
         this.passportHashMapt = new HashMap<Integer, Passport>();
         try {
-            HSSFSheet sheet = workbook.createSheet("Daten");
+            HSSFSheet sheet = workbook.createSheet(WORKSHEET_DATA_NAME);
             sheet.createFreezePane(10, 1);
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(BoniturSafe.APP_CONTEXT);

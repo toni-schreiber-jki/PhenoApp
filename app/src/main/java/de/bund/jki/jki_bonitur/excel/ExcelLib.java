@@ -103,9 +103,9 @@ public class ExcelLib {
             FileOutputStream fos = new FileOutputStream(path);
             BufferedWriter   bw  = new BufferedWriter(new OutputStreamWriter(fos));
 
-            Sheet         sheet     = workbook.getSheetAt(workbook.getActiveSheetIndex());
+            Sheet         sheet     = workbook.getSheet(Writer.WORKSHEET_DATA_NAME);
             DataFormatter formatter = new DataFormatter();
-            for (int rowNum = 0; rowNum < sheet.getLastRowNum(); rowNum++) {
+            for (int rowNum = 0; rowNum <= sheet.getLastRowNum(); rowNum++) {
                 Iterator<Cell> cells = sheet.getRow(rowNum).cellIterator();
                 while (cells.hasNext()) {
                     Cell cell = cells.next();
