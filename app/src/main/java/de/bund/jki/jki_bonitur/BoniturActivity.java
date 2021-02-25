@@ -236,6 +236,7 @@ public class BoniturActivity extends Activity {
                                 bah.setBbchWert(s.getValue(marker.id));
                                 break;
                         }
+                        bah.hideKeyboard();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -1,6 +1,8 @@
 package de.bund.jki.jki_bonitur;
 
+import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -14,6 +16,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -1440,6 +1443,14 @@ public class BoniturActivityHelper {
                 return;
         }
         new BbchDialog(mBa, "BBCH " + df.format(c.getTime()));
+    }
+
+    public void hideKeyboard() {
+        View view = mBa.findViewById(android.R.id.content);
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) mBa.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 }
