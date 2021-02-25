@@ -58,31 +58,33 @@
             <Spinner
                 android:id="@+id/spParzelle"
                 style="@style/JKI_Spinner"
-                android:layout_width="@dimen/top_line_element_size"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/top_line_element_size"
                 android:layout_gravity="top"
                 android:layout_marginLeft="@dimen/top_large_margin"
+                android:minWidth="@dimen/top_line_element_size"
                 tools:listitem="@layout/jki_simple_list_item_1_top" />
 
             <Spinner
-                style="@style/JKI_Spinner"
-                android:layout_width="@dimen/top_line_element_size"
-                android:layout_height="@dimen/top_line_element_size"
                 android:id="@+id/spReihe"
-                android:layout_marginLeft="@dimen/top_medium_margin"
+                style="@style/JKI_Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/top_line_element_size"
                 android:layout_gravity="top"
+                android:layout_marginLeft="@dimen/top_medium_margin"
+                android:minWidth="@dimen/top_line_element_size"
                 tools:listitem="@layout/jki_simple_list_item_1_top" />
 
             <Spinner
-                style="@style/JKI_Spinner"
-                android:layout_width="@dimen/top_line_element_size"
-                android:layout_height="@dimen/top_line_element_size"
                 android:id="@+id/spPflanze"
-                android:layout_marginLeft="@dimen/top_medium_margin"
+                style="@style/JKI_Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/top_line_element_size"
                 android:layout_gravity="top"
-                tools:listitem="@layout/jki_simple_list_item_1_top"
+                android:layout_marginLeft="@dimen/top_medium_margin"
+                android:minWidth="@dimen/top_line_element_size"
 
-                />
+                tools:listitem="@layout/jki_simple_list_item_1_top" />
 
         </LinearLayout>
 
