@@ -22,7 +22,7 @@
     <string name="label_location">Location</string>
     <string name="label_accession">Accession</string>
     <string name="label_passport">Passport</string>
-    <string name="label_variety_breeding_strain">Variety/Breeding strain</string>
+    <string name="label_variety_breeding_strain">Variety/Genotype</string>
     <string name="label_parents">Parents</string>
     <string name="label_assortment_no">Collection no.</string>
     <string name="label_information">Information</string>
