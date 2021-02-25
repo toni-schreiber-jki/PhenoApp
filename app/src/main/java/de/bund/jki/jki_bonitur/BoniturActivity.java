@@ -107,7 +107,7 @@ public class BoniturActivity extends Activity {
                     bah.askNewBbch();
                 }
 
-                ((TextView) findViewById(R.id.tvDocument)).setText("" + BoniturSafe.VERSUCH_NAME);
+                ((TextView) findViewById(R.id.tvDocument)).setText("" + this.getVersuchName());
 
                 loadSettings();
 
@@ -116,6 +116,25 @@ public class BoniturActivity extends Activity {
         } catch (Exception e) {
             new ErrorLog(e, getApplicationContext());
         }
+    }
+
+    private String getVersuchName(){
+        String name = "";
+        String name_complete = BoniturSafe.VERSUCH_NAME;
+        int[] partionierung = this.getResources().getIntArray(R.array.versuchname_partionierung);
+
+        //remove .xls
+        name_complete = name_complete.substring(0,name_complete.length() - 4);
+        int length = name_complete.length();
+
+        if(length > partionierung[0]){
+            name = name_complete.substring(0, partionierung[1]) + "..";
+            name += name_complete.substring(length - partionierung[2], length);
+        }else{
+            name = name_complete;
+        }
+
+        return name;
     }
 
     @Override
