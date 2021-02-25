@@ -3,6 +3,10 @@
 * new Name PhenoApp
 * Multi-Language Gui
 * Input Excelfiles: Worksheets loaded by Index
+* Neues Standortfeld Danbenk-Key (siehe Tabelle Standort)
+* Fehlerkorrektur: [#1945](https://promadmz.julius-kuehn.de/issues/1945) Tastatur ausblenden bei Deskriptorwechsel
+* Fehlerkorrektur: [#1946](https://promadmz.julius-kuehn.de/issues/1946) Pflanzenauswahlfeld mindest 4-stellig
+* Fehlerkorrektur: [#1952](https://promadmz.julius-kuehn.de/issues/1952) leere Zahleneingabe führt zur 0
 
 0.9
 ---
