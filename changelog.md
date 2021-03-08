@@ -7,6 +7,8 @@
 * Fehlerkorrektur: [#1945](https://promadmz.julius-kuehn.de/issues/1945) Tastatur ausblenden bei Deskriptorwechsel
 * Fehlerkorrektur: [#1946](https://promadmz.julius-kuehn.de/issues/1946) Pflanzenauswahlfeld mindest 4-stellig
 * Fehlerkorrektur: [#1952](https://promadmz.julius-kuehn.de/issues/1952) leere Zahleneingabe führt zur 0
+* Fehlerkorrektur: [#1571](https://promadmz.julius-kuehn.de/issues/1571) Lange Dateinamen überdecken Richtungsangaben
+* Fehlerkorrektur: [#1947](https://promadmz.julius-kuehn.de/issues/1947) first Empty-Funktion beachtet Deskriptorauswahl nicht
 
 0.9
 ---

@@ -175,7 +175,10 @@ public class MarkerManager {
         return res;
     }
 
-    private static String getMarkerFilter() {
+    /**
+     * @return String
+     */
+    public static String getMarkerFilter() {
         String res = "";
         for (int i = 0; i < BoniturSafe.MARKER_FILTER.size(); i++) {
             if (i > 0)
