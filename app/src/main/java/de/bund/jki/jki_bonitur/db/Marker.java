@@ -15,7 +15,7 @@ public class Marker extends DbModelInterface {
     public static final int MARKER_TYPE_DATUM     = 3;
     public static final int MARKER_TYPE_BEMERKUNG = 4;
     public static final int MARKER_TYPE_BBCH      = 5;
-
+    public static final int MARKER_TYPE_NUMERIC   = 6;
     public static String COLUMN_ID           = "_id";
     public static String COLUMN_VERSUCH      = "versuchId";
     public static String COLUMN_CODE         = "code";

@@ -361,6 +361,8 @@
 
             <include layout="@layout/bon_messen" />
 
+            <include layout="@layout/bon_numric" />
+
             <include layout="@layout/bon_bbch" />
 
         </RelativeLayout>

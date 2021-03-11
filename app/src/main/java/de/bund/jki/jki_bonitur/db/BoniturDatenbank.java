@@ -18,7 +18,6 @@ import java.nio.channels.FileChannel;
 import de.bund.jki.jki_bonitur.ErrorLog;
 import de.bund.jki.jki_bonitur.config.Config;
 import de.bund.jki.jki_bonitur.db.data.BbchCereal;
-import de.bund.jki.jki_bonitur.db.data.BbchDataImport;
 import de.bund.jki.jki_bonitur.db.data.BbchGrape;
 import de.bund.jki.jki_bonitur.db.data.BbchMaize;
 import de.bund.jki.jki_bonitur.db.data.BbchRape;
@@ -31,15 +30,15 @@ import de.bund.jki.jki_bonitur.db.data.BbchRice;
 public class BoniturDatenbank extends SQLiteOpenHelper {
 
     public static final String  DATENBANK_NAME    = "bonitur.sqlite";
-    public static final int     DATENBANK_VERSION = 5;
+    public static final int     DATENBANK_VERSION = 6;
     public              Context c;
 
     public BoniturDatenbank(Context context) {
         super(
-                context,
-                DATENBANK_NAME,
-                null,
-                DATENBANK_VERSION
+            context,
+            DATENBANK_NAME,
+            null,
+            DATENBANK_VERSION
         );
         c = context;
     }
@@ -162,6 +161,8 @@ public class BoniturDatenbank extends SQLiteOpenHelper {
                     (new BbchRape()).insertValuesTo(db);
                     (new BbchRice()).insertValuesTo(db);
                     break;
+                case 6:
+                    db.execSQL(VersuchWert.ALTER_TABLE_ADD_NUMERIC);
             }
         } catch (Exception e) {
             new ErrorLog(e, null);

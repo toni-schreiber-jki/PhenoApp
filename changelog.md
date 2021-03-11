@@ -9,6 +9,7 @@
 * Fehlerkorrektur: [#1952](https://promadmz.julius-kuehn.de/issues/1952) leere Zahleneingabe führt zur 0
 * Fehlerkorrektur: [#1571](https://promadmz.julius-kuehn.de/issues/1571) Lange Dateinamen überdecken Richtungsangaben
 * Fehlerkorrektur: [#1947](https://promadmz.julius-kuehn.de/issues/1947) first Empty-Funktion beachtet Deskriptorauswahl nicht
+* Feature: [#1949](https://promadmz.julius-kuehn.de/issues/1949) Neuer Eingabetypen Kommazahl
 
 0.9
 ---

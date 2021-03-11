@@ -235,6 +235,11 @@ public class BoniturActivity extends Activity {
                                 bah.getEtBbchWert().setText(s.getValue(marker.id));
                                 bah.setBbchWert(s.getValue(marker.id));
                                 break;
+                            case Marker.MARKER_TYPE_NUMERIC:
+                                bah.getRlNumric().setVisibility(View.VISIBLE);
+                                bah.getEtNumricEingabe().setText(s.getValue(marker.id));
+                                bah.showBild();
+                                break;
                         }
                         bah.hideKeyboard();
                     }

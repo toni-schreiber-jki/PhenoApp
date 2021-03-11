@@ -20,6 +20,7 @@ import de.bund.jki.jki_bonitur.db.Akzession;
 import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
+import de.bund.jki.jki_bonitur.db.VersuchWert;
 import de.bund.jki.jki_bonitur.dialoge.WartenDialog;
 
 /**
@@ -235,6 +236,11 @@ public class Writer {
             case Marker.MARKER_TYPE_BEMERKUNG:
             case Marker.MARKER_TYPE_BBCH:
                 value = werteAll.getString(4);
+                break;
+            case Marker.MARKER_TYPE_NUMERIC:
+                value = "" + werteAll.getDouble(
+                    werteAll.getColumnIndex(VersuchWert.COLUMN_WERT_NUMERIC)
+                );
         }
         return value.replace("\n", "").replace("\r", "");
     }

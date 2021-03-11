@@ -113,16 +113,16 @@ public class Reader {
 
 
                 values.put(
-                        Marker.COLUMN_CODE,
-                        row.getCell(0).getCellTypeEnum() == CellType.NUMERIC ?
-                                "" + row.getCell(0).getNumericCellValue() :
-                                row.getCell(0).getStringCellValue()
+                    Marker.COLUMN_CODE,
+                    row.getCell(0).getCellTypeEnum() == CellType.NUMERIC ?
+                        "" + row.getCell(0).getNumericCellValue() :
+                        row.getCell(0).getStringCellValue()
                 );
                 values.put(
-                        Marker.COLUMN_NAME,
-                        row.getCell(1).getCellTypeEnum() == CellType.NUMERIC ?
-                                "" + row.getCell(1).getNumericCellValue() :
-                                row.getCell(1).getStringCellValue()
+                    Marker.COLUMN_NAME,
+                    row.getCell(1).getCellTypeEnum() == CellType.NUMERIC ?
+                        "" + row.getCell(1).getNumericCellValue() :
+                        row.getCell(1).getStringCellValue()
                 );
                 values.put(Marker.COLUMN_BESCHREIBUNG, ! ExcelLib.isCellEmpty(row, 4) ? row.getCell(4).getStringCellValue() : null);
                 values.put(Marker.COLUMN_TYPE, (int) row.getCell(2).getNumericCellValue());
@@ -249,16 +249,16 @@ public class Reader {
 
     private int readPassport(HSSFRow row) {
         Cursor cursor = BoniturSafe.db.query(
-                Passport.TABLE_NAME,
-                new String[]{Passport.COLUMN_ID},
-                Passport.COLUMN_VERSUCH + "=? AND " + Passport.COLUMN_KENN_NR + "=?",
-                new String[]{
-                        "" + BoniturSafe.VERSUCH_ID,
-                        ExcelLib.getCellValueString(row, 7, true)
-                },
-                null,
-                null,
-                null
+            Passport.TABLE_NAME,
+            new String[]{Passport.COLUMN_ID},
+            Passport.COLUMN_VERSUCH + "=? AND " + Passport.COLUMN_KENN_NR + "=?",
+            new String[]{
+                "" + BoniturSafe.VERSUCH_ID,
+                ExcelLib.getCellValueString(row, 7, true)
+            },
+            null,
+            null,
+            null
         );
         if (cursor.getCount() == 1) {
             cursor.moveToFirst();
@@ -335,11 +335,11 @@ public class Reader {
                                 }
                                 if (! (code == null || code == "" || value == "" || value == null)) {
                                     c = BoniturSafe.db.query(
-                                            Marker.TABLE_NAME,
-                                            new String[]{Marker.COLUMN_ID},
-                                            Marker.COLUMN_CODE + " = ? AND " + Marker.COLUMN_VERSUCH + " = ?",
-                                            new String[]{code, BoniturSafe.VERSUCH_ID + ""},
-                                            null, null, null
+                                        Marker.TABLE_NAME,
+                                        new String[]{Marker.COLUMN_ID},
+                                        Marker.COLUMN_CODE + " = ? AND " + Marker.COLUMN_VERSUCH + " = ?",
+                                        new String[]{code, BoniturSafe.VERSUCH_ID + ""},
+                                        null, null, null
                                     );
 
                                     if (c.getCount() == 1) {
@@ -356,12 +356,25 @@ public class Reader {
                                         if (marker.type != Marker.MARKER_TYPE_BONITUR) {
                                             switch (marker.type) {
                                                 case Marker.MARKER_TYPE_MESSEN:
-                                                    vw.wert_int = Integer.parseInt(value);
+                                                    if (value.trim().length() == 0) {
+                                                        vw.wert_int = - 1;
+                                                    } else {
+                                                        vw.wert_int = Integer.parseInt(value);
+                                                    }
                                                     break;
                                                 case Marker.MARKER_TYPE_BBCH:
                                                 case Marker.MARKER_TYPE_DATUM:
                                                 case Marker.MARKER_TYPE_BEMERKUNG:
                                                     vw.wert_text = value;
+                                                    break;
+                                                case Marker.MARKER_TYPE_NUMERIC:
+                                                    if (value.trim().length() == 0) {
+                                                        vw.wert_numeric = - 1;
+                                                    } else {
+                                                        vw.wert_numeric = Double.parseDouble(
+                                                            value.replace(',', '.')
+                                                        );
+                                                    }
                                                     break;
                                             }
                                             if (datum != null)

@@ -51,6 +51,7 @@ import de.bund.jki.jki_bonitur.db.Marker;
 import de.bund.jki.jki_bonitur.db.MarkerWert;
 import de.bund.jki.jki_bonitur.db.Passport;
 import de.bund.jki.jki_bonitur.db.Standort;
+import de.bund.jki.jki_bonitur.db.Versuch;
 import de.bund.jki.jki_bonitur.db.VersuchWert;
 import de.bund.jki.jki_bonitur.dialoge.BbchDialog;
 import de.bund.jki.jki_bonitur.dialoge.ManyStandorteDialog;
@@ -127,6 +128,7 @@ public class BoniturActivityHelper {
     //-----------Ende BBCH Stadien Spinner----------------------------------------------------------
     private RelativeLayout            rlBemerkung        = null;
     private RelativeLayout            rlMessen           = null;
+    private RelativeLayout            rlNumric           = null;
     private RelativeLayout            rlBBCH             = null;
     private int                       setBbchDetail      = - 1;
     //------------Ende BBCH Detail Spinner----------------------------------------------------------
@@ -135,6 +137,7 @@ public class BoniturActivityHelper {
     private EditText                  etBbchWert         = null;
     private EditText                  etBemerkungEingabe = null;
     private EditText                  etMessenEingabe    = null;
+    private EditText                  etNumricEingabe    = null;
     private Button                    btnZzUnten         = null;
     private Button                    btnZzOben          = null;
     private Button                    btnZzLinks         = null;
@@ -336,6 +339,7 @@ public class BoniturActivityHelper {
         getEtDatumEingabe().addTextChangedListener(new BoniturTextWatcher(mBa));
         getEtBemerkungEingabe().addTextChangedListener(new BoniturTextWatcher(mBa));
         getEtMessenEingabe().addTextChangedListener(new BoniturTextWatcher(mBa));
+        getEtNumricEingabe().addTextChangedListener(new BoniturTextWatcher(mBa));
     }
 
     public void init_checkBox() {
@@ -1023,6 +1027,12 @@ public class BoniturActivityHelper {
         return rlMessen;
     }
 
+    public RelativeLayout getRlNumric() {
+        if (rlNumric != null) return rlNumric;
+        rlNumric = mBa.findViewById(R.id.rlNumic);
+        return rlNumric;
+    }
+
     public RelativeLayout getRlBBCH() {
         if (rlBBCH != null) return rlBBCH;
         rlBBCH = mBa.findViewById(R.id.rlBBCH);
@@ -1034,6 +1044,7 @@ public class BoniturActivityHelper {
         getRlDatum().setVisibility(View.GONE);
         getRlBemerkung().setVisibility(View.GONE);
         getRlMessen().setVisibility(View.GONE);
+        getRlNumric().setVisibility(View.GONE);
         getRlBBCH().setVisibility(View.GONE);
         getIvBild().setVisibility(View.GONE);
     }
@@ -1156,6 +1167,12 @@ public class BoniturActivityHelper {
         etMessenEingabe = mBa.findViewById(R.id.etMessenEingabe);
         return etMessenEingabe;
     }
+
+    public EditText getEtNumricEingabe() {
+        if(etNumricEingabe != null) return etNumricEingabe;
+        etNumricEingabe = mBa.findViewById(R.id.etNumricEingabe);
+        return etNumricEingabe;
+    }
     //----------Ende: Datum-------------------------------------------------------------------------
 
     //----------Ende: Werte-------------------------------------------------------------------------
@@ -1191,6 +1208,20 @@ public class BoniturActivityHelper {
                 case Marker.MARKER_TYPE_BBCH:
                     writeValue(VersuchWert.COLUMN_WERT_TEXT, getEtBbchWert().getText().toString());
                     break;
+                case Marker.MARKER_TYPE_NUMERIC:
+                    try {
+                        String eingabe = getEtNumricEingabe().getText().toString().replace(',', '.');
+                        eingabe = eingabe.trim();
+                        if(eingabe.length() == 0){
+                            eingabe = null;
+                            writeValue(VersuchWert.COLUMN_WERT_NUMERIC, null);
+                        }else {
+                            double value = Double.parseDouble(eingabe);
+                            writeValue(VersuchWert.COLUMN_WERT_NUMERIC, value);
+                        }
+                    }catch (NumberFormatException e){
+                        writeValue(VersuchWert.COLUMN_WERT_NUMERIC, 0.0);
+                    }
             }
         } catch (Exception e) {
             new ErrorLog(e, mBa.getApplicationContext());
@@ -1215,6 +1246,8 @@ public class BoniturActivityHelper {
                 values.put(column, wert.toString());
             else if(wert == null)
                 values.putNull(column);
+            else if(wert instanceof Double)
+                values.put(column, (double) wert);
             else
                 values.put(column, (int) wert);
 

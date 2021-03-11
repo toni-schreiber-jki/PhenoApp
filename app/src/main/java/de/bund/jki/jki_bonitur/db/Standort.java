@@ -29,23 +29,23 @@ public class Standort extends DbModelInterface {
     public static String COLUMN_DB_KEY      = "db_key";
     public static String TABLE_NAME         = "standort";
     public static String CREATE_TABLE       = "CREATE TABLE " + TABLE_NAME + "(" + '\n' +
-            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + '\n' +
-            COLUMN_VERSUCH + " INTEGER NOT NULL," + '\n' +
-            COLUMN_PARZELLE + " TEXT NOT NULL DEFAULT '00'," + '\n' +
-            COLUMN_REIHE + " INTEGER NOT NULL," + '\n' +
-            COLUMN_PFLANZE + " INTEGER NOT NULL," + '\n' +
-            COLUMN_SORTE + " TEXT," + '\n' +
-            COLUMN_ZUCHTSTAMM + " TEXT," + '\n' +
-            COLUMN_MUTTER + " TEXT," + '\n' +
-            COLUMN_VATER + " TEXT," + '\n' +
-            COLUMN_SORTIMENTNR + " TEXT," + '\n' +
-            //COLUMN_AKZESSION+ " INTEGER," + '\n' +
-            //COLUMN_PASSPORT + " INTEGER," + '\n' +
+        COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + '\n' +
+        COLUMN_VERSUCH + " INTEGER NOT NULL," + '\n' +
+        COLUMN_PARZELLE + " TEXT NOT NULL DEFAULT '00'," + '\n' +
+        COLUMN_REIHE + " INTEGER NOT NULL," + '\n' +
+        COLUMN_PFLANZE + " INTEGER NOT NULL," + '\n' +
+        COLUMN_SORTE + " TEXT," + '\n' +
+        COLUMN_ZUCHTSTAMM + " TEXT," + '\n' +
+        COLUMN_MUTTER + " TEXT," + '\n' +
+        COLUMN_VATER + " TEXT," + '\n' +
+        COLUMN_SORTIMENTNR + " TEXT," + '\n' +
+        //COLUMN_AKZESSION+ " INTEGER," + '\n' +
+        //COLUMN_PASSPORT + " INTEGER," + '\n' +
 
-            "CONSTRAINT standort_versuch FOREIGN KEY(" + COLUMN_VERSUCH + ") REFERENCES " + Versuch.TABLE_NAME + "(" + Versuch.COLUMN_ID + ")" + '\n' +
-            "ON UPDATE CASCADE " + '\n' +
-            "ON DELETE CASCADE " + '\n' +
-            ")";
+        "CONSTRAINT standort_versuch FOREIGN KEY(" + COLUMN_VERSUCH + ") REFERENCES " + Versuch.TABLE_NAME + "(" + Versuch.COLUMN_ID + ")" + '\n' +
+        "ON UPDATE CASCADE " + '\n' +
+        "ON DELETE CASCADE " + '\n' +
+        ")";
     public static String ALTER_TABLE_1      = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_AKZESSION + " INTEGER REFERENCES " + Akzession.TABLE_NAME + "(" + Versuch.COLUMN_ID + ")" + '\n';
     public static String ALTER_TABLE_2      = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_PASSPORT + " INTEGER REFERENCES " + Passport.TABLE_NAME + "(" + Versuch.COLUMN_ID + ")" + '\n';
     public static String ALTER_TABLE_3      = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_FREIFELD + " TEXT" + '\n';
@@ -81,8 +81,8 @@ public class Standort extends DbModelInterface {
         Cursor   c   = null;
         try {
             c = BoniturSafe.db.rawQuery(
-                    "SELECT * FROM " + Standort.TABLE_NAME + " WHERE " + Standort.COLUMN_ID + " = ?",
-                    new String[]{"" + id}
+                "SELECT * FROM " + Standort.TABLE_NAME + " WHERE " + Standort.COLUMN_ID + " = ?",
+                new String[]{"" + id}
             );
 
             if (c.getCount() == 1) {
@@ -143,13 +143,13 @@ public class Standort extends DbModelInterface {
         Cursor c = null;
         try {
             c = BoniturSafe.db.query(
-                    VersuchWert.TABLE_NAME,
-                    new String[]{VersuchWert.COLUMN_WERT_DATUM},
-                    VersuchWert.COLUMN_STANDORT + "=? AND " + VersuchWert.COLUMN_MARKER + "=?",
-                    new String[]{"" + this.id, "" + markerId},
-                    null,
-                    null,
-                    VersuchWert.COLUMN_ID + " DESC"
+                VersuchWert.TABLE_NAME,
+                new String[]{VersuchWert.COLUMN_WERT_DATUM},
+                VersuchWert.COLUMN_STANDORT + "=? AND " + VersuchWert.COLUMN_MARKER + "=?",
+                new String[]{"" + this.id, "" + markerId},
+                null,
+                null,
+                VersuchWert.COLUMN_ID + " DESC"
             );
 
             if (c.getCount() == 0) {
@@ -177,16 +177,17 @@ public class Standort extends DbModelInterface {
     }
 
     public String getValue(int markerId) {
+        Marker m = Marker.findByPk(markerId);
         Cursor c = null;
         try {
             c = BoniturSafe.db.query(
-                    VersuchWert.TABLE_NAME,
-                    null,//new String[]{ VersuchWert.COLUMN_ID },
-                    VersuchWert.COLUMN_STANDORT + "=? AND " + VersuchWert.COLUMN_MARKER + "=?",
-                    new String[]{"" + this.id, "" + markerId},
-                    null,
-                    null,
-                    null
+                VersuchWert.TABLE_NAME,
+                null,//new String[]{ VersuchWert.COLUMN_ID },
+                VersuchWert.COLUMN_STANDORT + "=? AND " + VersuchWert.COLUMN_MARKER + "=?",
+                new String[]{"" + this.id, "" + markerId},
+                null,
+                null,
+                null
             );
 
             if (c.getCount() == 0) {
@@ -199,19 +200,25 @@ public class Standort extends DbModelInterface {
             if (c.getCount() == 1) {
                 VersuchWert vw = new VersuchWert(); //.findByPk(c.getInt(c.getColumnIndex(VersuchWert.COLUMN_ID)));
                 vw.fillWithCursor(c);
-                if (vw.wert_id > 0) {
-                    //c.close();
-                    return "" + this.getMarkerWert(vw.wert_id).value;
+                switch (m.type) {
+                    case Marker.MARKER_TYPE_BONITUR:
+                        return "" + this.getMarkerWert(vw.wert_id).value;
+                    case Marker.MARKER_TYPE_MESSEN:
+                        if (vw.wert_int == 0 && vw.int_is_null) {
+                            return "";
+                        }
+                        if (vw.wert_numeric > 0)
+                            return "" + vw.wert_int;
+                    case Marker.MARKER_TYPE_BBCH:
+                    case Marker.MARKER_TYPE_DATUM:
+                    case Marker.MARKER_TYPE_BEMERKUNG:
+                        return vw.wert_text;
+                    case Marker.MARKER_TYPE_NUMERIC:
+                        if(vw.numeric_is_null){
+                            return "";
+                        }
+                        return "" + Double.toString(vw.wert_numeric);
                 }
-                if (vw.wert_text != null) {
-                    //c.close();
-                    return vw.wert_text;
-                }
-                if(vw.wert_int == 0 && vw.int_is_null){
-                    return "";
-                }
-
-                return "" + vw.wert_int;
             }
 
             String res = "";
