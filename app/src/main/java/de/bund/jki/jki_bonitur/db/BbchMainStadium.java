@@ -99,7 +99,7 @@ public class BbchMainStadium extends DbModelInterface {
 
     public static void insertStartValues(SQLiteDatabase database) {
         String[][] daten = new String[][]{
-                {"1", "Cerals", "Getreide"},
+                {"1", "Cereals", "Getreide"},
                 {"2", "Rape", "Raps"},
                 {"3", "Rice", "Reis"},
                 {"4", "Maize", "Mais"},
