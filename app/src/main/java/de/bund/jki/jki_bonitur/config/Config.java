@@ -24,7 +24,7 @@ public class Config {
     public static String NAME_LEFT_HAND_MODE  = "linkshaender";
     public static String NAME_MULTIPLE_VALUES = "multipleValues";
 
-    public static String  BaseFolder         = File.separator + "obstBonitur";
+    public static String  BaseFolder         = File.separator + "phenoApp";
     public static boolean ZICK_ZACK_MODUS    = true;
     public static boolean FIRST_EMPTY        = true;
     public static boolean SHOW_ELTERN        = true;
