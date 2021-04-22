@@ -170,11 +170,19 @@ public class BoniturActivity extends Activity {
             if (daten[0] != null) {
                 s = (Standort) daten[0];
                 currentStandort = s;
-                ((TextView) findViewById(R.id.tvStandort)).setText(s.getName());
-                ((TextView) findViewById(R.id.tvSorteZucht)).setText(((Standort) daten[0]).sorte + " / " + ((Standort) daten[0]).zuchtstamm);
-                ((TextView) findViewById(R.id.tvEltern)).setText(((Standort) daten[0]).mutter + " / " + ((Standort) daten[0]).vater);
-                ((TextView) findViewById(R.id.tvSortiment)).setText(((Standort) daten[0]).sortimentsnummer);
-                ((TextView) findViewById(R.id.tvFreifeld)).setText(s.freifeld);
+                String standort = s.getName() == null ? "" :s.getName();
+                String sorte = s.sorte == null ? "" : s.sorte;
+                String zuchtstamm = s.zuchtstamm == null ? "" : s.zuchtstamm;
+                String mutter = s.mutter == null ? "" : s.mutter;
+                String vater = s.vater == null ? "" : s.vater;
+                String sortimentsnummer = s.sortimentsnummer == null ? "" : s.sortimentsnummer;
+                String freifeld = s.freifeld == null ? "" : s.freifeld;
+
+                ((TextView) findViewById(R.id.tvStandort)).setText("" + standort);
+                ((TextView) findViewById(R.id.tvSorteZucht)).setText(sorte + " / " + zuchtstamm);
+                ((TextView) findViewById(R.id.tvEltern)).setText(mutter + " / " + vater);
+                ((TextView) findViewById(R.id.tvSortiment)).setText("" + sortimentsnummer);
+                ((TextView) findViewById(R.id.tvFreifeld)).setText("" + freifeld);
 
                 if (bah.akzesionIdPos.containsKey(s.akzessionId)) {
                     if (bah.akzesionIdPos.get(s.akzessionId) != bah.getAkzessionSpinner().getSelectedItemPosition()) {
@@ -201,8 +209,10 @@ public class BoniturActivity extends Activity {
 
                 bah.setCbMarkerValue(BoniturSafe.MARKER_FILTER.contains(new Integer(marker.id)));
 
-                ((TextView) findViewById(R.id.tvMerkmal)).setText(marker.name);
-                ((TextView) findViewById(R.id.tvBeschreibung)).setText(marker.beschreibung);
+                String marker_name = marker.name == null ? "" : marker.name;
+                String marker_beschreibung = marker.beschreibung == null ? "" : marker.beschreibung;
+                ((TextView) findViewById(R.id.tvMerkmal)).setText(marker_name);
+                ((TextView) findViewById(R.id.tvBeschreibung)).setText(marker_beschreibung);
 
                 bah.hideAllEingabeTypen();
 
