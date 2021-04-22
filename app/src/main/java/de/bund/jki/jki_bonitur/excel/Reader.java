@@ -226,7 +226,20 @@ public class Reader {
     }
 
     private int readAkzession(HSSFRow row) {
-        Cursor cursor = BoniturSafe.db.query(Akzession.TABLE_NAME, new String[]{Akzession.COLUMN_ID}, Akzession.COLUMN_VERSUCH + "=? AND " + Akzession.COLUMN_NUMMER + "=?", new String[]{"" + BoniturSafe.VERSUCH_ID, row.getCell(5).getStringCellValue()}, null, null, null);
+        Cursor cursor = BoniturSafe.db.query(
+            Akzession.TABLE_NAME,
+            new String[]{Akzession.COLUMN_ID},
+            Akzession.COLUMN_VERSUCH + "=? AND " + Akzession.COLUMN_NUMMER + "=?",
+            new String[]{
+                "" + BoniturSafe.VERSUCH_ID,
+                row.getCell(5).getCellTypeEnum() == CellType.NUMERIC ?
+                    "" + row.getCell(5).getNumericCellValue() :
+                    row.getCell(5).getStringCellValue()
+            },
+            null,
+            null,
+            null
+        );
         if (cursor.getCount() == 1) {
             cursor.moveToFirst();
             int res = cursor.getInt(cursor.getColumnIndex(Akzession.COLUMN_ID));
@@ -235,8 +248,21 @@ public class Reader {
         } else {
             Akzession akzession = new Akzession();
             akzession.versuchId = BoniturSafe.VERSUCH_ID;
-            akzession.nummer = ExcelLib.isCellEmpty(row, 5) ? "" : row.getCell(5).getStringCellValue();
-            akzession.name = ExcelLib.isCellEmpty(row, 4) ? "" : row.getCell(4).getStringCellValue();
+            akzession.nummer = ExcelLib.isCellEmpty(row, 5) ?
+                "" :
+                (
+                    row.getCell(5).getCellTypeEnum() == CellType.NUMERIC ?
+                        "" + row.getCell(5).getNumericCellValue() :
+                        row.getCell(5).getStringCellValue()
+                );
+            akzession.name =
+                ExcelLib.isCellEmpty(row, 4) ?
+                    "" :
+                    (
+                        row.getCell(4).getCellTypeEnum() == CellType.NUMERIC ?
+                            "" + row.getCell(4).getNumericCellValue() :
+                            row.getCell(4).getStringCellValue()
+                    );
 
             akzession.save();
 
