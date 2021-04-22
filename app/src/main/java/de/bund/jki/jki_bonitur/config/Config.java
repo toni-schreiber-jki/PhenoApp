@@ -18,7 +18,7 @@ public class Config {
     public static String NAME_SHOW_AKZESSION  = "akzession";
     public static String NAME_SHOW_PASSPORT   = "passport";
     public static String NAME_SHOW_SORTE      = "sorte";
-    public static String NAME_SHOW_SORTIMENT  = "sorte";
+    public static String NAME_SHOW_SORTIMENT  = "sortiment";
     public static String NAME_EXCEL_DATUM     = "excelDatum";
     public static String NAME_BBCH_FRAGE      = "bbchFrage";
     public static String NAME_LEFT_HAND_MODE  = "linkshaender";
