@@ -61,5 +61,16 @@
     <string name="title_please_wait">Please wait</string>
     <string name="text_loading_data">Loading data</string>
     
+    <string name="excel_title_plot">Plot</string>
+    <string name="excel_title_row">Row</string>
+    <string name="excel_title_plant">Plant</string>
+    <string name="excel_title_acc_name">Accession name</string>
+    <string name="excel_title_acc_num">Accession no.</string>
+    <string name="excel_title_var_num">Variety no.</string>
+    <string name="excel_title_var_name">Variety name</string>
+    <string name="excel_title_loc_info">Location info</string>
+    <string name="excel_title_char_merk">Addtitional info</string>
+
+
 
 </resources>

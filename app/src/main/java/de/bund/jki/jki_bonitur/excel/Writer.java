@@ -14,6 +14,7 @@ import java.util.HashMap;
 import de.bund.jki.jki_bonitur.BoniturSafe;
 import de.bund.jki.jki_bonitur.ErrorLog;
 import de.bund.jki.jki_bonitur.MarkerManager;
+import de.bund.jki.jki_bonitur.R;
 import de.bund.jki.jki_bonitur.StandortManager;
 import de.bund.jki.jki_bonitur.config.Config;
 import de.bund.jki.jki_bonitur.db.Akzession;
@@ -102,15 +103,15 @@ public class Writer {
 
             //Überschriften erstellen
             Row row = sheet.createRow(0);
-            row.createCell(0).setCellValue("Parzelle");
-            row.createCell(1).setCellValue("Reihe");
-            row.createCell(2).setCellValue("Pflanze");
-            row.createCell(3).setCellValue("Akzessionsnummer");
-            row.createCell(4).setCellValue("Akzessionsname");
-            row.createCell(5).setCellValue("Kennnr");
-            row.createCell(6).setCellValue("Leitname");
-            row.createCell(7).setCellValue("StandortInfo");
-            row.createCell(8).setCellValue("Charkteristische Merkmale");
+            row.createCell(0).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_plot));
+            row.createCell(1).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_row));
+            row.createCell(2).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_plant));
+            row.createCell(3).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_name));
+            row.createCell(4).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_num));
+            row.createCell(5).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_num));
+            row.createCell(6).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_name));
+            row.createCell(7).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_loc_info));
+            row.createCell(8).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_char_merk));
             row.createCell(9).setCellValue("DB Key");
 
             Marker[]   marker    = MarkerManager.getAllMarker();
