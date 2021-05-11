@@ -37,7 +37,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -77,10 +79,10 @@ public class VersuchListActivity extends Activity {
         init_typefaces();
         loadNewBbch();
 
-        Resources  res = getResources();
+        Resources res = getResources();
     }
 
-    private void loadNewBbch(){
+    private void loadNewBbch() {
         try {
             String   appPath      = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
             String   bbchPath     = appPath + File.separator + "bbch" + File.separator;
@@ -125,7 +127,7 @@ public class VersuchListActivity extends Activity {
         String[]      names       = getNamesFromRow(row);
         cv.put(BbchArt.COLUMN_NAME_EN, names[0]);
         cv.put(BbchArt.COLUMN_NAME_DE, names[1]);
-        long new_art_id = db.insertOrThrow(BbchArt.TABLE_NAME,null, cv);
+        long new_art_id = db.insertOrThrow(BbchArt.TABLE_NAME, null, cv);
 
         createMainStages(db, workbook, stagesSheet, new_art_id);
     }
@@ -134,19 +136,19 @@ public class VersuchListActivity extends Activity {
         HSSFRow       row;
         ContentValues cv = new ContentValues();
 
-        for(int stage = 0; stage < 10; stage++){
+        for (int stage = 0; stage < 10; stage++) {
             row = stagesSheet.getRow(4 + stage);
-            String[] names = getNamesFromRow(row);
-            String imageFile = row.getLastCellNum() >= 4 && row.getCell(3) != null ? row.getCell(3).getStringCellValue() : "";
+            String[] names     = getNamesFromRow(row);
+            String   imageFile = row.getLastCellNum() >= 4 && row.getCell(3) != null ? row.getCell(3).getStringCellValue() : "";
 
-            if(names[0].length() != 0 || names[1].length() != 0){
+            if (names[0].length() != 0 || names[1].length() != 0) {
                 cv = new ContentValues();
 
                 cv.put(BbchMainStadium.COLUMN_ART_ID, "" + new_art_id);
                 cv.put(BbchMainStadium.COLUMN_NUMBER, "" + stage);
                 cv.put(BbchMainStadium.COLUMN_NAME_EN, names[0]);
                 cv.put(BbchMainStadium.COLUMN_NAME_DE, names[0]);
-                if(imageFile.length() > 0){
+                if (imageFile.length() > 0) {
                     copyAndInsertFile(new_art_id, cv, imageFile);
                 }
 
@@ -157,20 +159,20 @@ public class VersuchListActivity extends Activity {
     }
 
     private void copyAndInsertFile(long new_art_id, ContentValues cv, String imageFile) throws IOException {
-        String appPath  = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
-        String bbchPath = appPath + File.separator + "bbch" + File.separator;
-        String src = bbchPath + File.separator + imageFile;
+        String appPath      = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
+        String bbchPath     = appPath + File.separator + "bbch" + File.separator;
+        String src          = bbchPath + File.separator + imageFile;
         String destBasePath = "/data/data/de.bund.jki.jki_bonitur/images/bbch/";
-        String dest = destBasePath + new_art_id + "/" + imageFile;
+        String dest         = destBasePath + new_art_id + "/" + imageFile;
 
         File destFolder = new File(destBasePath + new_art_id);
-        if(!destFolder.exists()){
+        if (! destFolder.exists()) {
             destFolder.mkdirs();
         }
 
         File srcFile = new File(src);
 
-        if(srcFile.exists()) {
+        if (srcFile.exists()) {
             copyFile(src, dest);
             srcFile.delete();
             cv.put(BbchMainStadium.COLUMN_IMAGE, imageFile);
@@ -193,10 +195,10 @@ public class VersuchListActivity extends Activity {
         ContentValues cv         = new ContentValues();
         HSSFSheet     stageSheet = workbook.getSheetAt(1 + stage);
 
-        for(int stage_row = 0; stage_row < 10; stage_row++){
-            row = stageSheet.getRow(1+ stage_row);
+        for (int stage_row = 0; stage_row < 10; stage_row++) {
+            row = stageSheet.getRow(1 + stage_row);
             names = getNamesFromRow(row);
-            if(names[0].length() != 0 || names[1].length() != 0){
+            if (names[0].length() != 0 || names[1].length() != 0) {
                 cv = new ContentValues();
 
                 cv.put(BbchStadium.COLUMN_MAIN_ID, "" + new_main_stadium_id);
@@ -242,28 +244,28 @@ public class VersuchListActivity extends Activity {
     private void showFiles() {
         try {
             if (
-                    ContextCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-                            != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                    != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
-                        this,
-                        new String[]{
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        },
-                        4711
+                    this,
+                    new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    },
+                    4711
                 );
             }
 
             Config.load(this);
-            String appPath   = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
-            String path      = appPath + File.separator + "in" + File.separator;
-            String bbchPath  = appPath + File.separator + "bbch" + File.separator;
-            File   appFolder = new File(appPath);
-            File   sd        = Environment.getExternalStorageDirectory();
-            File   folder    = new File(path);
+            String appPath    = Environment.getExternalStorageDirectory().getAbsolutePath() + Config.BaseFolder;
+            String path       = appPath + File.separator + "in" + File.separator;
+            String bbchPath   = appPath + File.separator + "bbch" + File.separator;
+            File   appFolder  = new File(appPath);
+            File   sd         = Environment.getExternalStorageDirectory();
+            File   folder     = new File(path);
             File   bbchFolder = new File(bbchPath);
 
 
@@ -389,8 +391,8 @@ public class VersuchListActivity extends Activity {
     public void init_typefaces() {
         Typeface typeface = Typeface.createFromAsset(this.getAssets(), "fonts/fontawesome.ttf");
         int[] buttonIds = new int[]{
-                R.id.btnSettingList,
-                R.id.btnImpressum
+            R.id.btnSettingList,
+            R.id.btnImpressum
         };
 
         for (int id : buttonIds) {
@@ -398,57 +400,65 @@ public class VersuchListActivity extends Activity {
         }
     }
 
-    private void initFolderStructure(){
+    private void initFolderStructure() {
         String basePath = Environment.getExternalStorageDirectory().getAbsolutePath() +
             Config.BaseFolder + File.separator;
 
-        String path      = basePath + "in" + File.separator;
+        String path     = basePath + "in" + File.separator;
         File   filePath = new File(path);
         filePath.mkdir();
 
-        path      = basePath + "out" + File.separator;
+        copyTemplateFile(path, "Input_example.xls");
+
+        path = basePath + "out" + File.separator;
         filePath = new File(path);
         filePath.mkdir();
 
-        path      = basePath + "bbch" + File.separator;
+        path = basePath + "bbch" + File.separator;
         filePath = new File(path);
         filePath.mkdir();
 
-        copyBbchTemplate(path);
+        copyTemplateFile(path, "bbch_template.xls");
 
-        path      = basePath + "error" + File.separator;
+        path = basePath + "error" + File.separator;
+        filePath = new File(path);
+        filePath.mkdir();
+
+        path = basePath + "fotos" + File.separator;
+        filePath = new File(path);
+        filePath.mkdir();
+
+        path = basePath + "decriptorPictures" + File.separator;
         filePath = new File(path);
         filePath.mkdir();
     }
 
-    private void copyBbchTemplate(String path) {
-        BufferedReader reader = null;
-        BufferedWriter writer = null;
-        try{
-            reader = new BufferedReader(
-                new InputStreamReader(
-                    getAssets().open("template" + File.separator  + "bbch_template.xls"))
-            );
-            FileOutputStream fos = new FileOutputStream(path + "bbch_template.xls");
-            writer =  new BufferedWriter(new OutputStreamWriter(fos));
-            int character;
-            while ((character = reader.read()) != -1) {
-                writer.write(character);
+    private void copyTemplateFile(String path, String filename) {
+        InputStream  in  = null;
+        OutputStream out = null;
+        try {
+            in = getAssets().open("template" + File.separator + filename);
+            out = new FileOutputStream(path + filename);
+            byte[] buffer = new byte[1024];
+            int    read   = in.read(buffer);
+            while (read != - 1) {
+                out.write(buffer, 0, read);
+                read = in.read(buffer);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             new ErrorLog(e, this);
-        }finally {
-            if(reader != null){
-                try{
-                    reader.close();
-                }catch (Exception e){
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (Exception e) {
                     new ErrorLog(e, this);
                 }
             }
-            if(writer != null){
-                try{
-                    writer.close();
-                }catch (Exception e){
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (Exception e) {
                     new ErrorLog(e, this);
                 }
             }
@@ -459,32 +469,32 @@ public class VersuchListActivity extends Activity {
         delVersuch = (Versuch) v.getTag();
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setNegativeButton("NEIN", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+            .setNegativeButton("NEIN", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-                        dialog.dismiss();
-                    }
-                })
-                .setPositiveButton("JA", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            })
+            .setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-                        BoniturSafe.db.delete(Passport.TABLE_NAME, Passport.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
-                        BoniturSafe.db.delete(Akzession.TABLE_NAME, Akzession.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
-                        BoniturSafe.db.delete(VersuchWert.TABLE_NAME, VersuchWert.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
-                        BoniturSafe.db.delete(Standort.TABLE_NAME, Standort.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
-                        BoniturSafe.db.delete(Marker.TABLE_NAME, Marker.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
-                        BoniturSafe.db.delete(Versuch.TABLE_NAME, Versuch.COLUMN_ID + "=?", new String[]{"" + delVersuch.id});
+                    BoniturSafe.db.delete(Passport.TABLE_NAME, Passport.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
+                    BoniturSafe.db.delete(Akzession.TABLE_NAME, Akzession.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
+                    BoniturSafe.db.delete(VersuchWert.TABLE_NAME, VersuchWert.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
+                    BoniturSafe.db.delete(Standort.TABLE_NAME, Standort.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
+                    BoniturSafe.db.delete(Marker.TABLE_NAME, Marker.COLUMN_VERSUCH + "=?", new String[]{"" + delVersuch.id});
+                    BoniturSafe.db.delete(Versuch.TABLE_NAME, Versuch.COLUMN_ID + "=?", new String[]{"" + delVersuch.id});
 
-                        showFiles();
+                    showFiles();
 
-                        dialog.dismiss();
-                    }
-                })
-                .setTitle("Versuche \"" + delVersuch.name + "\" löschen ?")
-                .setMessage("Sind die sicher? Alle bereits erhobenen Werte gehen verloren!")
-                .create();
+                    dialog.dismiss();
+                }
+            })
+            .setTitle("Versuche \"" + delVersuch.name + "\" löschen ?")
+            .setMessage("Sind die sicher? Alle bereits erhobenen Werte gehen verloren!")
+            .create();
 
         dialog.show();
 

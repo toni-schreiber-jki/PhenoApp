@@ -199,12 +199,12 @@ public class Reader {
                 standort.reihe = (int) row.getCell(1).getNumericCellValue();//Integer.parseInt(tmp[1].replaceAll(" ",""));
                 standort.pflanze = (int) row.getCell(2).getNumericCellValue();
                 standort.sorte = ExcelLib.isCellEmpty(row, 8) ? null : ExcelLib.getCellValueString(row, 8, true);
-                standort.zuchtstamm = ExcelLib.isCellEmpty(row, 9) ? null : ExcelLib.getCellValueString(row, 9, true);
+                //standort.zuchtstamm = ExcelLib.isCellEmpty(row, 9) ? null : ExcelLib.getCellValueString(row, 9, true);
+                standort.sortimentsnummer = ExcelLib.isCellEmpty(row, 9) ? null : ExcelLib.getCellValueString(row, 9, true);
                 standort.mutter = ExcelLib.isCellEmpty(row, 10) ? null : ExcelLib.getCellValueString(row, 10, true);
                 standort.vater = ExcelLib.isCellEmpty(row, 11) ? null : ExcelLib.getCellValueString(row, 11, true);
-                standort.sortimentsnummer = ExcelLib.isCellEmpty(row, 12) ? null : ExcelLib.getCellValueString(row, 12, true);
-                standort.freifeld = ExcelLib.isCellEmpty(row, 13) ? null : ExcelLib.getCellValueString(row, 13, true);
-                standort.dbKey = ExcelLib.isCellEmpty(row, 14) ? null : ExcelLib.getCellValueString(row, 14, true);
+                standort.freifeld = ExcelLib.isCellEmpty(row, 12) ? null : ExcelLib.getCellValueString(row, 12, true);
+                standort.dbKey = ExcelLib.isCellEmpty(row, 13) ? null : ExcelLib.getCellValueString(row, 13, true);
 
                 if (! ExcelLib.isCellEmpty(row, 5)) {
                     standort.akzessionId = readAkzession(row);

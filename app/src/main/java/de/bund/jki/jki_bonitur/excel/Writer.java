@@ -109,7 +109,7 @@ public class Writer {
             row.createCell(3).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_name));
             row.createCell(4).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_num));
             row.createCell(5).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_num));
-            row.createCell(6).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_name));
+            row.createCell(6).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_name));
             row.createCell(7).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_loc_info));
             row.createCell(8).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_char_merk));
             row.createCell(9).setCellValue("DB Key");

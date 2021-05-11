@@ -21,8 +21,8 @@
     <string name="ba_si_button_text">Remarks</string>
     <string name="label_location">Location</string>
     <string name="label_accession">Accession</string>
-    <string name="label_passport">Passport</string>
-    <string name="label_variety_breeding_strain">Variety/Genotype</string>
+    <string name="label_passport">Variety</string>
+    <string name="label_variety_breeding_strain">Genotype</string>
     <string name="label_parents">Parents</string>
     <string name="label_assortment_no">Collection no.</string>
     <string name="label_information">Information</string>
@@ -67,9 +67,9 @@
     <string name="excel_title_acc_name">Accession name</string>
     <string name="excel_title_acc_num">Accession no.</string>
     <string name="excel_title_var_num">Variety no.</string>
-    <string name="excel_title_var_name">Variety name</string>
+    <string name="excel_title_var_name">Genotype</string>
     <string name="excel_title_loc_info">Location info</string>
-    <string name="excel_title_char_merk">Addtitional info</string>
+    <string name="excel_title_char_merk">Additional info</string>
 
 
 

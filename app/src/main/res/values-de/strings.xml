@@ -3,8 +3,8 @@
     <string name="app_name">PhenoApp</string>
     <string name="label_location">Standort</string>
     <string name="label_accession">Akzession</string>
-    <string name="label_passport">Passport</string>
-    <string name="label_variety_breeding_strain">Sorte/Zuchtstamm</string>
+    <string name="label_passport">Sorte</string>
+    <string name="label_variety_breeding_strain">Genotyp</string>
     <string name="label_parents">Eltern</string>
     <string name="label_assortment_no">Sortimentsnr</string>
     <string name="label_information">Informationen</string>
@@ -56,10 +56,10 @@
     <string name="excel_title_plot">Parzelle</string>
     <string name="excel_title_row">Reihe</string>
     <string name="excel_title_plant">Pflanze</string>
-    <string name="excel_title_acc_name">Akzessionsname</string>
+    <string name="excel_title_acc_name">Genotyp</string>
     <string name="excel_title_acc_num">Akzessionsnummer</string>
     <string name="excel_title_var_num">Leitnummer</string>
-    <string name="excel_title_var_name">Sortenname</string>
+    <string name="excel_title_var_name">Sorte</string>
     <string name="excel_title_loc_info">Standortinfo</string>
     <string name="excel_title_char_merk">Charkteristische Merkmale</string>
 

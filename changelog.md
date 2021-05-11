@@ -1,5 +1,7 @@
 1.0
 ---
+* rename boniturBilder -> descriptorPictures
+* remove Field ZuchtstammNr
 * new Name PhenoApp
 * Multi-Language Gui
 * Input Excelfiles: Worksheets loaded by Index

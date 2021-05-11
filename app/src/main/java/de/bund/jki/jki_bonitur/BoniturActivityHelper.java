@@ -1436,8 +1436,8 @@ public class BoniturActivityHelper {
     public void showBild() {
         String    code = mBa.currentMarker.code;
         ImageView iv   = getIvBild();
-        if (new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/boniturBilder/" + code + ".JPG").exists()) {
-            iv.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/boniturBilder/" + code + ".JPG"));
+        if (new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/decriptorPictures/" + code + ".JPG").exists()) {
+            iv.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/decriptorPictures/" + code + ".JPG"));
             iv.setVisibility(View.VISIBLE);
         } else {
             iv.setVisibility(View.GONE);
@@ -1459,8 +1459,8 @@ public class BoniturActivityHelper {
     public void showBildGross() {
         String    code = mBa.currentMarker.code;
         ImageView iv   = mBa.findViewById(R.id.ivBildGross);
-        if (new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/boniturBilder/" + code + ".JPG").exists()) {
-            iv.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/boniturBilder/" + code + ".JPG"));
+        if (new File(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/decriptorPictures/" + code + ".JPG").exists()) {
+            iv.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + Config.BaseFolder + "/decriptorPictures/" + code + ".JPG"));
             iv.setVisibility(View.VISIBLE);
             setVisibilityBildHintergrund(View.GONE);
         } else {

@@ -179,7 +179,7 @@ public class BoniturActivity extends Activity {
                 String freifeld = s.freifeld == null ? "" : s.freifeld;
 
                 ((TextView) findViewById(R.id.tvStandort)).setText("" + standort);
-                ((TextView) findViewById(R.id.tvSorteZucht)).setText(sorte + " / " + zuchtstamm);
+                ((TextView) findViewById(R.id.tvSorteZucht)).setText(sorte); //+ " / " + zuchtstamm
                 ((TextView) findViewById(R.id.tvEltern)).setText(mutter + " / " + vater);
                 ((TextView) findViewById(R.id.tvSortiment)).setText("" + sortimentsnummer);
                 ((TextView) findViewById(R.id.tvFreifeld)).setText("" + freifeld);
