@@ -428,7 +428,7 @@ public class VersuchListActivity extends Activity {
         filePath = new File(path);
         filePath.mkdir();
 
-        path = basePath + "decriptorPictures" + File.separator;
+        path = basePath + "descriptorPictures" + File.separator;
         filePath = new File(path);
         filePath.mkdir();
     }
