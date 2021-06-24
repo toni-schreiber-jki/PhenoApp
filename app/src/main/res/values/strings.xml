@@ -68,6 +68,9 @@
     <string name="excel_title_acc_num">Accession no.</string>
     <string name="excel_title_var_num">Variety no.</string>
     <string name="excel_title_var_name">Genotype</string>
+    <string name="excel_title_col_no">Collection no.</string>
+    <string name="excel_title_mother">Mother</string>
+    <string name="excel_title_father">Father</string>
     <string name="excel_title_loc_info">Location info</string>
     <string name="excel_title_char_merk">Additional info</string>
 

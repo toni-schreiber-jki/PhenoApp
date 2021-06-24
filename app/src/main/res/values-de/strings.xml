@@ -60,6 +60,9 @@
     <string name="excel_title_acc_num">Akzessionsnummer</string>
     <string name="excel_title_var_num">Leitnummer</string>
     <string name="excel_title_var_name">Sorte</string>
+    <string name="excel_title_col_no">Sortimentsnr.</string>
+    <string name="excel_title_mother">Mutter</string>
+    <string name="excel_title_father">Vater</string>
     <string name="excel_title_loc_info">Standortinfo</string>
     <string name="excel_title_char_merk">Charkteristische Merkmale</string>
 

@@ -96,7 +96,7 @@ public class Writer {
         this.passportHashMapt = new HashMap<Integer, Passport>();
         try {
             HSSFSheet sheet = workbook.createSheet(WORKSHEET_DATA_NAME);
-            sheet.createFreezePane(10, 1);
+            sheet.createFreezePane(13, 1);
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(BoniturSafe.APP_CONTEXT);
             boolean           show_datum  = preferences.getBoolean(Config.NAME_EXCEL_DATUM, Config.SHOW_EXCEL_DATUM);
@@ -110,14 +110,17 @@ public class Writer {
             row.createCell(4).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_num));
             row.createCell(5).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_num));
             row.createCell(6).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_name));
-            row.createCell(7).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_loc_info));
-            row.createCell(8).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_char_merk));
-            row.createCell(9).setCellValue("DB Key");
+            row.createCell(7).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_col_no));
+            row.createCell(8).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_mother));
+            row.createCell(9).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_father));
+            row.createCell(10).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_loc_info));
+            row.createCell(11).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_char_merk));
+            row.createCell(12).setCellValue("DB Key");
 
             Marker[]   marker    = MarkerManager.getAllMarker();
             Standort[] standorte = StandortManager.getAllStandorte();
 
-            int colum_offset = 10;
+            int colum_offset = 13;
 
             int p = 0;
             for (Marker m : marker) {
@@ -172,9 +175,12 @@ public class Writer {
                 row.createCell(4).setCellValue(akzession != null ? akzession.name : "");
                 row.createCell(5).setCellValue(passport != null ? passport.kennNr : "");
                 row.createCell(6).setCellValue(passport != null ? passport.leitname : "");
-                row.createCell(7).setCellValue(standort.info != null ? standort.info : "");
-                row.createCell(8).setCellValue(akzession != null ? akzession.merkmale : "");
-                row.createCell(9).setCellValue(standort.dbKey != null ? standort.dbKey : "");
+                row.createCell(7).setCellValue(standort.sortimentsnummer);
+                row.createCell(8).setCellValue(standort.mutter);
+                row.createCell(9).setCellValue(standort.vater);
+                row.createCell(10).setCellValue(standort.info != null ? standort.info : "");
+                row.createCell(11).setCellValue(akzession != null ? akzession.merkmale : "");
+                row.createCell(12).setCellValue(standort.dbKey != null ? standort.dbKey : "");
 
 
                 int mp = 0;
