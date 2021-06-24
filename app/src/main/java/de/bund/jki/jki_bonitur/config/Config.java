@@ -33,7 +33,7 @@ public class Config {
     public static boolean SHOW_SORTE         = true;
     public static boolean SHOW_SORTIMENT     = true;
     public static boolean SHOW_EXCEL_DATUM   = true;
-    public static boolean SHOW_BBCH_FRAGE    = true;
+    public static boolean SHOW_BBCH_FRAGE    = false;
     public static boolean IS_LEFT_HAND_MODE  = false;
     public static boolean IS_MULTIPLE_VALUES = true;
 
