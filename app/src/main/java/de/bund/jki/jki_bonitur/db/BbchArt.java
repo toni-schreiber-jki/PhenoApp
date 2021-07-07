@@ -87,4 +87,22 @@ public class BbchArt extends DbModelInterface {
             database.insertOrThrow(TABLE_NAME, null, values);
         }
     }
+
+    public static void insertMoreValues(SQLiteDatabase database) {
+        String[][] daten = new String[][]{
+            {"6", "Apple", "Apfel"},
+            {"7", "Patato", "Kartoffel"}
+        };
+
+        for (String[] art : daten) {
+            ContentValues values = new ContentValues();
+
+            values.put(COLUMN_ID, art[0]);
+            values.put(COLUMN_NAME_EN, art[1]);
+            values.put(COLUMN_NAME_DE, art[2]);
+
+            database.insertOrThrow(TABLE_NAME, null, values);
+        }
+    }
+
 }
