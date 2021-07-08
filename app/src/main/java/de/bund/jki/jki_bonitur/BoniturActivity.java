@@ -169,6 +169,10 @@ public class BoniturActivity extends Activity {
 
             if (daten[0] != null) {
                 s = (Standort) daten[0];
+                BoniturSafe.CURRENT_STANDORT_ID = s.id;
+                BoniturSafe.CURRENT_PARZELLE = s.parzelle;
+                BoniturSafe.CURRENT_REIHE = s.reihe;
+                BoniturSafe.CURRENT_PFLANZE = s.pflanze;
                 currentStandort = s;
                 String standort = s.getName() == null ? "" :s.getName();
                 String sorte = s.sorte == null ? "" : s.sorte;
@@ -205,6 +209,7 @@ public class BoniturActivity extends Activity {
 
             if (daten[1] != null) {
                 Marker marker = (Marker) daten[1];
+                BoniturSafe.CURRENT_MARKER = marker.id;
                 currentMarker = marker;
 
                 bah.setCbMarkerValue(BoniturSafe.MARKER_FILTER.contains(new Integer(marker.id)));
