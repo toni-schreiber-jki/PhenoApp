@@ -65,6 +65,8 @@
     <string name="excel_title_father">Vater</string>
     <string name="excel_title_loc_info">Standortinfo</string>
     <string name="excel_title_char_merk">Charkteristische Merkmale</string>
+    <string name="excel_title_free_field"></string>
+    <string name="excel_title_genotype">Genotyp</string>
 
     <string name="_intern_name_column">name_de</string>
 </resources>

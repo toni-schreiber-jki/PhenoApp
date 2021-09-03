@@ -110,12 +110,14 @@ public class Writer {
             row.createCell(4).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_num));
             row.createCell(5).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_num));
             row.createCell(6).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_name));
-            row.createCell(7).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_col_no));
-            row.createCell(8).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_mother));
-            row.createCell(9).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_father));
-            row.createCell(10).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_loc_info));
-            row.createCell(11).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_char_merk));
-            row.createCell(12).setCellValue("DB Key");
+            row.createCell(7).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_genotype));
+            row.createCell(8).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_col_no));
+            row.createCell(9).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_mother));
+            row.createCell(10).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_father));
+            row.createCell(11).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_free_field));
+            row.createCell(12).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_loc_info));
+            row.createCell(13).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_char_merk));
+            row.createCell(13).setCellValue("DB Key");
 
             Marker[]   marker    = MarkerManager.getAllMarker();
             Standort[] standorte = StandortManager.getAllStandorte();
@@ -175,12 +177,14 @@ public class Writer {
                 row.createCell(4).setCellValue(akzession != null ? akzession.name : "");
                 row.createCell(5).setCellValue(passport != null ? passport.kennNr : "");
                 row.createCell(6).setCellValue(passport != null ? passport.leitname : "");
-                row.createCell(7).setCellValue(standort.sortimentsnummer);
-                row.createCell(8).setCellValue(standort.mutter);
-                row.createCell(9).setCellValue(standort.vater);
-                row.createCell(10).setCellValue(standort.info != null ? standort.info : "");
-                row.createCell(11).setCellValue(akzession != null ? akzession.merkmale : "");
-                row.createCell(12).setCellValue(standort.dbKey != null ? standort.dbKey : "");
+                row.createCell(7).setCellValue(standort.sorte);
+                row.createCell(8).setCellValue(standort.sortimentsnummer);
+                row.createCell(9).setCellValue(standort.mutter);
+                row.createCell(10).setCellValue(standort.vater);
+                row.createCell(11).setCellValue(standort.freifeld);
+                row.createCell(12).setCellValue(standort.info != null ? standort.info : "");
+                row.createCell(13).setCellValue(akzession != null ? akzession.merkmale : "");
+                row.createCell(14).setCellValue(standort.dbKey != null ? standort.dbKey : "");
 
 
                 int mp = 0;
@@ -249,7 +253,11 @@ public class Writer {
                     werteAll.getColumnIndex(VersuchWert.COLUMN_WERT_NUMERIC)
                 );
         }
-        return value.replace("\n", "").replace("\r", "");
+        value = value.replace("\n", "").replace("\r", "");
+        if (value.isEmpty()) {
+            return "NA";
+        }
+        return value;
     }
 
     private Akzession getAkzession(int id) {

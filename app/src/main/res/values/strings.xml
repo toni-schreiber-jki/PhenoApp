@@ -51,7 +51,7 @@
     <string name="text_select_location">Several locations were found, please select a location:</string>
     <string name="title_settings">Settings</string>
     <string name="label_settings_storage_location">File location</string>
-    <string name="label_settings_zig_zag_mode">Zig zag mode</string>
+    <string name="label_settings_zig_zag_mode">Zigzag mode</string>
     <string name="label_settings_excel_date">Excel output with date</string>
     <string name="label_settings_bbch_question">BBCH question</string>
     <string name="label_settings_left_handed_people">Left-handed mode</string>
@@ -73,7 +73,8 @@
     <string name="excel_title_father">Father</string>
     <string name="excel_title_loc_info">Location info</string>
     <string name="excel_title_char_merk">Additional info</string>
-
+    <string name="excel_title_free_field"></string>
+    <string name="excel_title_genotype">Genotype</string>
 
 
 </resources>

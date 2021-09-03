@@ -252,7 +252,7 @@ public class Reader {
                 "" :
                 (
                     row.getCell(5).getCellTypeEnum() == CellType.NUMERIC ?
-                        "" + row.getCell(5).getNumericCellValue() :
+                            "" + (int) row.getCell(5).getNumericCellValue() :
                         row.getCell(5).getStringCellValue()
                 );
             akzession.name =
