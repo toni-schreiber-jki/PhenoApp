@@ -106,10 +106,10 @@ public class Writer {
             row.createCell(0).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_plot));
             row.createCell(1).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_row));
             row.createCell(2).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_plant));
-            row.createCell(3).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_name));
-            row.createCell(4).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_num));
-            row.createCell(5).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_num));
-            row.createCell(6).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_name));
+            row.createCell(3).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_num));
+            row.createCell(4).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_acc_name));
+            row.createCell(5).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_name));
+            row.createCell(6).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_var_num));
             row.createCell(7).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_genotype));
             row.createCell(8).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_col_no));
             row.createCell(9).setCellValue(BoniturSafe.BON_ACTIVITY.getString(R.string.excel_title_mother));
@@ -173,10 +173,10 @@ public class Writer {
                 row.createCell(0).setCellValue(standort.parzelle);
                 row.createCell(1).setCellValue(standort.reihe);
                 row.createCell(2).setCellValue(standort.pflanze);
-                row.createCell(3).setCellValue(akzession != null ? akzession.nummer : "");
-                row.createCell(4).setCellValue(akzession != null ? akzession.name : "");
-                row.createCell(5).setCellValue(passport != null ? passport.kennNr : "");
-                row.createCell(6).setCellValue(passport != null ? passport.leitname : "");
+                row.createCell(3).setCellValue(akzession != null ? akzession.name : "");
+                row.createCell(4).setCellValue(akzession != null ? akzession.nummer : "");
+                row.createCell(5).setCellValue(passport != null ? passport.leitname : "");
+                row.createCell(6).setCellValue(passport != null ? passport.kennNr : "");
                 row.createCell(7).setCellValue(standort.sorte);
                 row.createCell(8).setCellValue(standort.sortimentsnummer);
                 row.createCell(9).setCellValue(standort.mutter);
@@ -255,7 +255,7 @@ public class Writer {
         }
         value = value.replace("\n", "").replace("\r", "");
         if (value.isEmpty()) {
-            return "NA";
+            return "";
         }
         return value;
     }
