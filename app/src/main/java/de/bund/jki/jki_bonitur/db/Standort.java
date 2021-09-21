@@ -207,8 +207,7 @@ public class Standort extends DbModelInterface {
                         if (vw.wert_int == 0 && vw.int_is_null) {
                             return "";
                         }
-                        if (vw.wert_numeric > 0)
-                            return "" + vw.wert_int;
+                        return "" + vw.wert_int;
                     case Marker.MARKER_TYPE_BBCH:
                     case Marker.MARKER_TYPE_DATUM:
                     case Marker.MARKER_TYPE_BEMERKUNG:
